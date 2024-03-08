@@ -1,14 +1,12 @@
 // Main theme entrypoint
-
 import { extendTheme } from '@chakra-ui/react';
-import styles from './styles'
+import colors from './foundations/colors'
+import { components } from './components';
+
 
 const overrides = {
-    styles,
-
-    components: {
-
-    },
+    colors,
+    components,
 }
 
 export default extendTheme(overrides)
