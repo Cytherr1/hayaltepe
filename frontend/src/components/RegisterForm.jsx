@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Button,
   Flex,
@@ -10,12 +10,19 @@ import {
   Box,
   VStack,
 } from "@chakra-ui/react"
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl'
 import * as Yup from "yup"
 import { Field, Formik } from 'formik'
 import { Link } from "react-router-dom"
 
+import 'yup-phone-lite'
+import 'libphonenumber-js'
+
 const RegisterForm = (props) => {
+
+  const intl = useIntl()
+  const [country, setCountry] = useState("TR")
+
   return (
     <Box
       minW="sm"
@@ -39,7 +46,7 @@ const RegisterForm = (props) => {
           validationSchema={Yup.object({
             name: Yup.string().required(<FormattedMessage id='required'/>),
             surname: Yup.string().required(<FormattedMessage id='required'/>),
-            tel: Yup.string().required(<FormattedMessage id='required'/>),
+            tel: Yup.string().phone(country, intl.formatMessage({id: 'invalidtel'})).required(<FormattedMessage id='required'/>),
             email: Yup.string().email().required(<FormattedMessage id='required'/>),
             password: Yup.string().min(8, <FormattedMessage id="passshort"/>).max(12, <FormattedMessage id='passshort'/>).required(<FormattedMessage id='required'/>),
             cpassword: Yup.string().oneOf([Yup.ref('password'), null], <FormattedMessage id='passmatch'/>).required(<FormattedMessage id='required'/>),
