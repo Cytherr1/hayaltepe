@@ -37,7 +37,8 @@ const LoginForm = () => {
 
   return (
     <Box 
-        minW="sm" 
+        minW="sm"
+        maxW="md"
         borderWidth="2px" 
         borderRadius="lg" 
         overflow="hidden" 

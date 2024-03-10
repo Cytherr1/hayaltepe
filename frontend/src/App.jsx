@@ -5,9 +5,8 @@ import translations from './Translations'
 import Home from './pages/Home';
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
-
-import './App.css'
-
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
 function App() {
 
@@ -17,11 +16,13 @@ function App() {
   return (
     <IntlProvider locale={locale} messages={messages}>
       <BrowserRouter>
+        <Navbar/>
         <Routes>
           <Route path='/' element={<Home/>}/>
           <Route path='/login' element={<LoginForm/>}/>
           <Route path='/register' element={<RegisterForm locale={locale}/>}/>
         </Routes>
+        <Footer/>
       </BrowserRouter>
     </IntlProvider>
   )
