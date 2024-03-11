@@ -28,10 +28,10 @@ function App() {
           <Route path='/products' element={<Products/>}/>
           <Route path='/contact' element={<Contact/>}/>
           <Route path='/corporate' element={<Corporate/>}>
-            <Route path='/about' element={<Corporate/>}/>
-            <Route path='/privacy' element={<Corporate/>}/>
-            <Route path='/contract' element={<Corporate/>}/>
-            <Route path='/refund' element={<Corporate/>}/>
+            <Route path=':about' element={<Corporate/>}/>
+            <Route path=':privacy' element={<Corporate/>}/>
+            <Route path=':contract' element={<Corporate/>}/>
+            <Route path=':refund' element={<Corporate/>}/>
           </Route>
           <Route path='/product' element={<ProductPage/>}>
             <Route path=':productId' element={<ProductPage/>}/>
