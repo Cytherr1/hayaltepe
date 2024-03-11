@@ -21,7 +21,6 @@ import 'libphonenumber-js'
 const RegisterForm = (props) => {
 
   const intl = useIntl()
-  const [country, setCountry] = useState("TR")
 
   return (
     <Box
@@ -29,6 +28,7 @@ const RegisterForm = (props) => {
       borderRadius="lg"
       borderWidth="2px"
       p="1em"
+      maxW="lg"
     >
       <Formik
           initialValues={{
@@ -46,7 +46,7 @@ const RegisterForm = (props) => {
           validationSchema={Yup.object({
             name: Yup.string().required(<FormattedMessage id='required'/>),
             surname: Yup.string().required(<FormattedMessage id='required'/>),
-            tel: Yup.string().phone(country, intl.formatMessage({id: 'invalidtel'})).required(<FormattedMessage id='required'/>),
+            tel: Yup.string().phone(null, intl.formatMessage({id: 'invalidtel'})).required(<FormattedMessage id='required'/>),
             email: Yup.string().email().required(<FormattedMessage id='required'/>),
             password: Yup.string().min(8, <FormattedMessage id="passshort"/>).max(12, <FormattedMessage id='passshort'/>).required(<FormattedMessage id='required'/>),
             cpassword: Yup.string().oneOf([Yup.ref('password'), null], <FormattedMessage id='passmatch'/>).required(<FormattedMessage id='required'/>),
@@ -128,7 +128,7 @@ const RegisterForm = (props) => {
                   </Field>
                   <FormErrorMessage>{errors.policy}</FormErrorMessage>
                 </FormControl>
-                <Button minW="sm" type='submit'><FormattedMessage id='register'/></Button>
+                <Button w="100%" type='submit'><FormattedMessage id='register'/></Button>
               </VStack>
             </form>
           )}
