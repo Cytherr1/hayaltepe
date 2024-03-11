@@ -16,7 +16,7 @@ function App() {
   return (
     <IntlProvider locale={locale} messages={messages}>
       <BrowserRouter>
-        <Navbar/>
+        <Navbar langSelector={setLocale} />
         <Routes>
           <Route path='/' element={<Home/>}/>
           <Route path='/login' element={<LoginForm/>}/>
