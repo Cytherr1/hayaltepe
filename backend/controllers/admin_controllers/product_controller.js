@@ -1,6 +1,30 @@
 const { getConnection, releaseConnection } = require("../../config/db_config");
 const { addLog } = require("../log_controllers/log_controller");
 
+const getAllProduct = async (req, res) => {
+  let connection;
+
+  try {
+    connection = await getConnection();
+
+    const query = "SELECT * FROM PRODUCT";
+
+    connection.query(query, (error, results) => {
+      if (error) {
+        res.status(500).send(error.message);
+      } else {
+        res.status(200).send(results);
+      }
+    });
+  } catch (error) {
+    res.status(500).send(error.message);
+  } finally {
+    if (connection) {
+      releaseConnection(connection);
+    }
+  }
+};
+
 const addProduct = async (req, res) => {
   let connection;
 
@@ -10,7 +34,7 @@ const addProduct = async (req, res) => {
     const { name, price, descr, stock, image, log_user } = req.body;
 
     const query =
-      "INSERT INTO PRODUCT (NAME, PRICE, DESCR, STOCK, IMAGE) VALUES (?, ?, ?, ?, ?)";
+      "INSERT INTO PRODUCT (PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_DESCR, PRODUCT_STOCK, PRODUCT_IMAGE) VALUES (?, ?, ?, ?, ?)";
 
     const log_query =
       "INSERT INTO LOG (LOG_USER, LOG_TIMESTAMP, LOG_DESCR) VALUES (?, ?, ?)";
@@ -144,27 +168,27 @@ const updateProduct = async (req, res) => {
       }
 
       if (name) {
-        query += "NAME = ?, ";
+        query += "PRODUCT_NAME = ?, ";
         params.push(name);
       }
 
       if (price) {
-        query += "PRICE = ?, ";
+        query += "PRODUCT_PRICE = ?, ";
         params.push(price);
       }
 
       if (descr) {
-        query += "DESCR = ?, ";
+        query += "PRODUCT_DESCR = ?, ";
         params.push(descr);
       }
 
       if (stock) {
-        query += "STOCK = ?, ";
+        query += "PRODUCT_STOCK = ?, ";
         params.push(stock);
       }
 
       if (image) {
-        query += "IMAGE = ?, ";
+        query += "PRODUCT_IMAGE = ?, ";
         params.push(image);
       }
 
@@ -224,19 +248,19 @@ const getProductsFiltered = async (req, res) => {
     const params = [];
 
     if (name) {
-      query += "AND NAME LIKE ? ";
+      query += "AND PRODUCT_NAME LIKE ? ";
 
       params.push("%" + name + "%");
     }
 
     if (price) {
-      query += "AND PRICE = ? ";
+      query += "AND PRODUCT_PRICE = ? ";
 
       params.push(price);
     }
 
     if (stock) {
-      query += "AND STOCK = ? ";
+      query += "AND PRODUCT_STOCK = ? ";
 
       params.push(stock);
     }
@@ -258,6 +282,7 @@ const getProductsFiltered = async (req, res) => {
 };
 
 module.exports = {
+  getAllProduct,
   addProduct,
   removeProduct,
   updateProduct,
