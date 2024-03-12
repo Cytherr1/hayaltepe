@@ -7,11 +7,11 @@ const login = async (req, res) => {
   try {
     connection = await getConnection();
 
-    const { email, password } = req.body;
+    const { mail, password } = req.body;
 
     const query = "SELECT * FROM USER WHERE MAIL = ?";
 
-    connection.query(query, [email], (error, results) => {
+    connection.query(query, [mail], (error, results) => {
       if (error) {
         res.status(500).send(error.message);
         return;

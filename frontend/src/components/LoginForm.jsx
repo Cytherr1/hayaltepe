@@ -16,7 +16,7 @@ const LoginForm = () => {
 
     const login = async (formData) => {
         let responseData;
-        await fetch("http://localhost:3000/login", {
+        await fetch("http://localhost:3000/general/auth/login", {
           method: "POST",
           headers: {
             Accept: "application/form-data",

@@ -6,11 +6,11 @@ const login = async (req, res) => {
   try {
     connection = await getConnection();
 
-    const { email, password } = req.body;
+    const { mail, password } = req.body;
 
     const query = "SELECT * FROM USER WHERE MAIL = ?";
 
-    connection.query(query, [email], async (error, results) => {
+    connection.query(query, [mail], async (error, results) => {
       if (error) {
         res.status(500).send(error.message);
         return;
@@ -49,16 +49,16 @@ const register = async (req, res) => {
   try {
     connection = await getConnection();
 
-    const { fname, surname, telephone_number, email, password } = req.body;
+    const { name, surname, telephone_number, email, password } = req.body;
 
     const query =
-      "INSERT INTO USER (FNAME, SURNAME, TELEPHONE_NUMBER, MAIL, PASSWORD) VALUES (?, ?, ?, ?, ?)";
+      "INSERT INTO USER (NAME, SURNAME, TELEPHONE_NUMBER, MAIL, PASSWORD) VALUES (?, ?, ?, ?, ?)";
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
     connection.query(
       query,
-      [fname, surname, telephone_number, email, hashedPassword],
+      [name, surname, telephone_number, email, hashedPassword],
       (error, results) => {
         if (error) {
           res.status(500).send(error.message);
