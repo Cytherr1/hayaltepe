@@ -1,5 +1,5 @@
 const mysql = require("mysql");
-require('dotenv').config({ path: '../../.env'});
+require('dotenv').config({ path: `${__dirname}/../../.env`});
 
 const pool = mysql.createPool({
   connectionLimit: 10,
@@ -11,6 +11,7 @@ const pool = mysql.createPool({
 });
 
 console.log(process.env.DB_HOST);
+console.log(`${__dirname}/../../.env`)
 
 const getConnection = () => {
 
