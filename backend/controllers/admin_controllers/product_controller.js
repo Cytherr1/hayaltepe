@@ -1,5 +1,5 @@
-import { getConnection, releaseConnection } from "../../config/db_config";
-import { addLog } from "../../log_controllers/log_controller";
+const { getConnection, releaseConnection } = require("../../config/db_config");
+const { addLog } = require("../log_controllers/log_controller");
 
 const addProduct = async (req, res) => {
   let connection;
