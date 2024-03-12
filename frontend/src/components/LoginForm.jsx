@@ -4,7 +4,6 @@ import { Field, Formik } from 'formik'
 import * as Yup from "yup"
 import {
   Button,
-  Flex,
   FormControl,
   FormLabel,
   FormErrorMessage,
@@ -80,7 +79,7 @@ const LoginForm = () => {
                   />
                   <FormErrorMessage>{errors.password}</FormErrorMessage>
                 </FormControl>
-                <Button minW="sm" type='submit'><FormattedMessage id='login'/></Button>
+                <Button w="100%" type='submit'><FormattedMessage id='login'/></Button>
               </VStack>
             </form>
           )}

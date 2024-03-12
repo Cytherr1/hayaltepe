@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import {
   Button,
   Flex,
@@ -7,6 +7,7 @@ import {
   FormErrorMessage,
   Input,
   Checkbox,
+  Text,
   Box,
   VStack,
 } from "@chakra-ui/react"
@@ -14,13 +15,15 @@ import { FormattedMessage, useIntl } from 'react-intl'
 import * as Yup from "yup"
 import { Field, Formik } from 'formik'
 import { Link } from "react-router-dom"
+import { Language } from '../App'
 
 import 'yup-phone-lite'
 import 'libphonenumber-js'
 
-const RegisterForm = (props) => {
+const RegisterForm = () => {
 
   const intl = useIntl()
+  const lan = useContext(Language)
 
   return (
     <Box
@@ -115,15 +118,14 @@ const RegisterForm = (props) => {
                 </FormControl>
                 <FormControl isInvalid={touched.policy && errors.policy}>
                   <Field
-                    mt={5}
                     as={Checkbox}
                     id="policy"
                     name="policy"
                   >
                     <Flex align="center" gap={1} justifyContent="center">
-                      {props.locale === "TR" && <Link to="/privacy"><p><FormattedMessage id="kvkk"/></p></Link>}
-                      <p><FormattedMessage id="read"/></p>
-                      {props.locale === "EN" && <Link to="/privacy"><p><FormattedMessage id="kvkk"/></p></Link>}
+                      {lan === "TR" && <Link to="/corporate/privacy"><Text><FormattedMessage id="kvkk"/></Text></Link>}
+                      <Text><FormattedMessage id="read"/></Text>
+                      {lan === "EN" && <Link to="corporate/privacy"><Text><FormattedMessage id="kvkk"/></Text></Link>}
                     </Flex>
                   </Field>
                   <FormErrorMessage>{errors.policy}</FormErrorMessage>
