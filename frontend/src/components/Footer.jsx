@@ -13,7 +13,7 @@ import { FormattedMessage } from 'react-intl'
 import logo from '../assets/ht_logo_m.png'
 import { Link } from 'react-router-dom'
 
-const Footer = () => {
+const Footer = (props) => {
   return (
     <VStack spacing="none">
       <Flex
@@ -22,6 +22,7 @@ const Footer = () => {
         justify="center"
         bg="#A9B388"
         p="1em"
+        flexWrap="wrap"
       >
         <Spacer/>
         <Image src={logo} alt="Hayaltepe logo" boxSize="200px"/>
@@ -39,10 +40,10 @@ const Footer = () => {
         <VStack align="flex-start">
           <Heading size="sm"><FormattedMessage id='corpo'/></Heading>
           <UnorderedList style={{display: "flex", flexDirection: "column", alignItems: "flex-start"}} spacing="0.5em">
-            <ListItem  _hover={{color: "#5F6F52"}} transition="0.3s" as={Link} to="/corporate/about"><FormattedMessage id='about'/></ListItem>
-            <ListItem  _hover={{color: "#5F6F52"}} transition="0.3s" as={Link} to="/corporate/privacy"><FormattedMessage id='privacy'/></ListItem>
-            <ListItem  _hover={{color: "#5F6F52"}} transition="0.3s" as={Link} to="/corporate/contract"><FormattedMessage id='dsc'/></ListItem>
-            <ListItem  _hover={{color: "#5F6F52"}} transition="0.3s" as={Link} to="/corporate/refund"><FormattedMessage id='refund'/></ListItem>
+            <ListItem  _hover={{color: "#5F6F52"}} transition="0.3s" as={Link} to="/corporate/about" onClick={() => props.tabSetter(0)}><FormattedMessage id='about'/></ListItem>
+            <ListItem  _hover={{color: "#5F6F52"}} transition="0.3s" as={Link} to="/corporate/privacy" onClick={() => props.tabSetter(1)}><FormattedMessage id='privacy'/></ListItem>
+            <ListItem  _hover={{color: "#5F6F52"}} transition="0.3s" as={Link} to="/corporate/contract" onClick={() => props.tabSetter(2)}><FormattedMessage id='dsc'/></ListItem>
+            <ListItem  _hover={{color: "#5F6F52"}} transition="0.3s" as={Link} to="/corporate/refund" onClick={() => props.tabSetter(3)}><FormattedMessage id='refund'/></ListItem>
           </UnorderedList>
         </VStack>
         <Spacer/>

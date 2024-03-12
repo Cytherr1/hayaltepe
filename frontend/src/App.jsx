@@ -17,30 +17,31 @@ export const Language = createContext();
 function App() {
 
   const [locale, setLocale] = useState("TR");
-  const messages = translations[locale]
+  const [index, setIndex] = useState(0);
+  const messages = translations[locale];
 
   return (
     <IntlProvider locale={locale} messages={messages}>
       <Language.Provider value={locale}>
         <BrowserRouter>
-          <Navbar langSelector={setLocale} />
+          <Navbar langSelector={setLocale} tabSetter={setIndex}/>
           <Routes>
             <Route path='/' element={<Home/>}/>
             <Route path='/login' element={<LoginForm/>}/>
             <Route path='/register' element={<RegisterForm locale={locale}/>}/>
             <Route path='/products' element={<Products/>}/>
             <Route path='/contact' element={<Contact/>}/>
-            <Route path='/corporate' element={<Corporate/>}>
-              <Route path='about' element={<Corporate/>}/>
-              <Route path='privacy' element={<Corporate/>}/>
-              <Route path='contract' element={<Corporate/>}/>
-              <Route path='refund' element={<Corporate/>}/>
+            <Route path='/corporate' element={<Corporate index={index} tabSetter={setIndex}/>}>
+              <Route path='about' element={<Corporate index={index} tabSetter={setIndex}/>}/>
+              <Route path='privacy' element={<Corporate index={index} tabSetter={setIndex}/>}/>
+              <Route path='contract' element={<Corporate index={index} tabSetter={setIndex}/>}/>
+              <Route path='refund' element={<Corporate index={index} tabSetter={setIndex}/>}/>
             </Route>
             <Route path='/product' element={<ProductPage/>}>
               <Route path=':productId' element={<ProductPage/>}/>
             </Route>
           </Routes>
-          <Footer/>
+          <Footer tabSetter={setIndex}/>
         </BrowserRouter>
       </Language.Provider>
     </IntlProvider>
