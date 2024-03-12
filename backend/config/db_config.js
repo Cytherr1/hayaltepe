@@ -10,9 +10,6 @@ const pool = mysql.createPool({
   port: process.env.DB_PORT,
 });
 
-console.log(process.env.DB_HOST);
-console.log(`${__dirname}/../../.env`)
-
 const getConnection = () => {
 
   return new Promise((resolve, reject) => {
