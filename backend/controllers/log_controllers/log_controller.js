@@ -1,4 +1,4 @@
-import { getConnection, releaseConnection } from "../../config/db_config";
+const { getConnection, releaseConnection } = require("../../config/db_config");
 
 const addLog = async (req, res) => {
   let connection;
