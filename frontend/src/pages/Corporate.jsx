@@ -19,13 +19,15 @@ const Corporate = (props) => {
       w="100%"
       h="85vh"
       p="1em"
+      bg="y.500"
     >
       <Box
         w="95%"
         h="90%"
-        border="2px"
+        borderWidth="2px"
         borderRadius="lg"
         p="1em"
+        bg="b.500"
       >
         <Tabs 
           orientation='vertical'
@@ -40,19 +42,19 @@ const Corporate = (props) => {
           </TabList>
 
           <TabPanels>
-            <TabPanel>
+            <TabPanel p="2em">
               <Heading size="xl"><FormattedMessage id='about'/></Heading>
               <Text>one!</Text>
             </TabPanel>
-            <TabPanel>
+            <TabPanel p="2em">
               <Heading size="xl"><FormattedMessage id='privacy'/></Heading>
               <Text>two!</Text>
             </TabPanel>
-            <TabPanel>
+            <TabPanel p="2em">
               <Heading size="xl"><FormattedMessage id='dsc'/></Heading>
               <Text>three!</Text>
             </TabPanel>
-            <TabPanel>
+            <TabPanel p="2em">
               <Heading size="xl"><FormattedMessage id='refund'/></Heading>
               <Text>three!</Text>
             </TabPanel>
