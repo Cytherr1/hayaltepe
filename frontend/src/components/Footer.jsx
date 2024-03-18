@@ -29,7 +29,7 @@ const Footer = (props) => {
         <Spacer/>
         <VStack align="flex-start">
           <Heading size="sm"><FormattedMessage id='qmenu'/></Heading>
-          <UnorderedList style={{display: "flex", flexDirection: "column", alignItems: "flex-start"}} spacing="0.5em">
+          <UnorderedList style={{display: "flex", flexDirection: "column", alignItems: "flex-start", margin: "0"}} spacing="0.5em">
             <ListItem  _hover={{color: "#5F6F52"}} transition="0.3s" as={Link} to="/"><FormattedMessage id='home'/></ListItem>
             <ListItem  _hover={{color: "#5F6F52"}} transition="0.3s" as={Link} to="/products"><FormattedMessage id='products'/></ListItem>
             <ListItem  _hover={{color: "#5F6F52"}} transition="0.3s" as={Link} to="/corporate"><FormattedMessage id='corpo'/></ListItem>
@@ -39,7 +39,7 @@ const Footer = (props) => {
         <Spacer/>
         <VStack align="flex-start">
           <Heading size="sm"><FormattedMessage id='corpo'/></Heading>
-          <UnorderedList style={{display: "flex", flexDirection: "column", alignItems: "flex-start"}} spacing="0.5em">
+          <UnorderedList style={{display: "flex", flexDirection: "column", alignItems: "flex-start", margin: "0"}} spacing="0.5em">
             <ListItem  _hover={{color: "#5F6F52"}} transition="0.3s" as={Link} to="/corporate/about" onClick={() => props.tabSetter(0)}><FormattedMessage id='about'/></ListItem>
             <ListItem  _hover={{color: "#5F6F52"}} transition="0.3s" as={Link} to="/corporate/privacy" onClick={() => props.tabSetter(1)}><FormattedMessage id='privacy'/></ListItem>
             <ListItem  _hover={{color: "#5F6F52"}} transition="0.3s" as={Link} to="/corporate/contract" onClick={() => props.tabSetter(2)}><FormattedMessage id='dsc'/></ListItem>
@@ -49,7 +49,7 @@ const Footer = (props) => {
         <Spacer/>
         <VStack align='flex-start'>
           <Heading size='sm'><FormattedMessage id='cinfo'/></Heading>
-          <UnorderedList style={{display: "flex", flexDirection: "column", alignItems: "flex-start"}} spacing="0.5em">
+          <UnorderedList style={{display: "flex", flexDirection: "column", alignItems: "flex-start", margin: "0"}} spacing="0.5em">
             <Text>Yeşilüzümlü mah. Fethiye/Muğla</Text>
             <Text>info@hayaltepe.com</Text>
             <Text>+90 541 487 59 78</Text>

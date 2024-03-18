@@ -26,11 +26,13 @@ const ContactForm = () => {
   
     return (
         <Box
-            minW="sm"
-            maxW="md"
+            minW="md"
+            maxW="lg"
             borderWidth="2px" 
             borderRadius="lg" 
-            overflow="hidden" 
+            overflow="hidden"
+            bg="g.500"
+            boxShadow="lg"
             p="1em"
         >
             <Formik

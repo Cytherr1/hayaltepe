@@ -1,6 +1,7 @@
 import { createContext, useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { IntlProvider } from 'react-intl'
+import { useMediaQuery } from '@chakra-ui/react';
 import translations from './Translations'
 import Home from './pages/Home';
 import LoginForm from './components/LoginForm';
@@ -11,6 +12,8 @@ import Products from './pages/Products';
 import Contact from './pages/Contact';
 import Corporate from './pages/Corporate';
 import ProductPage from './pages/ProductPage';
+import NavbarMobile from './components/NavbarMobile';
+import FooterMobile from './components/FooterMobile';
 
 export const Language = createContext();
 
@@ -19,12 +22,13 @@ function App() {
   const [locale, setLocale] = useState("TR");
   const [index, setIndex] = useState(0);
   const messages = translations[locale];
+  const [isMobile] = useMediaQuery("(max-width: 768px)")
 
   return (
     <IntlProvider locale={locale} messages={messages}>
       <Language.Provider value={locale}>
         <BrowserRouter>
-          <Navbar langSelector={setLocale} tabSetter={setIndex}/>
+          {isMobile ? <NavbarMobile langSelector={setLocale} tabSetter={setIndex}/> : <Navbar langSelector={setLocale} tabSetter={setIndex}/>}
           <Routes>
             <Route path='/' element={<Home/>}/>
             <Route path='/login' element={<LoginForm/>}/>
@@ -41,7 +45,7 @@ function App() {
               <Route path=':productId' element={<ProductPage/>}/>
             </Route>
           </Routes>
-          <Footer tabSetter={setIndex}/>
+          {isMobile ? <FooterMobile tabSetter={setIndex}/> :<Footer tabSetter={setIndex}/>}
         </BrowserRouter>
       </Language.Provider>
     </IntlProvider>
