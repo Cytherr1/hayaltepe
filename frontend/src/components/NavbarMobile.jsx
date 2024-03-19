@@ -7,7 +7,7 @@ import {
   Spacer,
   Button,
   Center,
-  Box,
+  Text,
   Image,
   UnorderedList,
   ListItem,
@@ -18,7 +18,11 @@ import {
   DrawerBody,
   DrawerFooter,
   DrawerOverlay,
-  Heading,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
   useDisclosure,
 } from '@chakra-ui/react'
 import { HamburgerIcon } from '@chakra-ui/icons'
@@ -85,12 +89,29 @@ const NavbarMobile = (props) => {
               <UnorderedList
                 style={{display: "flex", flexDirection:"column", gap: "3em"}}
                 styleType="none"
-                onClick={onClose}
               >
-                <ListItem _hover={{color: "#A9B388"}} fontWeight="semibold" transition="0.3s" as={Link} to="/"><FormattedMessage id='home'/></ListItem>
-                <ListItem _hover={{color: "#A9B388"}} fontWeight="semibold" transition="0.3s" as={Link} to="/products"><FormattedMessage id='products'/></ListItem>
-                <ListItem _hover={{color: "#A9B388"}} fontWeight="semibold" transition="0.3s" as={Link} to="/corporate"><FormattedMessage id='corpo'/></ListItem>
-                <ListItem _hover={{color: "#A9B388"}} fontWeight="semibold" transition="0.3s" as={Link} to="/contact"><FormattedMessage id='contact'/></ListItem>
+                <ListItem onClick={onClose} _hover={{color: "#A9B388"}} fontWeight="semibold" transition="0.3s" as={Link} to="/"><FormattedMessage id='home'/></ListItem>
+                <ListItem onClick={onClose} _hover={{color: "#A9B388"}} fontWeight="semibold" transition="0.3s" as={Link} to="/products"><FormattedMessage id='products'/></ListItem>
+                <ListItem fontWeight="semibold" transition="0.3s" as={Accordion} allowMultiple>
+                  <AccordionItem>
+                    <AccordionButton _hover={{color: "#A9B388"}} fontWeight="semibold">
+                      <FormattedMessage id='corpo'/>
+                    </AccordionButton>
+                    <AccordionPanel>
+                      <Text as={Link} onClick={onClose} _hover={{color: "#A9B388"}} fontWeight="semibold" transition="0.3s" to="/corporate/about"><FormattedMessage id='about'/></Text>
+                    </AccordionPanel>
+                    <AccordionPanel>
+                      <Text as={Link} onClick={onClose} _hover={{color: "#A9B388"}} fontWeight="semibold" transition="0.3s" to="/corporate/privacy"><FormattedMessage id='privacy'/></Text>
+                    </AccordionPanel>
+                    <AccordionPanel>
+                      <Text as={Link} onClick={onClose} _hover={{color: "#A9B388"}} fontWeight="semibold" transition="0.3s" to="/corporate/contract"><FormattedMessage id='dsc'/></Text>
+                    </AccordionPanel>
+                    <AccordionPanel>
+                      <Text as={Link} onClick={onClose} _hover={{color: "#A9B388"}} fontWeight="semibold" transition="0.3s" to="/corporate/refund"><FormattedMessage id='refund'/></Text>
+                    </AccordionPanel>
+                  </AccordionItem>
+                </ListItem>
+                <ListItem onClick={onClose} _hover={{color: "#A9B388"}} fontWeight="semibold" transition="0.3s" as={Link} to="/contact"><FormattedMessage id='contact'/></ListItem>
               </UnorderedList>
             </DrawerBody>
 
