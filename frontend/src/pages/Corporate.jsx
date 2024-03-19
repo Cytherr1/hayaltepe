@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { 
+  useMediaQuery,
   Tabs, 
   TabList, 
   TabPanels, 
@@ -11,9 +12,28 @@ import {
   Center,
 } from '@chakra-ui/react'
 import { FormattedMessage } from 'react-intl'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 const Corporate = (props) => {
+
+  const [isMobile] = useMediaQuery("(max-width: 768px)")
+  let location = useLocation()
+
+  useEffect(() => {
+    if (location.pathname === '/corporate/privacy') {
+      props.tabSetter(1)
+    }
+    else if (location.pathname === '/corporate/contract') {
+      props.tabSetter(2)
+    }
+    else if (location.pathname === '/corporate/refund') {
+      props.tabSetter(3)
+    }
+    else {
+      props.tabSetter(0)
+    }
+  }, [location])
+
   return (
     <Center
       w="100%"
@@ -23,40 +43,46 @@ const Corporate = (props) => {
     >
       <Box
         w="95%"
-        h="90%"
+        minW="md"
         borderWidth="2px"
         borderRadius="lg"
         p="1em"
-        bg="b.500"
+        bg="g.500"
       >
-        <Tabs 
+        <Tabs
+          variant="solid-rounded"
           orientation='vertical'
           index={props.index}
           defaultIndex={props.index}
+          colorScheme="g"
+          size="sm"
+          fontSize={isMobile ? "0.50rem" : "1rem"}
+          p="1em"
           >
-          <TabList>
+          {!isMobile &&
+          <TabList gap="1em" p="none" alignItems="center">
             <Tab as={Link} to="/corporate/about" onClick={() => props.tabSetter(0)}><FormattedMessage id='about'/></Tab>
             <Tab as={Link} to="/corporate/privacy" onClick={() => props.tabSetter(1)}><FormattedMessage id='privacy'/></Tab>
             <Tab as={Link} to="/corporate/contract" onClick={() => props.tabSetter(2)}><FormattedMessage id='dsc'/></Tab>
             <Tab as={Link} to="/corporate/refund" onClick={() => props.tabSetter(3)}><FormattedMessage id='refund'/></Tab>
-          </TabList>
+          </TabList>}
 
           <TabPanels>
             <TabPanel p="2em">
               <Heading size="xl"><FormattedMessage id='about'/></Heading>
-              <Text>one!</Text>
+              <Text fontSize="md">one!</Text>
             </TabPanel>
             <TabPanel p="2em">
               <Heading size="xl"><FormattedMessage id='privacy'/></Heading>
-              <Text>two!</Text>
+              <Text fontSize="md">two!</Text>
             </TabPanel>
             <TabPanel p="2em">
               <Heading size="xl"><FormattedMessage id='dsc'/></Heading>
-              <Text>three!</Text>
+              <Text fontSize="md">three!</Text>
             </TabPanel>
             <TabPanel p="2em">
               <Heading size="xl"><FormattedMessage id='refund'/></Heading>
-              <Text>three!</Text>
+              <Text fontSize="md">three!</Text>
             </TabPanel>
           </TabPanels>
         </Tabs>
