@@ -2,15 +2,14 @@ const { getConnection, releaseConnection } = require("../../config/db_config");
 
 const login = async (req, res) => {
   let connection;
-
   try {
     connection = await getConnection();
 
-    const { mail, password } = req.body;
+    const { email, password } = req.body;
 
     const query = "SELECT * FROM USER WHERE MAIL = ?";
 
-    connection.query(query, [mail], (error, results) => {
+    connection.query(query, [email], (error, results) => {
       if (error) {
         res.status(500).send(error.message);
         return;
@@ -23,15 +22,12 @@ const login = async (req, res) => {
 
       const user = results[0];
 
-      if (user.password !== password) {
-        res.status(401).send("Invalid password");
+      if (password !== user.PASSWORD) {
+        res.status(401).send("Invalid credentials");
         return;
       }
 
-      else {
-        res.status(200).send(user);
-      }
-      
+      res.status(200).send("User logged in");
     });
   } catch (error) {
     res.status(500).send(error.message);
