@@ -21,38 +21,25 @@ export const Language = createContext();
 function App() {
   const [locale, setLocale] = useState("TR");
   const [index, setIndex] = useState(0);
-  const [loggedIn, setLoggedIn] = useState(false); // State to track login status
   const messages = translations[locale];
 
-  // Function to handle login
-  const handleLogin = () => {
-    // Implement your login logic here, and set loggedIn to true upon successful login
-    setLoggedIn(true);
-  };
-
   return (
-    <IntlProvider locale={locale} messages={messages}>
-      <Language.Provider value={locale}>
-        <BrowserRouter>
-          {loggedIn ? (
-            <>
-              <Navbar langSelector={setLocale} tabSetter={setIndex} />
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route
-                  path="/productmanagement"
-                  element={<ProductManagement />}
-                />
-                <Route path="/usermanagement" element={<UserManagement />} />
-              </Routes>
-              <Footer tabSetter={setIndex} />
-            </>
-          ) : (
-            <LoginForm onLogin={handleLogin} />
-          )}
-        </BrowserRouter>
-      </Language.Provider>
-    </IntlProvider>
+      <IntlProvider locale={locale} messages={messages}>
+        <Language.Provider value={locale}>
+          <BrowserRouter>
+            <Navbar langSelector={setLocale} tabSetter={setIndex} />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route
+                path="/productmanagement"
+                element={<ProductManagement />}
+              />
+              <Route path="/usermanagement" element={<UserManagement />} />
+            </Routes>
+            <Footer tabSetter={setIndex} />
+          </BrowserRouter>
+        </Language.Provider>
+      </IntlProvider>
   );
 }
 
