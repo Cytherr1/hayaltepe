@@ -14,25 +14,34 @@ import {
 
 const LoginForm = () => {
 
-    const login = async (formData) => {
-        let responseData;
-        await fetch("http://localhost:3000/admin/auth/login", {
-          method: "POST",
-          headers: {
-            Accept: "application/form-data",
-            'content-type': "application/json",
-          },
-          body: JSON.stringify(formData),
-        }).then((response) => response.json()).then((data) => responseData = data)
-    
+  const login = async (formData) => {
+    try {
+        const response = await fetch("http://localhost:3000/admin/auth/login", {
+            method: "POST",
+            headers: {
+                Accept: "application/form-data",
+                'Content-Type': "application/json",
+            },
+            body: JSON.stringify(formData),
+        });
+        
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const responseData = await response.json();
+
         if (responseData.success) {
-          localStorage.setItem("auth-token", responseData.token);
-          window.location.replace("/");
+            localStorage.setItem("auth-token", responseData.token);
+            window.location.replace("/");
+        } else {
+            alert(responseData.errors);
         }
-        else {
-          alert(responseData.errors)
-        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("An error has occured.");
     }
+}
 
   return (
     <Box 

@@ -11,26 +11,26 @@ const login = async (req, res) => {
 
     connection.query(query, [email], (error, results) => {
       if (error) {
-        res.status(500).send(error.message);
+        res.status(500).json({ error: error.message });
         return;
       }
 
       if (results.length === 0) {
-        res.status(404).send("User not found");
+        res.status(404).json({ error: "User not found" });
         return;
       }
 
       const user = results[0];
 
       if (password !== user.PASSWORD) {
-        res.status(401).send("Invalid credentials");
+        res.status(401).json({ error: "Invalid credentials" });
         return;
       }
 
-      res.status(200).send("User logged in");
+      res.status(200).json({ success: true, message: "User logged in" });
     });
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500).json({ error: error.message });
   } finally {
     if (connection) {
       releaseConnection(connection);

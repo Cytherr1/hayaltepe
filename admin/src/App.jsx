@@ -1,6 +1,6 @@
 // import required modules
 import { createContext, useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { IntlProvider } from "react-intl";
 
 // import translations
@@ -24,22 +24,23 @@ function App() {
   const messages = translations[locale];
 
   return (
-      <IntlProvider locale={locale} messages={messages}>
-        <Language.Provider value={locale}>
-          <BrowserRouter>
-            <Navbar langSelector={setLocale} tabSetter={setIndex} />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route
-                path="/productmanagement"
-                element={<ProductManagement />}
-              />
-              <Route path="/usermanagement" element={<UserManagement />} />
-            </Routes>
-            <Footer tabSetter={setIndex} />
-          </BrowserRouter>
-        </Language.Provider>
-      </IntlProvider>
+    <div>
+    <IntlProvider locale={locale} messages={messages}>
+      <Language.Provider value={locale}>
+        <BrowserRouter>
+        { !localStorage.getItem('auth-token') && <Navigate to='/loginform'/>}
+          <Navbar langSelector={setLocale} tabSetter={setIndex} />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/loginform" element={<LoginForm/>} />
+            <Route path="/productmanagement" element={<ProductManagement />} />
+            <Route path="/usermanagement" element={<UserManagement />} />
+          </Routes>
+          <Footer tabSetter={setIndex} />
+        </BrowserRouter>
+      </Language.Provider>
+    </IntlProvider>
+    </div>
   );
 }
 
