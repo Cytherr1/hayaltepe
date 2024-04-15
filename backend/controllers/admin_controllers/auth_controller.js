@@ -1,5 +1,4 @@
 const { getConnection, releaseConnection } = require("../../config/db_config");
-const bcrypt = require("bcrypt");
 
 const login = async (req, res) => {
   let connection;
@@ -24,18 +23,15 @@ const login = async (req, res) => {
 
       const user = results[0];
 
-      bcrypt.compare(password, user.PASSWORD, (err, result) => {
-        if (err) {
-          res.status(500).send(err.message);
-          return;
-        }
+      if (user.password !== password) {
+        res.status(401).send("Invalid password");
+        return;
+      }
 
-        if (result) {
-          res.status(200).send(user);
-        } else {
-          res.status(401).send("Invalid password");
-        }
-      });
+      else {
+        res.status(200).send(user);
+      }
+      
     });
   } catch (error) {
     res.status(500).send(error.message);
@@ -45,8 +41,6 @@ const login = async (req, res) => {
     }
   }
 };
-
-
 
 module.exports = {
   login,
