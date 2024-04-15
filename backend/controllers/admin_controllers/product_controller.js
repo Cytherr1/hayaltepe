@@ -11,13 +11,13 @@ const getAllProduct = async (req, res) => {
 
     connection.query(query, (error, results) => {
       if (error) {
-        res.status(500).send(error.message);
+        res.status(500).json({ error : error.message });
       } else {
-        res.status(200).send(results);
+        res.status(200).json({ success: true, products: results})
       }
     });
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500).json({ error : error.message });;
   } finally {
     if (connection) {
       releaseConnection(connection);
@@ -220,56 +220,9 @@ const updateProduct = async (req, res) => {
   }
 };
 
-const getProductsFiltered = async (req, res) => {
-  let connection;
-
-  try {
-    connection = await getConnection();
-
-    const { name, image, link } = req.body;
-
-    let query = "SELECT * FROM PRODUCT WHERE 1=1 ";
-
-    const params = [];
-
-    if (name) {
-      query += "AND NAME LIKE ? ";
-
-      params.push("%" + name + "%");
-    }
-
-    if (image) {
-      query += "AND IMAGE = ? ";
-
-      params.push(image);
-    }
-
-    if (link) {
-      query += "AND LINK = ? ";
-
-      params.push(link);
-    }
-
-    connection.query(query, params, (error, results) => {
-      if (error) {
-        res.status(500).send(error.message);
-      } else {
-        res.status(200).send(results);
-      }
-    });
-  } catch (error) {
-    res.status(500).send(error.message);
-  } finally {
-    if (connection) {
-      releaseConnection(connection);
-    }
-  }
-};
-
 module.exports = {
   getAllProduct,
   addProduct,
   removeProduct,
   updateProduct,
-  getProductsFiltered,
 };
