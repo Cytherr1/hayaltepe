@@ -5,6 +5,6 @@ const userController = require("../../controllers/admin_controllers/user_control
 router.post("/add", userController.addUser);
 router.post("/delete", userController.deleteUser);
 router.post("/update", userController.updateUser);
-router.post("/filter", userController.getUserFiltered);
+router.get("/getAllUser", userController.getAllUser);
 
 module.exports = router;

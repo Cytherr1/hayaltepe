@@ -147,7 +147,7 @@ const updateProduct = async (req, res) => {
   try {
     connection = await getConnection();
 
-    const { name, image, link, log_user } = req.body;
+    const { id, name, image, link, log_user } = req.body;
 
     let query = "UPDATE PRODUCT SET ";
 

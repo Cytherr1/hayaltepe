@@ -6,6 +6,7 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const multer = require("multer");
 
 // Routes
 // 1. Admin routes
@@ -39,6 +40,18 @@ app.use(
     credentials: true,
   })
 );
+
+// Multer middleware
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, "public", "images"));
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
 
 // Mount routes
 app.use("/admin/auth", adminAuthRoutes);
