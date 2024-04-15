@@ -1,7 +1,5 @@
 import React from "react";
 import logo from "../assets/ht_logo_m.png";
-import tr from "../assets/tr.png";
-import en from "../assets/en.png";
 import {
   Flex,
   Spacer,
@@ -10,37 +8,20 @@ import {
   Image,
   UnorderedList,
   ListItem,
+  Heading
 } from "@chakra-ui/react";
-import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 
-const Navbar = (props) => {
-  const langChangeHandler = (lan) => {
-    props.langSelector(lan);
-  };
+const Navbar = () => {
+
+  const logout = () => {
+    localStorage.removeItem("auth-token"); 
+    window.location.replace("/loginform")
+  }
 
   return (
     <>
-      <Flex bg="black" maxH="25px" align="center" justify="flex-end">
-        <Image src={tr} alt="TR" width="16px" height="12px" />
-        <Button
-          color="#FEFAE0"
-          _hover={{ color: "#B99470", bg: "none" }}
-          bg="none"
-          onClick={() => langChangeHandler("TR")}
-        >
-          TR
-        </Button>
-        <Image src={en} alt="EN" width="16px" height="12px" />
-        <Button
-          color="#FEFAE0"
-          _hover={{ color: "#B99470", bg: "none" }}
-          bg="none"
-          onClick={() => langChangeHandler("EN")}
-        >
-          EN
-        </Button>
-      </Flex>
+      <Flex bg="black" h="25px" align="center" justify="flex-end"></Flex>
       <Flex alignItems="center" p="1.5em" bg="#5F6F52" maxH="100px" gap={3}>
         <Spacer />
         <Center
@@ -53,6 +34,10 @@ const Navbar = (props) => {
           <Image boxSize="150px" src={logo} alt="Hayaltepe Logo" />
         </Center>
         <Spacer />
+        <Heading size="lg" fontWeight="500">HayalTepe Admin</Heading>
+        <Spacer />
+        <Spacer />
+        <Spacer />
         <Spacer />
         <UnorderedList style={{ display: "flex", gap: "3em" }} styleType="none">
           <ListItem
@@ -62,7 +47,7 @@ const Navbar = (props) => {
             as={Link}
             to="/"
           >
-            <FormattedMessage id="home" />
+            Ana Sayfa
           </ListItem>
           <ListItem
             _hover={{ color: "#A9B388" }}
@@ -71,7 +56,7 @@ const Navbar = (props) => {
             as={Link}
             to="/productmanagement"
           >
-            <FormattedMessage id="productmanagement" />
+            Ürün Yönetimi
           </ListItem>
           <ListItem
             _hover={{ color: "#A9B388" }}
@@ -80,10 +65,11 @@ const Navbar = (props) => {
             as={Link}
             to="/usermanagement"
           >
-            <FormattedMessage id="usermanagement" />
+            Kullanıcı Yönetimi
           </ListItem>
         </UnorderedList>
         <Spacer />
+        <Button onClick={logout}>Çıkış yap</Button>
       </Flex>
     </>
   );
