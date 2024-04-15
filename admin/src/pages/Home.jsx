@@ -47,12 +47,12 @@ const Home = () => {
   return (
     <TableContainer m="4.5rem">
       <Table size="lg" variant="striped" colorScheme="gray">
-        <TableCaption>Actions performed by the authorized users</TableCaption>
+        <TableCaption>Gerçekleştirdiğiniz Son İşlemler</TableCaption>
         <Thead>
           <Tr>
-            <Th>User</Th>
-            <Th>Date</Th>
-            <Th>Description</Th>
+            <Th>Kullanıcı</Th>
+            <Th>Tarih</Th>
+            <Th>Açıklama</Th>
           </Tr>
         </Thead>
         <Tbody>

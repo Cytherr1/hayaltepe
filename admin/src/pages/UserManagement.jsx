@@ -61,14 +61,14 @@ const UserManagement = () => {
         <FormControl>
           <TableContainer m="4.5rem">
             <Table size="lg" variant="striped" colorScheme="gray">
-              <TableCaption>All Users</TableCaption>
+              <TableCaption>Bütün Kullanıcılar</TableCaption>
               <Thead>
                 <Tr>
                   <Th>ID</Th>
-                  <Th>Name</Th>
-                  <Th>Surname</Th>
+                  <Th>İsim</Th>
+                  <Th>Soy isim</Th>
                   <Th>Mail</Th>
-                  <Th>Telephone Number</Th>
+                  <Th>Telefon Numarası</Th>
                 </Tr>
               </Thead>
               <Tbody>
@@ -120,13 +120,13 @@ const UserManagement = () => {
               <VStack gap="1em">
                 <FormControl>
                   <FormLabel fontWeight="600" fontSize="lg" htmlFor="name">
-                    Name
+                    İsim
                   </FormLabel>
                   <Field as={Input} id="name" name="name" />
                 </FormControl>
                 <FormControl>
                   <FormLabel fontWeight="600" fontSize="lg" htmlFor="surname">
-                    Surname
+                    Soy İsim
                   </FormLabel>
                   <Field as={Input} id="surname" name="surname" />
                 </FormControl>
@@ -138,18 +138,18 @@ const UserManagement = () => {
                 </FormControl>
                 <FormControl>
                   <FormLabel fontWeight="600" fontSize="lg" htmlFor="password">
-                    Password
+                    Şifre
                   </FormLabel>
                   <Field as={Input} id="password" name="password" />
                 </FormControl>
                 <FormControl>
                   <FormLabel fontWeight="600" fontSize="lg" htmlFor="tel">
-                    Telephone Number
+                    Telefon Numarası
                   </FormLabel>
                   <Field as={Input} id="tel" name="tel" />
                 </FormControl>
                 <Button w="100%" type="submit">
-                  Add User
+                  Kullanıcı Ekle
                 </Button>
               </VStack>
             </form>
@@ -198,13 +198,13 @@ const UserManagement = () => {
                 </FormControl>
                 <FormControl>
                   <FormLabel fontWeight="600" fontSize="lg" htmlFor="name">
-                    Name
+                    İsim
                   </FormLabel>
                   <Field as={Input} id="name" name="name" />
                 </FormControl>
                 <FormControl>
                   <FormLabel fontWeight="600" fontSize="lg" htmlFor="surname">
-                    Surname
+                    Soy İsim
                   </FormLabel>
                   <Field as={Input} id="surname" name="surname" />
                 </FormControl>
@@ -216,18 +216,18 @@ const UserManagement = () => {
                 </FormControl>
                 <FormControl>
                   <FormLabel fontWeight="600" fontSize="lg" htmlFor="password">
-                    Password
+                    Şifre
                   </FormLabel>
                   <Field as={Input} id="password" name="password" />
                 </FormControl>
                 <FormControl>
                   <FormLabel fontWeight="600" fontSize="lg" htmlFor="tel">
-                    Telephone Number
+                    Telefon Numarası
                   </FormLabel>
                   <Field as={Input} id="tel" name="tel" />
                 </FormControl>
                 <Button w="100%" type="submit">
-                  Update User
+                  Kullanıcı Güncelle
                 </Button>
               </VStack>
             </form>
@@ -265,7 +265,7 @@ const UserManagement = () => {
                   <Field as={Input} id="id" name="id" />
                 </FormControl>
                 <Button w="100%" type="submit">
-                  Delete User
+                  Kullanıcıyı Sil
                 </Button>
               </VStack>
             </form>

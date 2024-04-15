@@ -61,12 +61,12 @@ const ProductManagement = () => {
         <FormControl>
           <TableContainer m="4.5rem">
             <Table size="lg" variant="striped" colorScheme="gray">
-              <TableCaption>All products</TableCaption>
+              <TableCaption>Bütün Ürünler</TableCaption>
               <Thead>
                 <Tr>
-                  <Th>Id</Th>
-                  <Th>Name</Th>
-                  <Th>Image</Th>
+                  <Th>ID</Th>
+                  <Th>İsim</Th>
+                  <Th>Görsel</Th>
                   <Th>Link</Th>
                 </Tr>
               </Thead>
@@ -123,13 +123,13 @@ const ProductManagement = () => {
               <VStack gap="1em">
                 <FormControl>
                   <FormLabel fontWeight="600" fontSize="lg" htmlFor="name">
-                    Name
+                    İsim
                   </FormLabel>
                   <Field as={Input} id="name" name="name" />
                 </FormControl>
                 <FormControl>
                   <FormLabel fontWeight="600" fontSize="lg" htmlFor="image">
-                    Image
+                    Görsel
                   </FormLabel>
                   <Field as={Input} id="image" name="image" type="file"/>
                 </FormControl>
@@ -140,7 +140,7 @@ const ProductManagement = () => {
                   <Field as={Input} id="link" name="link" />
                 </FormControl>
                 <Button w="100%" type="submit">
-                  Add Product
+                  Ürün Ekle
                 </Button>
               </VStack>
             </form>
@@ -194,13 +194,13 @@ const ProductManagement = () => {
                 </FormControl>
                 <FormControl>
                   <FormLabel fontWeight="600" fontSize="lg" htmlFor="name">
-                    Name
+                    İsim
                   </FormLabel>
                   <Field as={Input} id="name" name="name" />
                 </FormControl>
                 <FormControl>
                   <FormLabel fontWeight="600" fontSize="lg" htmlFor="image">
-                    Image
+                    Görsel
                   </FormLabel>
                   <Field as={Input} id="image" name="image" type="file"/>
                 </FormControl>
@@ -211,7 +211,7 @@ const ProductManagement = () => {
                   <Field as={Input} id="link" name="link" />
                 </FormControl>
                 <Button w="100%" type="submit">
-                  Update Product
+                  Ürünü Güncelle
                 </Button>
               </VStack>
             </form>
@@ -264,7 +264,7 @@ const ProductManagement = () => {
                   <Field as={Input} id="id" name="id" />
                 </FormControl>
                 <Button w="100%" type="submit">
-                  Delete Product
+                  Ürünü Sil
                 </Button>
               </VStack>
             </form>
