@@ -28,27 +28,15 @@ const getProductsFiltered = async (req, res) => {
   try {
     connection = await getConnection();
 
-    const { name, price, stock } = req.body;
+    const { name } = req.body;
 
     let query = "SELECT * FROM PRODUCT WHERE 1=1 ";
 
-    const params = []; // Define an array to store parameters
+    const params = [];
 
     if (name) {
-      query += "AND PRODUCT_NAME LIKE ? ";
+      query += "AND NAME LIKE ? ";
       params.push("%" + name + "%");
-    }
-
-    if (stock === "true") {
-      query += "AND PRODUCT_STOCK > 0 ";
-    }
-
-    if (price === "low") {
-      query += "ORDER BY PRODUCT_PRICE DESC";
-    }
-
-    if (price === "high") {
-      query += "ORDER BY PRODUCT_PRICE ASC";
     }
 
     connection.query(query, params, (error, results) => {

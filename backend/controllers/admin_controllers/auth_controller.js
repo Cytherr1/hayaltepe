@@ -1,52 +1,42 @@
 const { getConnection, releaseConnection } = require("../../config/db_config");
-const bcrypt = require("bcrypt");
 
 const login = async (req, res) => {
   let connection;
-
   try {
     connection = await getConnection();
 
-    const { mail, password } = req.body;
+    const { email, password } = req.body;
 
     const query = "SELECT * FROM USER WHERE MAIL = ?";
 
-    connection.query(query, [mail], (error, results) => {
+    connection.query(query, [email], (error, results) => {
       if (error) {
-        res.status(500).send(error.message);
+        res.status(500).json({ error: error.message });
         return;
       }
 
       if (results.length === 0) {
-        res.status(404).send("User not found");
+        res.status(404).json({ error: "User not found" });
         return;
       }
 
       const user = results[0];
 
-      bcrypt.compare(password, user.PASSWORD, (err, result) => {
-        if (err) {
-          res.status(500).send(err.message);
-          return;
-        }
+      if (password !== user.PASSWORD) {
+        res.status(401).json({ error: "Invalid credentials" });
+        return;
+      }
 
-        if (result) {
-          res.status(200).send(user);
-        } else {
-          res.status(401).send("Invalid password");
-        }
-      });
+      res.status(200).json({ success: true, message: "User logged in" });
     });
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500).json({ error: error.message });
   } finally {
     if (connection) {
       releaseConnection(connection);
     }
   }
 };
-
-
 
 module.exports = {
   login,

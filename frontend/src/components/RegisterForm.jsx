@@ -22,6 +22,26 @@ import 'libphonenumber-js'
 
 const RegisterForm = () => {
 
+  const register = async (formData) => {
+    let responseData;
+    await fetch("http://localhost:3000/general/auth/register", {
+      method: "POST",
+      headers: {
+        Accept: "application/form-data",
+        'content-type': "application/json",
+      },
+      body: JSON.stringify(formData),
+    }).then((response) => response.json()).then((data) => responseData = data)
+
+    if (responseData.success) {
+      localStorage.setItem("auth-token", responseData.token);
+      window.location.replace("/");
+    }
+    else {
+      alert(responseData.errors)
+    }
+}
+
   const intl = useIntl()
   const lan = useContext(Language)
 
@@ -44,6 +64,7 @@ const RegisterForm = () => {
             policy: false
           }}
           onSubmit={(values, { resetForm }) => {
+            register(values)
             resetForm()
           }}
           validationSchema={Yup.object({

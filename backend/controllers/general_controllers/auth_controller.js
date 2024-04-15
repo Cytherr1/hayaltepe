@@ -6,11 +6,11 @@ const login = async (req, res) => {
   try {
     connection = await getConnection();
 
-    const { mail, password } = req.body;
+    const { email, password } = req.body;
 
     const query = "SELECT * FROM USER WHERE MAIL = ?";
 
-    connection.query(query, [mail], async (error, results) => {
+    connection.query(query, [email], (error, results) => {
       if (error) {
         res.status(500).send(error.message);
         return;
@@ -23,16 +23,15 @@ const login = async (req, res) => {
 
       const user = results[0];
 
-      try {
-        const compareResult = await bcrypt.compare(password, user.PASSWORD);
-        if (compareResult) {
-          res.status(200).send(user);
-        } else {
-          res.status(401).send("Invalid password");
-        }
-      } catch (compareError) {
-        res.status(500).send(compareError.message);
+      const isMatch = bcrypt.compare(password, user.PASSWORD);
+
+      if (!isMatch) {
+        res.status(401).send("Invalid credentials");
+        return;
       }
+
+      res.status(200).send("User logged in");
+
     });
   } catch (error) {
     res.status(500).send(error.message);
@@ -49,7 +48,7 @@ const register = async (req, res) => {
   try {
     connection = await getConnection();
 
-    const { name, surname, telephone_number, email, password } = req.body;
+    const { name, surname, tel, email, password } = req.body;
 
     const query =
       "INSERT INTO USER (NAME, SURNAME, TELEPHONE_NUMBER, MAIL, PASSWORD) VALUES (?, ?, ?, ?, ?)";
@@ -58,7 +57,7 @@ const register = async (req, res) => {
 
     connection.query(
       query,
-      [name, surname, telephone_number, email, hashedPassword],
+      [name, surname, tel, email, hashedPassword],
       (error, results) => {
         if (error) {
           res.status(500).send(error.message);
