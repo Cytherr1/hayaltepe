@@ -31,10 +31,9 @@ const addProduct = async (req, res) => {
   try {
     connection = await getConnection();
 
-    const { name, price, descr, stock, image, log_user } = req.body;
+    const { name, image, link, log_user } = req.body;
 
-    const query =
-      "INSERT INTO PRODUCT (PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_DESCR, PRODUCT_STOCK, PRODUCT_IMAGE) VALUES (?, ?, ?, ?, ?)";
+    const query = "INSERT INTO PRODUCT (NAME, IMAGE, LINK)  VALUES (?, ?, ?)";
 
     const log_query =
       "INSERT INTO LOG (LOG_USER, LOG_TIMESTAMP, LOG_DESCR) VALUES (?, ?, ?)";
@@ -45,39 +44,35 @@ const addProduct = async (req, res) => {
         return;
       }
 
-      connection.query(
-        query,
-        [name, price, descr, stock, image],
-        (error, results) => {
-          if (error) {
-            connection.rollback(() => {
-              res.status(500).send(error.message);
-            });
-          } else {
-            connection.query(
-              log_query,
-              [log_user, new Date(), "Product added successfully"],
-              (error, results) => {
-                if (error) {
-                  connection.rollback(() => {
-                    res.status(500).send(error.message);
-                  });
-                } else {
-                  connection.commit((commitError) => {
-                    if (commitError) {
-                      connection.rollback(() => {
-                        res.status(500).send(commitError.message);
-                      });
-                    } else {
-                      res.status(201).send("Product added successfully");
-                    }
-                  });
-                }
+      connection.query(query, [name, image, link], (error, results) => {
+        if (error) {
+          connection.rollback(() => {
+            res.status(500).send(error.message);
+          });
+        } else {
+          connection.query(
+            log_query,
+            [log_user, new Date(), "Product added successfully"],
+            (error, results) => {
+              if (error) {
+                connection.rollback(() => {
+                  res.status(500).send(error.message);
+                });
+              } else {
+                connection.commit((commitError) => {
+                  if (commitError) {
+                    connection.rollback(() => {
+                      res.status(500).send(commitError.message);
+                    });
+                  } else {
+                    res.status(201).send("Product added successfully");
+                  }
+                });
               }
-            );
-          }
+            }
+          );
         }
-      );
+      });
     });
   } catch (error) {
     res.status(500).send(error.message);
@@ -152,7 +147,7 @@ const updateProduct = async (req, res) => {
   try {
     connection = await getConnection();
 
-    const { name, price, descr, stock, image, log_user } = req.body;
+    const { name, image, link, log_user } = req.body;
 
     let query = "UPDATE PRODUCT SET ";
 
@@ -168,28 +163,18 @@ const updateProduct = async (req, res) => {
       }
 
       if (name) {
-        query += "PRODUCT_NAME = ?, ";
+        query += "NAME = ?, ";
         params.push(name);
       }
 
-      if (price) {
-        query += "PRODUCT_PRICE = ?, ";
-        params.push(price);
-      }
-
-      if (descr) {
-        query += "PRODUCT_DESCR = ?, ";
-        params.push(descr);
-      }
-
-      if (stock) {
-        query += "PRODUCT_STOCK = ?, ";
-        params.push(stock);
-      }
-
       if (image) {
-        query += "PRODUCT_IMAGE = ?, ";
+        query += "IMAGE = ?, ";
         params.push(image);
+      }
+
+      if (link) {
+        query += "LINK = ?, ";
+        params.push(link);
       }
 
       query = query.slice(0, -2);
@@ -241,28 +226,28 @@ const getProductsFiltered = async (req, res) => {
   try {
     connection = await getConnection();
 
-    const { name, price, stock } = req.body;
+    const { name, image, link } = req.body;
 
     let query = "SELECT * FROM PRODUCT WHERE 1=1 ";
 
     const params = [];
 
     if (name) {
-      query += "AND PRODUCT_NAME LIKE ? ";
+      query += "AND NAME LIKE ? ";
 
       params.push("%" + name + "%");
     }
 
-    if (price) {
-      query += "AND PRODUCT_PRICE = ? ";
+    if (image) {
+      query += "AND IMAGE = ? ";
 
-      params.push(price);
+      params.push(image);
     }
 
-    if (stock) {
-      query += "AND PRODUCT_STOCK = ? ";
+    if (link) {
+      query += "AND LINK = ? ";
 
-      params.push(stock);
+      params.push(link);
     }
 
     connection.query(query, params, (error, results) => {
