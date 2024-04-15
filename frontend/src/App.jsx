@@ -11,7 +11,6 @@ import Footer from './components/Footer';
 import Products from './pages/Products';
 import Contact from './pages/Contact';
 import Corporate from './pages/Corporate';
-import ProductPage from './pages/ProductPage';
 import NavbarMobile from './components/NavbarMobile';
 import FooterMobile from './components/FooterMobile';
 
@@ -40,9 +39,6 @@ function App() {
               <Route path='privacy' element={<Corporate index={index} tabSetter={setIndex}/>}/>
               <Route path='contract' element={<Corporate index={index} tabSetter={setIndex}/>}/>
               <Route path='refund' element={<Corporate index={index} tabSetter={setIndex}/>}/>
-            </Route>
-            <Route path='/product' element={<ProductPage/>}>
-              <Route path=':productId' element={<ProductPage/>}/>
             </Route>
           </Routes>
           {isMobile ? <FooterMobile tabSetter={setIndex}/> :<Footer tabSetter={setIndex}/>}

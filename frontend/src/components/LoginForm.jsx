@@ -15,23 +15,23 @@ import {
 const LoginForm = () => {
 
     const login = async (formData) => {
-        let responseData;
-        await fetch("http://localhost:3000/general/auth/login", {
-          method: "POST",
-          headers: {
-            Accept: "application/form-data",
-            'content-type': "application/json",
-          },
-          body: JSON.stringify(formData),
-        }).then((response) => response.json()).then((data) => responseData = data)
-    
-        if (responseData.success) {
-          localStorage.setItem("auth-token", responseData.token);
-          window.location.replace("/");
-        }
-        else {
-          alert(responseData.errors)
-        }
+      let responseData;
+      await fetch("http://localhost:3000/general/auth/login", {
+        method: "POST",
+        headers: {
+          Accept: "application/form-data",
+          'content-type': "application/json",
+        },
+        body: JSON.stringify(formData),
+      }).then((response) => response.json()).then((data) => responseData = data)
+  
+      if (responseData.success) {
+        localStorage.setItem("auth-token", responseData.token);
+        window.location.replace("/");
+      }
+      else {
+        alert(responseData.errors)
+      }
     }
 
   return (

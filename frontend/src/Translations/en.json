@@ -42,5 +42,7 @@
     "passshort": "Password should be between 8-12 characters.",
     "invalidtel": "Phone number is not valid.",
     "resetpass": "Reset your password",
-    "newpass": "New password"
+    "newpass": "New password",
+    "buy": "Buy now",
+    "productserror": "Error connection."
 }

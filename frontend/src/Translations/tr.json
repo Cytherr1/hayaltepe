@@ -42,5 +42,7 @@
     "passshort": "Şifreniz 8-12 karakter uzunluğunda olmalıdır.",
     "invalidtel": "Telefon numarası geçersiz.",
     "resetpass": "Şifrenizi sıfırlayın",
-    "newpass": "Yeni şifre"
+    "newpass": "Yeni şifre",
+    "buy": "Satın al",
+    "productserror": "Bağlantı kurulamadı."
 }
