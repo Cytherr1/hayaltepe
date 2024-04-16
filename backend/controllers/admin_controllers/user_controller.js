@@ -1,5 +1,6 @@
 const { getConnection, releaseConnection } = require("../../config/db_config");
-const bcrypt = require("bcrypt");
+const { connect } = require("../../routes/admin/user_routes");
+const { addLog } = require("../log_controllers/log_controller");
 
 const getAllUser = async (req, res) => {
   let connection;
@@ -13,7 +14,7 @@ const getAllUser = async (req, res) => {
       if (error) {
         res.status(500).json({ error: error.message });
       } else {
-        res.status(200).json({ success: true, users: results });
+        res.status(200).json({ success: true, products: results });
       }
     });
   } catch (error) {
@@ -31,52 +32,42 @@ const addUser = async (req, res) => {
   try {
     connection = await getConnection();
 
-    const { fname, lname, tel, email, password } = req.body;
+    const { name, surname, mail, password, tel } = req.body;
+    const addQuery = "INSERT INTO USER (NAME, SURNAME, MAIL, PASSWORD, TEL) VALUES (?,?,?,?,?)";
+    const logQuery =
+      "INSERT INTO LOG (LOG_USER, LOG_TIMESTAMP, LOG_DESCR) VALUES (?, ?, ?)";
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    await connection.beginTransaction();
 
-    const query =
-      "INSERT INTO USER (FNAME, SURNAME, TELEPHONE_NUMBER, MAIL, PASSWORD) VALUES (?, ?, ?, ?, ?)";
-
-    connection.query(
-      query,
-      [fname, lname, tel, email, hashedPassword],
-      (error, results) => {
-        if (error) {
-          res.status(500).send(error.message);
-        } else {
-          res.status(201).send("User added successfully");
-        }
-      }
-    );
-  } catch (error) {
-    res.status(500).send(error.message);
-  } finally {
-    if (connection) {
-      releaseConnection(connection);
-    }
-  }
-};
-
-const deleteUser = async (req, res) => {
-  let connection;
-
-  try {
-    connection = await getConnection();
-
-    const { id } = req.params;
-
-    const query = "DELETE FROM USER WHERE ID = ?";
-
-    connection.query(query, [id], (error, results) => {
+    connection.query(addQuery, [name, surname, mail, password, tel], async (error, addResult) => {
       if (error) {
-        res.status(500).send(error.message);
-      } else {
-        res.status(200).send("User deleted successfully");
+        await connection.rollback();
+        res.status(500).json({ error: error.message });
+        return;
       }
+
+      connection.query(
+        logQuery,
+        ["log_user", new Date(), "Product added successfully"],
+        async (error, logResult) => {
+          if (error) {
+            await connection.rollback();
+            res.status(500).json({ error: error.message });
+            return;
+          }
+          await connection.commit();
+          res
+            .status(200)
+            .json({ success: true, message: "Product added successfully" });
+        }
+      );
     });
   } catch (error) {
-    res.status(500).send(error.message);
+    if (connection) {
+      await connection.rollback();
+      releaseConnection(connection);
+    }
+    res.status(500).json({ error: error.message });
   } finally {
     if (connection) {
       releaseConnection(connection);
@@ -90,44 +81,114 @@ const updateUser = async (req, res) => {
   try {
     connection = await getConnection();
 
-    const { fname, lname, email, tel } = req.body;
+    const { id, name, surname, mail, password, tel } = req.body;
+    const updateQuery = " UPDATE USER ";
 
-    let query = "UPDATE USER SET ";
-
-    const params = [];
-    if (fname) {
-      query += "FNAME = ?, ";
-      params.push(fname);
+    if (name) {
+      updateQuery += " SET NAME = ? ";
     }
 
-    if (lname) {
-      query += "SURNAME = ?, ";
-      params.push(lname);
+    if (surname) {
+      updateQuery += " SET SURNAME = ? ";
     }
 
-    if (email) {
-      query += "MAIL = ?, ";
-      params.push(email);
+    if (mail) {
+      updateQuery += " SET MAIL = ? ";
+    }
+
+    if (password) {
+      updateQuery += " SET PASSWORD = ? ";
     }
 
     if (tel) {
-      query += "TELEPHONE_NUMBER = ?, ";
-      params.push(tel);
+      updateQuery += " SET TEL = ? ";
     }
 
-    query = query.slice(0, -2);
-    query += " WHERE ID = ?";
-    params.push(req.params.id);
+    updateQuery += " WHERE ID = ?";
 
-    connection.query(query, params, (error, results) => {
+    const logQuery =
+      "INSERT INTO LOG (LOG_USER, LOG_TIMESTAMP, LOG_DESCR) VALUES (?, ?, ?)";
+
+    await connection.beginTransaction();
+
+    connection.query(updateQuery, [id, name, surname, mail, password, tel], async (error, updateResult) => {
       if (error) {
-        res.status(500).send(error.message);
-      } else {
-        res.status(200).send("User updated successfully");
+        await connection.rollback();
+        res.status(500).json({ error: error.message });
+        return;
       }
+
+      connection.query(
+        logQuery,
+        ["log_user", new Date(), "User updated successfully"],
+        async (error, logResult) => {
+          if (error) {
+            await connection.rollback();
+            res.status(500).json({ error: error.message });
+            return;
+          }
+          await connection.commit();
+          res
+            .status(200)
+            .json({ success: true, message: "User updated successfully" });
+        }
+      );
     });
   } catch (error) {
-    res.status(500).send(error.message);
+    if (connection) {
+      await connection.rollback();
+      releaseConnection(connection);
+    }
+    res.status(500).json({ error: error.message });
+  } finally {
+    if (connection) {
+      releaseConnection(connection);
+    }
+  }
+};
+
+const deleteUser = async (req, res) => {
+  let connection;
+
+  try {
+    connection = await getConnection();
+
+    const { id } = req.body;
+    const deleteQuery = "DELETE FROM USER WHERE ID = ?";
+    const logQuery =
+      "INSERT INTO LOG (LOG_USER, LOG_TIMESTAMP, LOG_DESCR) VALUES (?, ?, ?)";
+
+    await connection.beginTransaction();
+
+    connection.query(deleteQuery, [id], async (error, deleteResult) => {
+      if (error) {
+        await connection.rollback();
+        res.status(500).json({ error: error.message });
+        return;
+      }
+
+      connection.query(
+        logQuery,
+        ["log_user", new Date(), "User removed successfully"],
+        async (error, logResult) => {
+          if (error) {
+            await connection.rollback();
+            res.status(500).json({ error: error.message });
+            return;
+          }
+          await connection.commit();
+          res
+            .status(200)
+            .json({ success: true, message: "User removed successfully" });
+        }
+      );
+    });
+  } catch (error) {
+    if (connection) {
+      await connection.rollback();
+      releaseConnection(connection);
+    }
+    res.status(500).json({ error: error.message });
   } finally {
     if (connection) {
       releaseConnection(connection);
@@ -136,8 +197,8 @@ const updateUser = async (req, res) => {
 };
 
 module.exports = {
+  getAllUser,
   addUser,
   deleteUser,
   updateUser,
-  getAllUser,
 };

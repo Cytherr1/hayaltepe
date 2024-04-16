@@ -22,322 +22,317 @@ const UserManagement = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await fetch(
-          "http://localhost:3000/admin/user/getAllUser",
-          {
-            method: "GET",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const responseData = await response.json();
-
-        if (responseData.success) {
-          setUsers(responseData.users);
-        } else {
-          alert(responseData.errors);
-        }
-      } catch (error) {
-        console.error("Error:", error);
-        alert("An error has occurred.");
-      }
-    };
-
-    const addUser = async (values) => {
-      try {
-        const response = await fetch(
-          "http://localhost:3000/admin/user/add",
-          {
-            method: "POST",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(values),
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const responseData = await response.json();
-
-        if (!responseData.success) {
-          alert(responseData.errors);
-        }
-
-        fetchUsers();
-      } catch (error) {
-        console.error("Error:", error);
-        alert("An error has occurred.");
-      }
-    };
-
-    const updateUser = async (values) => {
-      try {
-        const response = await fetch(
-          "http://localhost:3000/admin/user/update",
-          {
-            method: "POST",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(values),
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const responseData = await response.json();
-
-        if (!responseData.success) {
-          alert(responseData.errors);
-        }
-
-        fetchUsers();
-      } catch (error) {
-        console.error("Error:", error);
-        alert("An error has occurred.");
-      }
-    };
-
-    const deleteUser = async (values) => {
-      try {
-        const response = await fetch(
-          "http://localhost:3000/admin/user/delete",
-          {
-            method: "POST",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(values),
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const responseData = await response.json();
-
-        if (!responseData.success) {
-          alert(responseData.errors);
-        }
-
-        fetchUsers();
-      } catch (error) {
-        console.error("Error:", error);
-        alert("An error has occurred.");
-      } 
-    };
-
     fetchUsers();
   }, []);
+
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:3000/admin/user/getAllUser",
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const responseData = await response.json();
+
+      if (responseData.success) {
+        setUsers(responseData.products);
+      } else {
+        alert(responseData.errors);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error has occurred.");
+    }
+  };
+
+  const addUser = async (formData) => {
+    try {
+      const response = await fetch("http://localhost:3000/admin/user/add", {
+        method: "POST",
+        headers: {
+          Accept: "application/form-data",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const responseData = await response.json();
+
+      if (responseData.success) {
+        localStorage.setItem("auth-token", responseData.token);
+        window.location.replace("/");
+      } else {
+        alert(responseData.errors);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error has occured.");
+    }
+  };
+
+  const updateUser = async (formData) => {
+    try {
+      const response = await fetch("http://localhost:3000/admin/user/update", {
+        method: "POST",
+        headers: {
+          Accept: "application/form-data",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const responseData = await response.json();
+
+      if (responseData.success) {
+        localStorage.setItem("auth-token", responseData.token);
+        window.location.replace("/");
+      } else {
+        alert(responseData.errors);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error has occured.");
+    }
+  };
+
+  const deleteUser = async (formData) => {
+    try {
+      const response = await fetch("http://localhost:3000/admin/user/delete", {
+        method: "POST",
+        headers: {
+          Accept: "application/form-data",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const responseData = await response.json();
+
+      if (responseData.success) {
+        localStorage.setItem("auth-token", responseData.token);
+        window.location.replace("/");
+      } else {
+        alert(responseData.errors);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error has occured.");
+    }
+  };
 
   return (
     <Box>
       <Box display="flex">
-      <Box
-        minW="sm"
-        maxW="md"
-        borderWidth="2px"
-        borderRadius="lg"
-        overflow="hidden"
-        bgColor="white"
-        p="1em"
-      >
-        <Formik
-          initialValues={{
-            name: "",
-            surname: "",
-            mail: "",
-            password: "",
-            telephone_number: "",
-          }}
-          onSubmit={(values, { resetForm }) => {
-            addUser(values);
-            resetForm();
-          }}
-          validationSchema={Yup.object({
-            name: Yup.string().required(),
-            surname: Yup.string().required(),
-            mail: Yup.string().email().required(),
-            password: Yup.string().required(),
-            telephone_number: Yup.string().required(),
-          })}
+        <Box
+          minW="sm"
+          maxW="md"
+          borderWidth="2px"
+          borderRadius="lg"
+          overflow="hidden"
+          bgColor="white"
+          p="1em"
         >
-          {({ handleSubmit, errors, touched }) => (
-            <form onSubmit={handleSubmit}>
-              <VStack gap="1em">
-                <FormControl>
-                  <FormLabel fontWeight="600" fontSize="lg" htmlFor="name">
-                    İsim
-                  </FormLabel>
-                  <Field as={Input} id="name" name="name" />
-                </FormControl>
-                <FormControl>
-                  <FormLabel fontWeight="600" fontSize="lg" htmlFor="surname">
-                    Soy İsim
-                  </FormLabel>
-                  <Field as={Input} id="surname" name="surname" />
-                </FormControl>
-                <FormControl>
-                  <FormLabel fontWeight="600" fontSize="lg" htmlFor="mail">
-                    Mail
-                  </FormLabel>
-                  <Field as={Input} id="mail" name="mail" />
-                </FormControl>
-                <FormControl>
-                  <FormLabel fontWeight="600" fontSize="lg" htmlFor="password">
-                    Şifre
-                  </FormLabel>
-                  <Field as={Input} id="password" name="password" />
-                </FormControl>
-                <FormControl>
-                  <FormLabel fontWeight="600" fontSize="lg" htmlFor="tel">
-                    Telefon Numarası
-                  </FormLabel>
-                  <Field as={Input} id="tel" name="tel" />
-                </FormControl>
-                <Button w="100%" type="submit">
-                  Kullanıcı Ekle
-                </Button>
-              </VStack>
-            </form>
-          )}
-        </Formik>
-      </Box>
-      <Box
-        minW="sm"
-        maxW="md"
-        borderWidth="2px"
-        borderRadius="lg"
-        overflow="hidden"
-        bgColor="white"
-        p="1em"
-      >
-        <Formik
-          initialValues={{
-            id: "",
-            name: "",
-            surname: "",
-            mail: "",
-            password: "",
-            telephone_number: "",
-          }}
-          onSubmit={(values, { resetForm }) => {
-            updateUser(values);
-            resetForm();
-          }}
-          validationSchema={Yup.object({
-            id: Yup.number().required(),
-            name: Yup.string().required(),
-            surname: Yup.string().required(),
-            mail: Yup.string().email().required(),
-            password: Yup.string().required(),
-            telephone_number: Yup.string().required(),
-          })}
+          <Formik
+            initialValues={{
+              name: "",
+              surname: "",
+              mail: "",
+              password: "",
+              tel: "",
+            }}
+            onSubmit={(values, { resetForm }) => {
+              addUser(values);
+              resetForm();
+            }}
+            validationSchema={Yup.object({
+              name: Yup.string().required(),
+              surname: Yup.string().required(),
+              mail: Yup.string().email().required(),
+              password: Yup.string().required(),
+              tel: Yup.string().required(),
+            })}
+          >
+            {({ handleSubmit, errors, touched }) => (
+              <form onSubmit={handleSubmit}>
+                <VStack gap="1em">
+                  <FormControl isInvalid={touched.name && errors.name}>
+                    <FormLabel fontWeight="600" fontSize="lg" htmlFor="name">
+                      İsim
+                    </FormLabel>
+                    <Field as={Input} id="name" name="name" />
+                  </FormControl>
+                  <FormControl isInvalid={touched.surname && errors.surname}>
+                    <FormLabel fontWeight="600" fontSize="lg" htmlFor="surname">
+                      Soy İsim
+                    </FormLabel>
+                    <Field as={Input} id="surname" name="surname" />
+                  </FormControl>
+                  <FormControl isInvalid={touched.mail && errors.mail}>
+                    <FormLabel fontWeight="600" fontSize="lg" htmlFor="mail">
+                      Mail
+                    </FormLabel>
+                    <Field as={Input} id="mail" name="mail" />
+                  </FormControl>
+                  <FormControl isInvalid={touched.password && errors.password}>
+                    <FormLabel fontWeight="600" fontSize="lg" htmlFor="name">
+                      Şifre
+                    </FormLabel>
+                    <Field as={Input} id="password" name="password" />
+                  </FormControl>
+                  <FormControl isInvalid={touched.tel && errors.tel}>
+                    <FormLabel fontWeight="600" fontSize="lg" htmlFor="name">
+                      Telefon Numarası
+                    </FormLabel>
+                    <Field as={Input} id="tel" name="tel" />
+                  </FormControl>
+                  <Button w="100%" type="submit">
+                    Kullanıcı Ekle
+                  </Button>
+                </VStack>
+              </form>
+            )}
+          </Formik>
+        </Box>
+        <Box
+          minW="sm"
+          maxW="md"
+          borderWidth="2px"
+          borderRadius="lg"
+          overflow="hidden"
+          bgColor="white"
+          p="1em"
         >
-          {({ handleSubmit, errors, touched }) => (
-            <form onSubmit={handleSubmit}>
-              <VStack gap="1em">
-              <FormControl>
-                  <FormLabel fontWeight="600" fontSize="lg" htmlFor="id">
-                    ID
-                  </FormLabel>
-                  <Field as={Input} id="id" name="id" />
-                </FormControl>
-                <FormControl>
-                  <FormLabel fontWeight="600" fontSize="lg" htmlFor="name">
-                    İsim
-                  </FormLabel>
-                  <Field as={Input} id="name" name="name" />
-                </FormControl>
-                <FormControl>
-                  <FormLabel fontWeight="600" fontSize="lg" htmlFor="surname">
-                    Soy İsim
-                  </FormLabel>
-                  <Field as={Input} id="surname" name="surname" />
-                </FormControl>
-                <FormControl>
-                  <FormLabel fontWeight="600" fontSize="lg" htmlFor="mail">
-                    Mail
-                  </FormLabel>
-                  <Field as={Input} id="mail" name="mail" />
-                </FormControl>
-                <FormControl>
-                  <FormLabel fontWeight="600" fontSize="lg" htmlFor="password">
-                    Şifre
-                  </FormLabel>
-                  <Field as={Input} id="password" name="password" />
-                </FormControl>
-                <FormControl>
-                  <FormLabel fontWeight="600" fontSize="lg" htmlFor="tel">
-                    Telefon Numarası
-                  </FormLabel>
-                  <Field as={Input} id="tel" name="tel" />
-                </FormControl>
-                <Button w="100%" type="submit">
-                  Kullanıcı Güncelle
-                </Button>
-              </VStack>
-            </form>
-          )}
-        </Formik>
-      </Box>
-      <Box
-        minW="sm"
-        maxW="md"
-        borderWidth="2px"
-        borderRadius="lg"
-        overflow="hidden"
-        bgColor="white"
-        p="1em"
-      >
-        <Formik
-          initialValues={{
-            id: "",
-          }}
-          onSubmit={(values, { resetForm }) => {
-            deleteUser(values);
-            resetForm();
-          }}
-          validationSchema={Yup.object({
-            id: Yup.number().required(),
-          })}
+          <Formik
+            initialValues={{
+              id: "",
+              name: "",
+              surname: "",
+              mail: "",
+              password: "",
+              tel: "",
+            }}
+            onSubmit={(values, { resetForm }) => {
+              updateUser(values);
+              resetForm();
+            }}
+            validationSchema={Yup.object({
+              id: Yup.number().required(),
+              name: Yup.string().required(),
+              surname: Yup.string().required(),
+              mail: Yup.string().email().required(),
+              password: Yup.string().required(),
+              tel: Yup.string().required(),
+            })}
+          >
+            {({ handleSubmit, errors, touched }) => (
+              <form onSubmit={handleSubmit}>
+                <VStack gap="1em">
+                  <FormControl isInvalid={touched.id && errors.id}>
+                    <FormLabel fontWeight="600" fontSize="lg" htmlFor="id">
+                      ID
+                    </FormLabel>
+                    <Field as={Input} id="id" name="id" />
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel fontWeight="600" fontSize="lg" htmlFor="name">
+                      İsim
+                    </FormLabel>
+                    <Field as={Input} id="name" name="name" />
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel fontWeight="600" fontSize="lg" htmlFor="surname">
+                      Soy İsim
+                    </FormLabel>
+                    <Field as={Input} id="surname" name="surname" />
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel fontWeight="600" fontSize="lg" htmlFor="mail">
+                      Mail
+                    </FormLabel>
+                    <Field as={Input} id="mail" name="mail" />
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel fontWeight="600" fontSize="lg" htmlFor="name">
+                      Şifre
+                    </FormLabel>
+                    <Field as={Input} id="password" name="password" />
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel fontWeight="600" fontSize="lg" htmlFor="name">
+                      Telefon Numarası
+                    </FormLabel>
+                    <Field as={Input} id="tel" name="tel" />
+                  </FormControl>
+                  <Button w="100%" type="submit">
+                    Kullanıcıyı Güncelle
+                  </Button>
+                </VStack>
+              </form>
+            )}
+          </Formik>
+        </Box>
+        <Box
+          minW="sm"
+          maxW="md"
+          borderWidth="2px"
+          borderRadius="lg"
+          overflow="hidden"
+          bgColor="white"
+          p="1em"
         >
-          {({ handleSubmit, errors, touched }) => (
-            <form onSubmit={handleSubmit}>
-              <VStack gap="1em">
-              <FormControl>
-                  <FormLabel fontWeight="600" fontSize="lg" htmlFor="id">
-                    ID
-                  </FormLabel>
-                  <Field as={Input} id="id" name="id" />
-                </FormControl>
-                <Button w="100%" type="submit">
-                  Kullanıcıyı Sil
-                </Button>
-              </VStack>
-            </form>
-          )}
-        </Formik>
+          <Formik
+            initialValues={{
+              id: "",
+            }}
+            onSubmit={(values, { resetForm }) => {
+              deleteUser(values);
+              resetForm();
+            }}
+            validationSchema={Yup.object({
+              id: Yup.number().required(),
+            })}
+          >
+            {({ handleSubmit, errors, touched }) => (
+              <form onSubmit={handleSubmit}>
+                <VStack gap="1em">
+                  <FormControl isInvalid={touched.id && errors.id}>
+                    <FormLabel fontWeight="600" fontSize="lg" htmlFor="id">
+                      ID
+                    </FormLabel>
+                    <Field as={Input} id="id" name="id" />
+                  </FormControl>
+                  <Button w="100%" type="submit">
+                    Kullanıcıyı Sil
+                  </Button>
+                </VStack>
+              </form>
+            )}
+          </Formik>
+        </Box>
       </Box>
-      </Box>
+
       <Box>
         <FormControl>
           <TableContainer>
@@ -347,7 +342,7 @@ const UserManagement = () => {
                 <Tr>
                   <Th>ID</Th>
                   <Th>İsim</Th>
-                  <Th>Soy isim</Th>
+                  <Th>Soy İsim</Th>
                   <Th>Mail</Th>
                   <Th>Telefon Numarası</Th>
                 </Tr>

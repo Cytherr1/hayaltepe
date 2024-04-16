@@ -55,20 +55,16 @@ const ProductManagement = () => {
     }
   };
 
-  const addProduct = async (product) => {
+  const addProduct = async (formData) => {
     try {
-      const formData = new FormData();
-      formData.append("name", product.name);
-      formData.append("image", product.image);
-      formData.append("link", product.link);
-
-      const response = await fetch(
-        "http://localhost:3000/admin/product/add",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+      const response = await fetch("http://localhost:3000/admin/product/add", {
+        method: "POST",
+        headers: {
+          Accept: "application/form-data",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -77,29 +73,28 @@ const ProductManagement = () => {
       const responseData = await response.json();
 
       if (responseData.success) {
-        fetchProducts();
+        localStorage.setItem("auth-token", responseData.token);
+        window.location.replace("/");
       } else {
         alert(responseData.errors);
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("An error has occurred.");
+      alert("An error has occured.");
     }
   };
 
-  const updateProduct = async (product) => {
+  const updateProduct = async (formData) => {
     try {
-      const formData = new FormData();
-      formData.append("id", product.id);
-      formData.append("name", product.name);
-      formData.append("image", product.image);
-      formData.append("link", product.link);
-
       const response = await fetch(
         "http://localhost:3000/admin/product/update",
         {
           method: "POST",
-          body: formData,
+          headers: {
+            Accept: "application/form-data",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
         }
       );
 
@@ -110,26 +105,28 @@ const ProductManagement = () => {
       const responseData = await response.json();
 
       if (responseData.success) {
-        fetchProducts();
+        localStorage.setItem("auth-token", responseData.token);
+        window.location.replace("/");
       } else {
         alert(responseData.errors);
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("An error has occurred.");
+      alert("An error has occured.");
     }
   };
 
-  const deleteProduct = async (product) => {
+  const deleteProduct = async (formData) => {
     try {
-      const formData = new FormData();
-      formData.append("id", product.id);
-
       const response = await fetch(
         "http://localhost:3000/admin/product/delete",
         {
           method: "POST",
-          body: formData,
+          headers: {
+            Accept: "application/form-data",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
         }
       );
 
@@ -140,13 +137,14 @@ const ProductManagement = () => {
       const responseData = await response.json();
 
       if (responseData.success) {
-        fetchProducts();
+        localStorage.setItem("auth-token", responseData.token);
+        window.location.replace("/");
       } else {
         alert(responseData.errors);
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("An error has occurred.");
+      alert("An error has occured.");
     }
   };
 
@@ -190,19 +188,19 @@ const ProductManagement = () => {
             {({ handleSubmit, errors, touched }) => (
               <form onSubmit={handleSubmit}>
                 <VStack gap="1em">
-                  <FormControl>
+                  <FormControl isInvalid={touched.name && errors.name}>
                     <FormLabel fontWeight="600" fontSize="lg" htmlFor="name">
                       İsim
                     </FormLabel>
                     <Field as={Input} id="name" name="name" />
                   </FormControl>
-                  <FormControl>
+                  <FormControl isInvalid={touched.image && errors.image}>
                     <FormLabel fontWeight="600" fontSize="lg" htmlFor="image">
                       Görsel
                     </FormLabel>
                     <Field as={Input} id="image" name="image" type="file" />
                   </FormControl>
-                  <FormControl>
+                  <FormControl isInvalid={touched.link && errors.link}>
                     <FormLabel fontWeight="600" fontSize="lg" htmlFor="link">
                       Link
                     </FormLabel>
@@ -261,19 +259,19 @@ const ProductManagement = () => {
                     </FormLabel>
                     <Field as={Input} id="id" name="id" />
                   </FormControl>
-                  <FormControl isInvalid={touched.name && errors.id}>
+                  <FormControl>
                     <FormLabel fontWeight="600" fontSize="lg" htmlFor="name">
                       İsim
                     </FormLabel>
                     <Field as={Input} id="name" name="name" />
                   </FormControl>
-                  <FormControl isInvalid={touched.image && errors.id}>
+                  <FormControl>
                     <FormLabel fontWeight="600" fontSize="lg" htmlFor="image">
                       Görsel
                     </FormLabel>
                     <Field as={Input} id="image" name="image" type="file" />
                   </FormControl>
-                  <FormControl isInvalid={touched.link && errors.link}>
+                  <FormControl>
                     <FormLabel fontWeight="600" fontSize="lg" htmlFor="link">
                       Link
                     </FormLabel>
@@ -311,7 +309,7 @@ const ProductManagement = () => {
             {({ handleSubmit, errors, touched }) => (
               <form onSubmit={handleSubmit}>
                 <VStack gap="1em">
-                  <FormControl>
+                  <FormControl isInvalid={touched.id && errors.id}>
                     <FormLabel fontWeight="600" fontSize="lg" htmlFor="id">
                       ID
                     </FormLabel>
