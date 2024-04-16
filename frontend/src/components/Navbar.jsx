@@ -19,7 +19,7 @@ import { Link } from 'react-router-dom'
 const Navbar = (props) => {
 
   const langChangeHandler = (lan) => {
-    props.langSelector(lan)
+    props.langSelector(lan);
   }
 
   return (

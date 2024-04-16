@@ -50,6 +50,7 @@ const RegisterForm = () => {
       minW="sm"
       borderRadius="lg"
       borderWidth="2px"
+      bgColor="g.500"
       p="1em"
       maxW="lg"
     >
