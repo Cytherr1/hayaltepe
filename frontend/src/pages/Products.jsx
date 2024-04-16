@@ -18,7 +18,7 @@ const Products = () => {
   // get products
   useEffect(() => {
     setLoading(true);
-    fetch("http://localhost:3000/getAllProducts")
+    fetch("http://localhost:3000/general/product/all")
       .then((response) => response.json())
       .then((data) => {
         setProducts(data);
@@ -67,9 +67,9 @@ const Products = () => {
           return (
             <ProductCard
               key={product.ID}
-              image={product.PRODUCT_IMAGE}
-              name={product.PRODUCT_NAME}
-              url={product.PRODUCT_URL}
+              image={product.IMAGE}
+              name={product.NAME}
+              url={product.LINK}
             />
           );
         })}

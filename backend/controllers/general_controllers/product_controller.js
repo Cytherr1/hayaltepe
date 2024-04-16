@@ -2,6 +2,7 @@ const { getConnection, releaseConnection } = require("../../config/db_config");
 
 const getAllProduct = async (req, res) => {
   let connection;
+
   try {
     connection = await getConnection();
 
@@ -9,45 +10,13 @@ const getAllProduct = async (req, res) => {
 
     connection.query(query, (error, results) => {
       if (error) {
-        res.status(500).send(error.message);
+        res.status(500).json({ error: error.message });
       } else {
-        res.status(200).send(results);
+        res.status(200).json({ success: true, products: results });
       }
     });
   } catch (error) {
-    res.status(500).send(error.message);
-  } finally {
-    if (connection) {
-      releaseConnection(connection);
-    }
-  }
-};
-
-const getProductsFiltered = async (req, res) => {
-  let connection;
-  try {
-    connection = await getConnection();
-
-    const { name } = req.body;
-
-    let query = "SELECT * FROM PRODUCT WHERE 1=1 ";
-
-    const params = [];
-
-    if (name) {
-      query += "AND NAME LIKE ? ";
-      params.push("%" + name + "%");
-    }
-
-    connection.query(query, params, (error, results) => {
-      if (error) {
-        res.status(500).send(error.message);
-      } else {
-        res.status(200).send(results);
-      }
-    });
-  } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500).json({ error: error.message });
   } finally {
     if (connection) {
       releaseConnection(connection);
@@ -57,5 +26,4 @@ const getProductsFiltered = async (req, res) => {
 
 module.exports = {
   getAllProduct,
-  getProductsFiltered,
 };
