@@ -9,7 +9,7 @@ import {
   FormErrorMessage,
   Input,
   Box,
-  VStack,
+  VStack
 } from "@chakra-ui/react"
 
 const LoginForm = () => {
@@ -36,54 +36,55 @@ const LoginForm = () => {
 
   return (
     <Box 
-        minW="sm"
-        maxW="md"
-        borderWidth="2px" 
-        borderRadius="lg" 
-        overflow="hidden" 
-        p="1em"
-        >
-        <Formik
-          initialValues={{
-            email: "",
-            password: "",
-          }}
-          onSubmit={(values, {resetForm}) => {
-            login(values)
-            resetForm()
-          }}
-          validationSchema={Yup.object({
-            email: Yup.string().email(<FormattedMessage id='notemail'/>).required(<FormattedMessage id='required'/>),
-            password: Yup.string().required(<FormattedMessage id='required'/>),
-          })}
-        >
-          {({handleSubmit, errors, touched}) => (
-            <form onSubmit={handleSubmit}>
-              <VStack gap="1em">
-                <FormControl isInvalid={touched.email && errors.email}>
-                  <FormLabel fontWeight="600" fontSize="lg" htmlFor='email'><FormattedMessage id='email'/></FormLabel>
-                  <Field
-                    as={Input}
-                    id="email"
-                    name="email"
-                  />
-                  <FormErrorMessage>{errors.email}</FormErrorMessage>
-                </FormControl>
-                <FormControl isInvalid={touched.password && errors.password}>
-                  <FormLabel fontWeight="600" fontSize="lg" htmlFor='password'><FormattedMessage id='pass'/></FormLabel>
-                  <Field
-                    as={Input}
-                    id="password"
-                    name="password"
-                    type="password"
-                  />
-                  <FormErrorMessage>{errors.password}</FormErrorMessage>
-                </FormControl>
-                <Button w="100%" type='submit'><FormattedMessage id='login'/></Button>
-              </VStack>
-            </form>
-          )}
-        </Formik>
+      minW="sm"
+      maxW="md"
+      borderWidth="2px" 
+      borderRadius="lg" 
+      overflow="hidden"
+      bgColor="g.500"
+      p="1em"
+      >
+      <Formik
+        initialValues={{
+          email: "",
+          password: "",
+        }}
+        onSubmit={(values, {resetForm}) => {
+          login(values)
+          resetForm()
+        }}
+        validationSchema={Yup.object({
+          email: Yup.string().email(<FormattedMessage id='notemail'/>).required(<FormattedMessage id='required'/>),
+          password: Yup.string().required(<FormattedMessage id='required'/>),
+        })}
+      >
+        {({handleSubmit, errors, touched}) => (
+          <form onSubmit={handleSubmit}>
+            <VStack gap="1em">
+              <FormControl isInvalid={touched.email && errors.email}>
+                <FormLabel fontWeight="600" fontSize="lg" htmlFor='email'><FormattedMessage id='email'/></FormLabel>
+                <Field
+                  as={Input}
+                  id="email"
+                  name="email"
+                />
+                <FormErrorMessage>{errors.email}</FormErrorMessage>
+              </FormControl>
+              <FormControl isInvalid={touched.password && errors.password}>
+                <FormLabel fontWeight="600" fontSize="lg" htmlFor='password'><FormattedMessage id='pass'/></FormLabel>
+                <Field
+                  as={Input}
+                  id="password"
+                  name="password"
+                  type="password"
+                />
+                <FormErrorMessage>{errors.password}</FormErrorMessage>
+              </FormControl>
+              <Button w="100%" type='submit'><FormattedMessage id='login'/></Button>
+            </VStack>
+          </form>
+        )}
+      </Formik>
     </Box>
   )
 }

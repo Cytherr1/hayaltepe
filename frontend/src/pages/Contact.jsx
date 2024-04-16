@@ -48,7 +48,7 @@ const Contact = () => {
           h={isMobile ? "xs" : "xl"}
           borderWidth="2px"
           borderRadius={isMobile ? "lg" : "0px 10px 10px 0px"}
-          bg="b.500"
+          bg="g.400"
           boxShadow="lg"
           w={isMobile ? "md" : "xs"}
         >
@@ -57,9 +57,9 @@ const Contact = () => {
           <Heading size="lg"><FormattedMessage id='contus'/></Heading>
           <Heading size="md"><FormattedMessage id='cinfo'/></Heading>
           <Spacer/>
-          <Text><InfoIcon/> Yeşilüzümlü mah. Fethiye/Muğla</Text>
-          <Text><EmailIcon/> info@hayaltepe.com</Text>
-          <Text><PhoneIcon/> +90 541 487 59 78</Text>
+          <Text fontWeight="600"><InfoIcon mr={2}/> Yeşilüzümlü mah. Fethiye/Muğla</Text>
+          <Text fontWeight="600"><EmailIcon mr={2}/> info@hayaltepe.com</Text>
+          <Text fontWeight="600"><PhoneIcon mr={1}/> +90 541 487 59 78</Text>
           <Spacer/>
           <Spacer/>
         </VStack>
