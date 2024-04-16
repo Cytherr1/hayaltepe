@@ -15,21 +15,39 @@ const Products = () => {
   const [isLoading, setLoading] = useState(true);
   const [isError, setError] = useState(false);
 
-  // get products
   useEffect(() => {
-    setLoading(true);
-    fetch("http://localhost:3000/general/product/all")
-      .then((response) => response.json())
-      .then((data) => {
-        setProducts(data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching products:", error);
-        setLoading(false);
-        setError(true);
-      });
+    fetchProducts();
   }, []);
+
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:3000/general/product/getAllProduct",
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const responseData = await response.json();
+
+      if (responseData.success) {
+        setProducts(responseData.products);
+      } else {
+        alert(responseData.errors);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error has occurred.");
+    }
+  };
   
 
   return (
@@ -64,7 +82,7 @@ const Products = () => {
           </VStack>
         }
         {products.map((product) => {
-          return (
+          return(
             <ProductCard
               key={product.ID}
               image={product.IMAGE}
