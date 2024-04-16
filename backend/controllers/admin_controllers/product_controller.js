@@ -40,14 +40,14 @@ const addProduct = async (req, res) => {
 
     connection.beginTransaction((beginError) => {
       if (beginError) {
-        res.status(500).send(beginError.message);
+        res.status(500).json({ error : beginError.message });;
         return;
       }
 
       connection.query(query, [name, image, link], (error, results) => {
         if (error) {
           connection.rollback(() => {
-            res.status(500).send(error.message);
+            res.status(500).json({ error : error.message });;
           });
         } else {
           connection.query(
@@ -56,16 +56,16 @@ const addProduct = async (req, res) => {
             (error, results) => {
               if (error) {
                 connection.rollback(() => {
-                  res.status(500).send(error.message);
+                  res.status(500).json({ error : error.message });;
                 });
               } else {
                 connection.commit((commitError) => {
                   if (commitError) {
                     connection.rollback(() => {
-                      res.status(500).send(commitError.message);
+                      res.status(500).json({ error : commitError.message });;
                     });
                   } else {
-                    res.status(201).send("Product added successfully");
+                    res.status(200).json({ success: true, message: "Product added successfully"});
                   }
                 });
               }
@@ -75,7 +75,7 @@ const addProduct = async (req, res) => {
       });
     });
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500).json({ error : error.message });
   } finally {
     if (connection) {
       releaseConnection(connection);
@@ -98,14 +98,14 @@ const removeProduct = async (req, res) => {
 
     connection.beginTransaction((beginError) => {
       if (beginError) {
-        res.status(500).send(beginError.message);
+        res.status(500).json({ error : beginError.message });
         return;
       }
 
       connection.query(query, [id], (error, results) => {
         if (error) {
           connection.rollback(() => {
-            res.status(500).send(error.message);
+            res.status(500).json({ error : error.message });
           });
         } else {
           connection.query(
@@ -114,16 +114,16 @@ const removeProduct = async (req, res) => {
             (error, results) => {
               if (error) {
                 connection.rollback(() => {
-                  res.status(500).send(error.message);
+                 res.status(500).json({ error : error.message});
                 });
               } else {
                 connection.commit((commitError) => {
                   if (commitError) {
                     connection.rollback(() => {
-                      res.status(500).send(commitError.message);
+                      res.status(500).json({ error : commitError.message });
                     });
                   } else {
-                    res.status(200).send("Product removed successfully");
+                    res.status(200).json({ success: true, message: "Product removed successfully" });
                   }
                 });
               }
@@ -133,7 +133,7 @@ const removeProduct = async (req, res) => {
       });
     });
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500).json({ error : error.message });
   } finally {
     if (connection) {
       releaseConnection(connection);
@@ -179,12 +179,12 @@ const updateProduct = async (req, res) => {
 
       query = query.slice(0, -2);
       query += " WHERE ID = ?";
-      params.push(req.params.id);
+      params.push(id);
 
       connection.query(query, params, (error, results) => {
         if (error) {
           connection.rollback(() => {
-            res.status(500).send(error.message);
+            res.status(500).json({ error : error.message });
           });
         } else {
           connection.query(
@@ -193,16 +193,16 @@ const updateProduct = async (req, res) => {
             (error, results) => {
               if (error) {
                 connection.rollback(() => {
-                  res.status(500).send(error.message);
+                  res.status(500).json({ error : error.message });
                 });
               } else {
                 connection.commit((commitError) => {
                   if (commitError) {
                     connection.rollback(() => {
-                      res.status(500).send(commitError.message);
+                      res.status(500).json({ error : commitError.message});
                     });
                   } else {
-                    res.status(200).send("Product updated successfully");
+                    res.status(200).json({ success: true, message: "Product updated successfully" });
                   }
                 });
               }
@@ -212,7 +212,7 @@ const updateProduct = async (req, res) => {
       });
     });
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500).json({ error : error.message });
   } finally {
     if (connection) {
       releaseConnection(connection);

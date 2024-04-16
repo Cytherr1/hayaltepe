@@ -22,44 +22,314 @@ const ProductManagement = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch(
-          "http://localhost:3000/admin/product/getAllProduct",
-          {
-            method: "GET",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const responseData = await response.json();
-
-        if (responseData.success) {
-          setProducts(responseData.products);
-        } else {
-          alert(responseData.errors);
-        }
-      } catch (error) {
-        console.error("Error:", error);
-        alert("An error has occurred.");
-      }
-    };
-
     fetchProducts();
   }, []);
 
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:3000/admin/product/getAllProduct",
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const responseData = await response.json();
+
+      if (responseData.success) {
+        setProducts(responseData.products);
+      } else {
+        alert(responseData.errors);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error has occurred.");
+    }
+  };
+
+  const addProduct = async (product) => {
+    try {
+      const formData = new FormData();
+      formData.append("name", product.name);
+      formData.append("image", product.image);
+      formData.append("link", product.link);
+
+      const response = await fetch(
+        "http://localhost:3000/admin/product/add",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const responseData = await response.json();
+
+      if (responseData.success) {
+        fetchProducts();
+      } else {
+        alert(responseData.errors);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error has occurred.");
+    }
+  };
+
+  const updateProduct = async (product) => {
+    try {
+      const formData = new FormData();
+      formData.append("id", product.id);
+      formData.append("name", product.name);
+      formData.append("image", product.image);
+      formData.append("link", product.link);
+
+      const response = await fetch(
+        "http://localhost:3000/admin/product/update",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const responseData = await response.json();
+
+      if (responseData.success) {
+        fetchProducts();
+      } else {
+        alert(responseData.errors);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error has occurred.");
+    }
+  };
+
+  const deleteProduct = async (product) => {
+    try {
+      const formData = new FormData();
+      formData.append("id", product.id);
+
+      const response = await fetch(
+        "http://localhost:3000/admin/product/delete",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const responseData = await response.json();
+
+      if (responseData.success) {
+        fetchProducts();
+      } else {
+        alert(responseData.errors);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error has occurred.");
+    }
+  };
+
   return (
     <Box>
+      <Box display="flex">
+        <Box
+          minW="sm"
+          maxW="md"
+          borderWidth="2px"
+          borderRadius="lg"
+          overflow="hidden"
+          bgColor="white"
+          p="1em"
+        >
+          <Formik
+            initialValues={{
+              name: "",
+              image: "",
+              link: "",
+            }}
+            onSubmit={(values, { resetForm }) => {
+              addProduct(values);
+              resetForm();
+            }}
+            validationSchema={Yup.object({
+              name: Yup.string().required(),
+              image: Yup.mixed()
+                .test("fileSize", "Image size is too large", (value) => {
+                  if (!value) return false;
+                  return value.size <= 5242880;
+                })
+                .test("fileType", "Unsupported file type", (value) => {
+                  if (!value) return false;
+                  return ["image/jpeg", "image/png"].includes(value.type);
+                })
+                .required("Please select an image file"),
+              link: Yup.string().required(),
+            })}
+          >
+            {({ handleSubmit, errors, touched }) => (
+              <form onSubmit={handleSubmit}>
+                <VStack gap="1em">
+                  <FormControl>
+                    <FormLabel fontWeight="600" fontSize="lg" htmlFor="name">
+                      İsim
+                    </FormLabel>
+                    <Field as={Input} id="name" name="name" />
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel fontWeight="600" fontSize="lg" htmlFor="image">
+                      Görsel
+                    </FormLabel>
+                    <Field as={Input} id="image" name="image" type="file" />
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel fontWeight="600" fontSize="lg" htmlFor="link">
+                      Link
+                    </FormLabel>
+                    <Field as={Input} id="link" name="link" />
+                  </FormControl>
+                  <Button w="100%" type="submit">
+                    Ürün Ekle
+                  </Button>
+                </VStack>
+              </form>
+            )}
+          </Formik>
+        </Box>
+        <Box
+          minW="sm"
+          maxW="md"
+          borderWidth="2px"
+          borderRadius="lg"
+          overflow="hidden"
+          bgColor="white"
+          p="1em"
+        >
+          <Formik
+            initialValues={{
+              id: "",
+              name: "",
+              image: "",
+              link: "",
+            }}
+            onSubmit={(values, { resetForm }) => {
+              updateProduct(values);
+              resetForm();
+            }}
+            validationSchema={Yup.object({
+              id: Yup.number().required(),
+              name: Yup.string().required(),
+              image: Yup.mixed()
+                .test("fileSize", "Image size is too large", (value) => {
+                  if (!value) return false;
+                  return value.size <= 5242880;
+                })
+                .test("fileType", "Unsupported file type", (value) => {
+                  if (!value) return false;
+                  return ["image/jpeg", "image/png"].includes(value.type);
+                })
+                .required("Please select an image file"),
+              link: Yup.string().required(),
+            })}
+          >
+            {({ handleSubmit, errors, touched }) => (
+              <form onSubmit={handleSubmit}>
+                <VStack gap="1em">
+                  <FormControl isInvalid={touched.id && errors.id}>
+                    <FormLabel fontWeight="600" fontSize="lg" htmlFor="id">
+                      ID
+                    </FormLabel>
+                    <Field as={Input} id="id" name="id" />
+                  </FormControl>
+                  <FormControl isInvalid={touched.name && errors.id}>
+                    <FormLabel fontWeight="600" fontSize="lg" htmlFor="name">
+                      İsim
+                    </FormLabel>
+                    <Field as={Input} id="name" name="name" />
+                  </FormControl>
+                  <FormControl isInvalid={touched.image && errors.id}>
+                    <FormLabel fontWeight="600" fontSize="lg" htmlFor="image">
+                      Görsel
+                    </FormLabel>
+                    <Field as={Input} id="image" name="image" type="file" />
+                  </FormControl>
+                  <FormControl isInvalid={touched.link && errors.link}>
+                    <FormLabel fontWeight="600" fontSize="lg" htmlFor="link">
+                      Link
+                    </FormLabel>
+                    <Field as={Input} id="link" name="link" />
+                  </FormControl>
+                  <Button w="100%" type="submit">
+                    Ürünü Güncelle
+                  </Button>
+                </VStack>
+              </form>
+            )}
+          </Formik>
+        </Box>
+        <Box
+          minW="sm"
+          maxW="md"
+          borderWidth="2px"
+          borderRadius="lg"
+          overflow="hidden"
+          bgColor="white"
+          p="1em"
+        >
+          <Formik
+            initialValues={{
+              id: "",
+            }}
+            onSubmit={(values, { resetForm }) => {
+              deleteProduct(values);
+              resetForm();
+            }}
+            validationSchema={Yup.object({
+              id: Yup.number().required(),
+            })}
+          >
+            {({ handleSubmit, errors, touched }) => (
+              <form onSubmit={handleSubmit}>
+                <VStack gap="1em">
+                  <FormControl>
+                    <FormLabel fontWeight="600" fontSize="lg" htmlFor="id">
+                      ID
+                    </FormLabel>
+                    <Field as={Input} id="id" name="id" />
+                  </FormControl>
+                  <Button w="100%" type="submit">
+                    Ürünü Sil
+                  </Button>
+                </VStack>
+              </form>
+            )}
+          </Formik>
+        </Box>
+      </Box>
+
       <Box>
         <FormControl>
-          <TableContainer m="4.5rem">
+          <TableContainer>
             <Table size="lg" variant="striped" colorScheme="gray">
               <TableCaption>Bütün Ürünler</TableCaption>
               <Thead>
@@ -83,193 +353,6 @@ const ProductManagement = () => {
             </Table>
           </TableContainer>
         </FormControl>
-      </Box>
-      <Box
-        minW="sm"
-        maxW="md"
-        borderWidth="2px"
-        borderRadius="lg"
-        overflow="hidden"
-        bgColor="white"
-        p="1em"
-      >
-        <Formik
-          initialValues={{
-            name: "",
-            image: null,
-            link: "",
-          }}
-          onSubmit={(values, { resetForm }) => {
-            // addProduct(values);
-            resetForm();
-          }}
-          validationSchema={Yup.object({
-            name: Yup.string().required(),
-            image: Yup.mixed()
-              .test("fileSize", "Image size is too large", (value) => {
-                if (!value) return false;
-                return value.size <= 5242880;
-              })
-              .test("fileType", "Unsupported file type", (value) => {
-                if (!value) return false;
-                return ["image/jpeg", "image/png"].includes(value.type);
-              })
-              .required("Please select an image file"),
-            link: Yup.string().required(),
-          })}
-        >
-          {({ handleSubmit, errors, touched }) => (
-            <form onSubmit={handleSubmit}>
-              <VStack gap="1em">
-                <FormControl>
-                  <FormLabel fontWeight="600" fontSize="lg" htmlFor="name">
-                    İsim
-                  </FormLabel>
-                  <Field as={Input} id="name" name="name" />
-                </FormControl>
-                <FormControl>
-                  <FormLabel fontWeight="600" fontSize="lg" htmlFor="image">
-                    Görsel
-                  </FormLabel>
-                  <Field as={Input} id="image" name="image" type="file"/>
-                </FormControl>
-                <FormControl>
-                  <FormLabel fontWeight="600" fontSize="lg" htmlFor="link">
-                    Link
-                  </FormLabel>
-                  <Field as={Input} id="link" name="link" />
-                </FormControl>
-                <Button w="100%" type="submit">
-                  Ürün Ekle
-                </Button>
-              </VStack>
-            </form>
-          )}
-        </Formik>
-      </Box>
-      <Box
-        minW="sm"
-        maxW="md"
-        borderWidth="2px"
-        borderRadius="lg"
-        overflow="hidden"
-        bgColor="white"
-        p="1em"
-      >
-        <Formik
-          initialValues={{
-            id: "",
-            name: "",
-            image: null,
-            link: "",
-          }}
-          onSubmit={(values, { resetForm }) => {
-            // updateProduct(values);
-            resetForm();
-          }}
-          validationSchema={Yup.object({
-            id: Yup.number().required(),
-            name: Yup.string().required(),
-            image: Yup.mixed()
-              .test("fileSize", "Image size is too large", (value) => {
-                if (!value) return false;
-                return value.size <= 5242880;
-              })
-              .test("fileType", "Unsupported file type", (value) => {
-                if (!value) return false;
-                return ["image/jpeg", "image/png"].includes(value.type);
-              })
-              .required("Please select an image file"),
-            link: Yup.string().required(),
-          })}
-        >
-          {({ handleSubmit, errors, touched }) => (
-            <form onSubmit={handleSubmit}>
-              <VStack gap="1em">
-              <FormControl>
-                  <FormLabel fontWeight="600" fontSize="lg" htmlFor="id">
-                    ID
-                  </FormLabel>
-                  <Field as={Input} id="id" name="id" />
-                </FormControl>
-                <FormControl>
-                  <FormLabel fontWeight="600" fontSize="lg" htmlFor="name">
-                    İsim
-                  </FormLabel>
-                  <Field as={Input} id="name" name="name" />
-                </FormControl>
-                <FormControl>
-                  <FormLabel fontWeight="600" fontSize="lg" htmlFor="image">
-                    Görsel
-                  </FormLabel>
-                  <Field as={Input} id="image" name="image" type="file"/>
-                </FormControl>
-                <FormControl>
-                  <FormLabel fontWeight="600" fontSize="lg" htmlFor="link">
-                    Link
-                  </FormLabel>
-                  <Field as={Input} id="link" name="link" />
-                </FormControl>
-                <Button w="100%" type="submit">
-                  Ürünü Güncelle
-                </Button>
-              </VStack>
-            </form>
-          )}
-        </Formik>
-      </Box>
-      <Box
-        minW="sm"
-        maxW="md"
-        borderWidth="2px"
-        borderRadius="lg"
-        overflow="hidden"
-        bgColor="white"
-        p="1em"
-      >
-        <Formik
-          initialValues={{
-            id: "",
-            name: "",
-            image: null,
-            link: "",
-          }}
-          onSubmit={(values, { resetForm }) => {
-            // deleteProduct(values);
-            resetForm();
-          }}
-          validationSchema={Yup.object({
-            id: Yup.number().required(),
-            name: Yup.string().required(),
-            image: Yup.mixed()
-              .test("fileSize", "Image size is too large", (value) => {
-                if (!value) return false;
-                return value.size <= 5242880;
-              })
-              .test("fileType", "Unsupported file type", (value) => {
-                if (!value) return false;
-                return ["image/jpeg", "image/png"].includes(value.type);
-              })
-              .required("Please select an image file"),
-            link: Yup.string().required(),
-          })}
-        >
-          {({ handleSubmit, errors, touched }) => (
-            <form onSubmit={handleSubmit}>
-              <VStack gap="1em">
-              <FormControl>
-                  <FormLabel fontWeight="600" fontSize="lg" htmlFor="id">
-                    ID
-                  </FormLabel>
-                  <Field as={Input} id="id" name="id" />
-                </FormControl>
-                <Button w="100%" type="submit">
-                  Ürünü Sil
-                </Button>
-              </VStack>
-            </form>
-          )}
-        </Formik>
       </Box>
     </Box>
   );

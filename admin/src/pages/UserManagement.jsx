@@ -52,40 +52,105 @@ const UserManagement = () => {
       }
     };
 
+    const addUser = async (values) => {
+      try {
+        const response = await fetch(
+          "http://localhost:3000/admin/user/add",
+          {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(values),
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const responseData = await response.json();
+
+        if (!responseData.success) {
+          alert(responseData.errors);
+        }
+
+        fetchUsers();
+      } catch (error) {
+        console.error("Error:", error);
+        alert("An error has occurred.");
+      }
+    };
+
+    const updateUser = async (values) => {
+      try {
+        const response = await fetch(
+          "http://localhost:3000/admin/user/update",
+          {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(values),
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const responseData = await response.json();
+
+        if (!responseData.success) {
+          alert(responseData.errors);
+        }
+
+        fetchUsers();
+      } catch (error) {
+        console.error("Error:", error);
+        alert("An error has occurred.");
+      }
+    };
+
+    const deleteUser = async (values) => {
+      try {
+        const response = await fetch(
+          "http://localhost:3000/admin/user/delete",
+          {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(values),
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const responseData = await response.json();
+
+        if (!responseData.success) {
+          alert(responseData.errors);
+        }
+
+        fetchUsers();
+      } catch (error) {
+        console.error("Error:", error);
+        alert("An error has occurred.");
+      } 
+    };
+
     fetchUsers();
   }, []);
 
   return (
     <Box>
-      <Box>
-        <FormControl>
-          <TableContainer m="4.5rem">
-            <Table size="lg" variant="striped" colorScheme="gray">
-              <TableCaption>Bütün Kullanıcılar</TableCaption>
-              <Thead>
-                <Tr>
-                  <Th>ID</Th>
-                  <Th>İsim</Th>
-                  <Th>Soy isim</Th>
-                  <Th>Mail</Th>
-                  <Th>Telefon Numarası</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {users.map((user, index) => (
-                  <Tr key={index}>
-                    <Td>{user.ID}</Td>
-                    <Td>{user.NAME}</Td>
-                    <Td>{user.SURNAME}</Td>
-                    <Td>{user.MAIL}</Td>
-                    <Td>{user.TELEPHONE_NUMBER}</Td>
-                  </Tr>
-                ))}
-              </Tbody>
-            </Table>
-          </TableContainer>
-        </FormControl>
-      </Box>
+      <Box display="flex">
       <Box
         minW="sm"
         maxW="md"
@@ -104,7 +169,7 @@ const UserManagement = () => {
             telephone_number: "",
           }}
           onSubmit={(values, { resetForm }) => {
-            // addUser(values);
+            addUser(values);
             resetForm();
           }}
           validationSchema={Yup.object({
@@ -175,7 +240,7 @@ const UserManagement = () => {
             telephone_number: "",
           }}
           onSubmit={(values, { resetForm }) => {
-            // updateUser(values);
+            updateUser(values);
             resetForm();
           }}
           validationSchema={Yup.object({
@@ -248,7 +313,7 @@ const UserManagement = () => {
             id: "",
           }}
           onSubmit={(values, { resetForm }) => {
-            // deleteUser(values);
+            deleteUser(values);
             resetForm();
           }}
           validationSchema={Yup.object({
@@ -271,6 +336,36 @@ const UserManagement = () => {
             </form>
           )}
         </Formik>
+      </Box>
+      </Box>
+      <Box>
+        <FormControl>
+          <TableContainer>
+            <Table size="lg" variant="striped" colorScheme="gray">
+              <TableCaption>Bütün Kullanıcılar</TableCaption>
+              <Thead>
+                <Tr>
+                  <Th>ID</Th>
+                  <Th>İsim</Th>
+                  <Th>Soy isim</Th>
+                  <Th>Mail</Th>
+                  <Th>Telefon Numarası</Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {users.map((user, index) => (
+                  <Tr key={index}>
+                    <Td>{user.ID}</Td>
+                    <Td>{user.NAME}</Td>
+                    <Td>{user.SURNAME}</Td>
+                    <Td>{user.MAIL}</Td>
+                    <Td>{user.TELEPHONE_NUMBER}</Td>
+                  </Tr>
+                ))}
+              </Tbody>
+            </Table>
+          </TableContainer>
+        </FormControl>
       </Box>
     </Box>
   );

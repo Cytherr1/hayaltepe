@@ -31,7 +31,7 @@ const Navbar = () => {
           minW="150px"
           zIndex={10}
         >
-          <Image boxSize="150px" src={logo} alt="Hayaltepe Logo" />
+          <Image boxSize="100px" src={logo} alt="Hayaltepe Logo" />
         </Center>
         <Spacer />
         <Heading size="lg" fontWeight="500">HayalTepe Admin</Heading>
