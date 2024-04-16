@@ -12,6 +12,7 @@ import {
   Input,
   FormControl,
   FormLabel,
+  FormErrorMessage,
   Button,
   VStack,
 } from "@chakra-ui/react";
@@ -182,30 +183,39 @@ const UserManagement = () => {
                       İsim
                     </FormLabel>
                     <Field as={Input} id="name" name="name" />
+                    <FormErrorMessage>{errors.name}</FormErrorMessage>
                   </FormControl>
                   <FormControl isInvalid={touched.surname && errors.surname}>
                     <FormLabel fontWeight="600" fontSize="lg" htmlFor="surname">
                       Soy İsim
                     </FormLabel>
                     <Field as={Input} id="surname" name="surname" />
+                    <FormErrorMessage>{errors.surname}</FormErrorMessage>
                   </FormControl>
                   <FormControl isInvalid={touched.mail && errors.mail}>
                     <FormLabel fontWeight="600" fontSize="lg" htmlFor="mail">
                       Mail
                     </FormLabel>
                     <Field as={Input} id="mail" name="mail" />
+                    <FormErrorMessage>{errors.mail}</FormErrorMessage>
                   </FormControl>
                   <FormControl isInvalid={touched.password && errors.password}>
-                    <FormLabel fontWeight="600" fontSize="lg" htmlFor="name">
+                    <FormLabel
+                      fontWeight="600"
+                      fontSize="lg"
+                      htmlFor="password"
+                    >
                       Şifre
                     </FormLabel>
                     <Field as={Input} id="password" name="password" />
+                    <FormErrorMessage>{errors.password}</FormErrorMessage>
                   </FormControl>
                   <FormControl isInvalid={touched.tel && errors.tel}>
-                    <FormLabel fontWeight="600" fontSize="lg" htmlFor="name">
+                    <FormLabel fontWeight="600" fontSize="lg" htmlFor="tel">
                       Telefon Numarası
                     </FormLabel>
                     <Field as={Input} id="tel" name="tel" />
+                    <FormErrorMessage>{errors.tel}</FormErrorMessage>
                   </FormControl>
                   <Button w="100%" type="submit">
                     Kullanıcı Ekle
@@ -226,12 +236,6 @@ const UserManagement = () => {
         >
           <Formik
             initialValues={{
-              id: "",
-              name: "",
-              surname: "",
-              mail: "",
-              password: "",
-              tel: "",
             }}
             onSubmit={(values, { resetForm }) => {
               updateUser(values);
@@ -239,11 +243,11 @@ const UserManagement = () => {
             }}
             validationSchema={Yup.object({
               id: Yup.number().required(),
-              name: Yup.string().required(),
-              surname: Yup.string().required(),
-              mail: Yup.string().email().required(),
-              password: Yup.string().required(),
-              tel: Yup.string().required(),
+              name: Yup.string(),
+              surname: Yup.string(),
+              mail: Yup.string().email(),
+              password: Yup.string(),
+              tel: Yup.string(),
             })}
           >
             {({ handleSubmit, errors, touched }) => (
@@ -254,6 +258,7 @@ const UserManagement = () => {
                       ID
                     </FormLabel>
                     <Field as={Input} id="id" name="id" />
+                    <FormErrorMessage>{errors.id}</FormErrorMessage>
                   </FormControl>
                   <FormControl>
                     <FormLabel fontWeight="600" fontSize="lg" htmlFor="name">
@@ -274,13 +279,17 @@ const UserManagement = () => {
                     <Field as={Input} id="mail" name="mail" />
                   </FormControl>
                   <FormControl>
-                    <FormLabel fontWeight="600" fontSize="lg" htmlFor="name">
+                    <FormLabel
+                      fontWeight="600"
+                      fontSize="lg"
+                      htmlFor="password"
+                    >
                       Şifre
                     </FormLabel>
                     <Field as={Input} id="password" name="password" />
                   </FormControl>
                   <FormControl>
-                    <FormLabel fontWeight="600" fontSize="lg" htmlFor="name">
+                    <FormLabel fontWeight="600" fontSize="lg" htmlFor="tel">
                       Telefon Numarası
                     </FormLabel>
                     <Field as={Input} id="tel" name="tel" />
@@ -322,6 +331,7 @@ const UserManagement = () => {
                       ID
                     </FormLabel>
                     <Field as={Input} id="id" name="id" />
+                    <FormErrorMessage>{errors.id}</FormErrorMessage>
                   </FormControl>
                   <Button w="100%" type="submit">
                     Kullanıcıyı Sil

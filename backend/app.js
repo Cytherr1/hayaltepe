@@ -51,6 +51,7 @@ const storage = multer.diskStorage({
   },
 });
 
+// Multer middleware. Must be handled for features.
 const upload = multer({ storage: storage });
 
 // Mount routes

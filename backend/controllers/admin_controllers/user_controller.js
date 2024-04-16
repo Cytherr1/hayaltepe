@@ -1,6 +1,4 @@
 const { getConnection, releaseConnection } = require("../../config/db_config");
-const { connect } = require("../../routes/admin/user_routes");
-const { addLog } = require("../log_controllers/log_controller");
 
 const getAllUser = async (req, res) => {
   let connection;
@@ -33,39 +31,43 @@ const addUser = async (req, res) => {
     connection = await getConnection();
 
     const { name, surname, mail, password, tel } = req.body;
-    const addQuery = "INSERT INTO USER (NAME, SURNAME, MAIL, PASSWORD, TEL) VALUES (?,?,?,?,?)";
+    const addQuery =
+      "INSERT INTO USER (NAME, SURNAME, MAIL, PASSWORD, TELEPHONE_NUMBER) VALUES (?, ?, ?, ?, ?)";
     const logQuery =
       "INSERT INTO LOG (LOG_USER, LOG_TIMESTAMP, LOG_DESCR) VALUES (?, ?, ?)";
 
     await connection.beginTransaction();
 
-    connection.query(addQuery, [name, surname, mail, password, tel], async (error, addResult) => {
-      if (error) {
-        await connection.rollback();
-        res.status(500).json({ error: error.message });
-        return;
-      }
-
-      connection.query(
-        logQuery,
-        ["log_user", new Date(), "Product added successfully"],
-        async (error, logResult) => {
-          if (error) {
-            await connection.rollback();
-            res.status(500).json({ error: error.message });
-            return;
-          }
-          await connection.commit();
-          res
-            .status(200)
-            .json({ success: true, message: "Product added successfully" });
+    connection.query(
+      addQuery,
+      [name, surname, mail, password, tel],
+      async (error, addResult) => {
+        if (error) {
+          await connection.rollback();
+          res.status(500).json({ error: error.message });
+          return;
         }
-      );
-    });
+
+        connection.query(
+          logQuery,
+          ["log_user", new Date(), "User added successfully"],
+          async (error, logResult) => {
+            if (error) {
+              await connection.rollback();
+              res.status(500).json({ error: error.message });
+              return;
+            }
+            await connection.commit();
+            res
+              .status(200)
+              .json({ success: true, message: "User added successfully" });
+          }
+        );
+      }
+    );
   } catch (error) {
     if (connection) {
       await connection.rollback();
-      releaseConnection(connection);
     }
     res.status(500).json({ error: error.message });
   } finally {
@@ -82,36 +84,44 @@ const updateUser = async (req, res) => {
     connection = await getConnection();
 
     const { id, name, surname, mail, password, tel } = req.body;
-    const updateQuery = " UPDATE USER ";
 
-    if (name) {
-      updateQuery += " SET NAME = ? ";
+    let updateQuery = "UPDATE USER SET";
+    const updateValues = [];
+
+    if (name !== undefined) {
+      updateQuery += " NAME = ?,";
+      updateValues.push(name);
     }
 
-    if (surname) {
-      updateQuery += " SET SURNAME = ? ";
+    if (surname !== undefined) {
+      updateQuery += " SURNAME = ?,";
+      updateValues.push(surname);
     }
 
-    if (mail) {
-      updateQuery += " SET MAIL = ? ";
+    if (mail !== undefined) {
+      updateQuery += " MAIL = ?,";
+      updateValues.push(mail);
     }
 
-    if (password) {
-      updateQuery += " SET PASSWORD = ? ";
+    if (password !== undefined) {
+      updateQuery += " PASSWORD = ?,";
+      updateValues.push(password);
     }
 
-    if (tel) {
-      updateQuery += " SET TEL = ? ";
+    if (tel !== undefined) {
+      updateQuery += " TELEPHONE_NUMBER = ?,";
+      updateValues.push(tel);
     }
 
-    updateQuery += " WHERE ID = ?";
+    updateQuery = updateQuery.slice(0, -1) + " WHERE ID = ?";
+    updateValues.push(id);
 
     const logQuery =
       "INSERT INTO LOG (LOG_USER, LOG_TIMESTAMP, LOG_DESCR) VALUES (?, ?, ?)";
 
     await connection.beginTransaction();
 
-    connection.query(updateQuery, [id, name, surname, mail, password, tel], async (error, updateResult) => {
+    connection.query(updateQuery, updateValues, async (error, updateResult) => {
       if (error) {
         await connection.rollback();
         res.status(500).json({ error: error.message });
@@ -127,17 +137,18 @@ const updateUser = async (req, res) => {
             res.status(500).json({ error: error.message });
             return;
           }
+
           await connection.commit();
-          res
-            .status(200)
-            .json({ success: true, message: "User updated successfully" });
         }
       );
     });
+
+    res
+      .status(200)
+      .json({ success: true, message: "User updated successfully" });
   } catch (error) {
     if (connection) {
       await connection.rollback();
-      releaseConnection(connection);
     }
     res.status(500).json({ error: error.message });
   } finally {
@@ -186,7 +197,6 @@ const deleteUser = async (req, res) => {
   } catch (error) {
     if (connection) {
       await connection.rollback();
-      releaseConnection(connection);
     }
     res.status(500).json({ error: error.message });
   } finally {

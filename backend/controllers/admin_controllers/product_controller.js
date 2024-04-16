@@ -1,6 +1,4 @@
 const { getConnection, releaseConnection } = require("../../config/db_config");
-const { connect } = require("../../routes/admin/product_routes");
-const { addLog } = require("../log_controllers/log_controller");
 
 const getAllProduct = async (req, res) => {
   let connection;
@@ -65,7 +63,6 @@ const addProduct = async (req, res) => {
   } catch (error) {
     if (connection) {
       await connection.rollback();
-      releaseConnection(connection);
     }
     res.status(500).json({ error: error.message });
   } finally {
@@ -129,7 +126,6 @@ const updateProduct = async (req, res) => {
   } catch (error) {
     if (connection) {
       await connection.rollback();
-      releaseConnection(connection);
     }
     res.status(500).json({ error: error.message });
   } finally {
@@ -178,7 +174,6 @@ const removeProduct = async (req, res) => {
   } catch (error) {
     if (connection) {
       await connection.rollback();
-      releaseConnection(connection);
     }
     res.status(500).json({ error: error.message });
   } finally {
