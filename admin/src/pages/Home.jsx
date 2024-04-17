@@ -8,6 +8,7 @@ import {
   Td,
   TableCaption,
   TableContainer,
+  Box
 } from "@chakra-ui/react";
 
 const Home = () => {
@@ -45,25 +46,27 @@ const Home = () => {
   }, []);
 
   return (
-    <TableContainer m="4.5rem">
+    <TableContainer m="4.5rem" >
       <Table size="lg" variant="striped" colorScheme="gray">
         <TableCaption>Gerçekleştirdiğiniz Son İşlemler</TableCaption>
-        <Thead>
+        <Thead display="table" w="100%" style={{tableLayout: "fixed"}}>
           <Tr>
             <Th>Kullanıcı</Th>
             <Th>Tarih</Th>
             <Th>Açıklama</Th>
           </Tr>
         </Thead>
-        <Tbody>
-          {logs.map((log, index) => (
-            <Tr key={index}>
-              <Td>{log.LOG_USER}</Td>
-              <Td>{log.LOG_TIMESTAMP}</Td>
-              <Td>{log.LOG_DESCR}</Td>
-            </Tr>
-          ))}
-        </Tbody>
+        <Box w="100%" h="70vh" overflowY="scroll">
+          <Tbody display="table" w="100%">
+            {logs.map((log, index) => (
+              <Tr display="table" w="100%" key={index} style={{tableLayout: "fixed"}}>
+                <Td>{log.LOG_USER}</Td>
+                <Td>{log.LOG_TIMESTAMP}</Td>
+                <Td>{log.LOG_DESCR}</Td>
+              </Tr>
+            ))}
+          </Tbody>
+        </Box>
       </Table>
     </TableContainer>
   );

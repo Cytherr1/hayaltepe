@@ -21,6 +21,7 @@ const Products = () => {
 
   const fetchProducts = async () => {
     try {
+      setLoading(true);
       const response = await fetch(
         "http://localhost:3000/general/product/getAllProduct",
         {
@@ -40,12 +41,14 @@ const Products = () => {
 
       if (responseData.success) {
         setProducts(responseData.products);
+        setLoading(false);
       } else {
-        alert(responseData.errors);
+        setError(true);
+        setLoading(false);
       }
     } catch (error) {
-      console.error("Error:", error);
-      alert("An error has occurred.");
+      setError(true);
+      setLoading(false);
     }
   };
   
