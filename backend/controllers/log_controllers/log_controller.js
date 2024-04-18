@@ -37,7 +37,7 @@ const getAllLogs = async (req, res) => {
   try {
     connection = await getConnection();
 
-    const query = "SELECT * FROM LOG";
+    const query = "SELECT * FROM LOG ORDER BY LOG_TIMESTAMP DESC LIMIT 10";
 
     connection.query(query, (error, results) => {
       if (error) {

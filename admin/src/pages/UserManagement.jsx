@@ -162,6 +162,7 @@ const UserManagement = () => {
               mail: "",
               password: "",
               tel: "",
+              rolefilter: "",
             }}
             onSubmit={(values, { resetForm }) => {
               addUser(values);
@@ -173,6 +174,7 @@ const UserManagement = () => {
               mail: Yup.string().email().required(),
               password: Yup.string().required(),
               tel: Yup.string().required(),
+              rolefilter: Yup.string().required(),
             })}
           >
             {({ handleSubmit, errors, touched }) => (
@@ -215,6 +217,13 @@ const UserManagement = () => {
                       Telefon Numarası
                     </FormLabel>
                     <Field as={Input} id="tel" name="tel" />
+                    <FormErrorMessage>{errors.tel}</FormErrorMessage>
+                  </FormControl>
+                  <FormControl isInvalid={touched.tel && errors.tel}>
+                    <FormLabel fontWeight="600" fontSize="lg" htmlFor="rolefilter">
+                      Rol Filtresi
+                    </FormLabel>
+                    <Field as={Input} id="tel" name="rolefilter" />
                     <FormErrorMessage>{errors.tel}</FormErrorMessage>
                   </FormControl>
                   <Button w="100%" type="submit">
@@ -355,6 +364,7 @@ const UserManagement = () => {
                   <Th>Soy İsim</Th>
                   <Th>Mail</Th>
                   <Th>Telefon Numarası</Th>
+                  <Th>Rol Filtresi</Th>
                 </Tr>
               </Thead>
               <Tbody>
@@ -365,6 +375,7 @@ const UserManagement = () => {
                     <Td>{user.SURNAME}</Td>
                     <Td>{user.MAIL}</Td>
                     <Td>{user.TELEPHONE_NUMBER}</Td>
+                    <Td>{user.ROLE_FILTER}</Td>
                   </Tr>
                 ))}
               </Tbody>

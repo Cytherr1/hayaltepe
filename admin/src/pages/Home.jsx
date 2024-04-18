@@ -46,9 +46,9 @@ const Home = () => {
   }, []);
 
   return (
-    <TableContainer m="4.5rem" >
+    <TableContainer m="1.5rem" >
       <Table size="lg" variant="striped" colorScheme="gray">
-        <TableCaption>Gerçekleştirdiğiniz Son İşlemler</TableCaption>
+        <TableCaption m="1.5rem">Gerçekleştirdiğiniz Son İşlemler</TableCaption>
         <Thead display="table" w="100%" style={{tableLayout: "fixed"}}>
           <Tr>
             <Th>Kullanıcı</Th>
@@ -56,7 +56,7 @@ const Home = () => {
             <Th>Açıklama</Th>
           </Tr>
         </Thead>
-        <Box w="100%" h="70vh" overflowY="scroll">
+        <Box w="100%" h="70vh">
           <Tbody display="table" w="100%">
             {logs.map((log, index) => (
               <Tr display="table" w="100%" key={index} style={{tableLayout: "fixed"}}>

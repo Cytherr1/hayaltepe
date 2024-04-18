@@ -2,12 +2,13 @@ const { getConnection, releaseConnection } = require("../../config/db_config");
 
 const login = async (req, res) => {
   let connection;
+  let query;
   try {
     connection = await getConnection();
 
     const { email, password } = req.body;
 
-    const query = "SELECT * FROM USER WHERE MAIL = ?";
+    query = "SELECT MAIL, PASSWORD, ROLE_FILTER FROM USER WHERE ROLE_FILTER = 'AU' AND MAIL = ?";
 
     connection.query(query, [email], (error, results) => {
       if (error) {
