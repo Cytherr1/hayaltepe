@@ -6,7 +6,7 @@ const getAllProduct = async (req, res) => {
   try {
     connection = await getConnection();
 
-    const query = "SELECT * FROM PRODUCT";
+    const query = "SELECT ID, NAME, IMAGE FROM PRODUCT";
 
     connection.query(query, (error, results) => {
       if (error) {
@@ -29,15 +29,17 @@ const addProduct = async (req, res) => {
 
   try {
     connection = await getConnection();
-
-    const { name, image, link } = req.body;
+    
+    const { name, link } = req.body;
+    const image = req.file;
+    const imagePath = image.path;
     const addQuery = "INSERT INTO PRODUCT (NAME, IMAGE, LINK) VALUES (?,?,?)";
     const logQuery =
       "INSERT INTO LOG (LOG_USER, LOG_TIMESTAMP, LOG_DESCR) VALUES (?, ?, ?)";
 
     await connection.beginTransaction();
 
-    connection.query(addQuery, [name, image, link], async (error, addResult) => {
+    connection.query(addQuery, [name, imagePath, link], async (error, addResult) => {
       if (error) {
         await connection.rollback();
         res.status(500).json({ error: error.message });
