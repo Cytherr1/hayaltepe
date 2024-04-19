@@ -6,7 +6,7 @@ const getAllProduct = async (req, res) => {
   try {
     connection = await getConnection();
 
-    const query = "SELECT * FROM PRODUCT";
+    const query = "SELECT ID, NAME, IMAGE FROM PRODUCT";
 
     connection.query(query, (error, results) => {
       if (error) {

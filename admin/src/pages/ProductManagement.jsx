@@ -334,7 +334,6 @@ const ProductManagement = () => {
                 <Tr>
                   <Th>ID</Th>
                   <Th>İsim</Th>
-                  <Th>Görsel</Th>
                   <Th>Link</Th>
                 </Tr>
               </Thead>
@@ -343,7 +342,6 @@ const ProductManagement = () => {
                   <Tr key={index}>
                     <Td>{product.ID}</Td>
                     <Td>{product.NAME}</Td>
-                    <Td>{product.IMAGE}</Td>
                     <Td>{product.LINK}</Td>
                   </Tr>
                 ))}
