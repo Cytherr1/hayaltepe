@@ -29,14 +29,17 @@ const addProduct = async (req, res) => {
 
   try {
     connection = await getConnection();
-
-    const { name, image, link } = req.body;
+    
+    const { name, link } = req.body;
+    const image = req.file;
+    const imagePath = image.path;
     const addQuery = "INSERT INTO PRODUCT (NAME, IMAGE, LINK) VALUES (?,?,?)";
     const logQuery =
       "INSERT INTO LOG (LOG_USER, LOG_TIMESTAMP, LOG_DESCR) VALUES (?, ?, ?)";
 
     await connection.beginTransaction();
 
+<<<<<<< HEAD
     connection.query(
       addQuery,
       [name, image, link],
@@ -45,6 +48,28 @@ const addProduct = async (req, res) => {
           await connection.rollback();
           res.status(500).json({ error: error.message });
           return;
+=======
+    connection.query(addQuery, [name, imagePath, link], async (error, addResult) => {
+      if (error) {
+        await connection.rollback();
+        res.status(500).json({ error: error.message });
+        return;
+      }
+
+      connection.query(
+        logQuery,
+        ["log_user", new Date(), "Product added successfully"],
+        async (error, logResult) => {
+          if (error) {
+            await connection.rollback();
+            res.status(500).json({ error: error.message });
+            return;
+          }
+          await connection.commit();
+          res
+            .status(200)
+            .json({ success: true, message: "Product added successfully" });
+>>>>>>> 88e2b3d2c3afbf0843506b3f2c9ca3c7d16ef30e
         }
 
         connection.query(
