@@ -17,9 +17,29 @@ import {
 } from "@chakra-ui/react";
 import { Field, Formik } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
 
 const ProductManagement = () => {
+  const formData = new FormData();
+
   const [products, setProducts] = useState([]);
+  const [file, setFile] = useState(null);
+
+  const handleFile = (e) => {
+    setFile(e.target.files[0]);
+  };
+
+  const handleUpload = async () => {
+    try {
+      formData.append("image", file);
+      const response = await axios.post(
+        "http://localhost:3000/admin/image/upload",
+        formData
+      );
+    } catch (error) {
+      console.error("Error uploading image:", error.message);
+    }
+  };
 
   useEffect(() => {
     fetchProducts();
@@ -172,16 +192,7 @@ const ProductManagement = () => {
             }}
             validationSchema={Yup.object({
               name: Yup.string().required(),
-              image: Yup.mixed()
-                .test("fileSize", "Image size is too large", (value) => {
-                  if (!value) return false;
-                  return value.size <= 5242880;
-                })
-                .test("fileType", "Unsupported file type", (value) => {
-                  if (!value) return false;
-                  return ["image/jpeg", "image/png"].includes(value.type);
-                })
-                .required("Please select an image file"),
+              image: Yup.mixed().required(),
               link: Yup.string().required(),
             })}
           >
@@ -194,7 +205,7 @@ const ProductManagement = () => {
                     </FormLabel>
                     <Field as={Input} id="name" name="name" />
                   </FormControl>
-                  <FormControl isInvalid={touched.image && errors.image}>
+                  <FormControl>
                     <FormLabel fontWeight="600" fontSize="lg" htmlFor="image">
                       Görsel
                     </FormLabel>
@@ -236,18 +247,9 @@ const ProductManagement = () => {
             }}
             validationSchema={Yup.object({
               id: Yup.number().required(),
-              name: Yup.string().required(),
-              image: Yup.mixed()
-                .test("fileSize", "Image size is too large", (value) => {
-                  if (!value) return false;
-                  return value.size <= 5242880;
-                })
-                .test("fileType", "Unsupported file type", (value) => {
-                  if (!value) return false;
-                  return ["image/jpeg", "image/png"].includes(value.type);
-                })
-                .required("Please select an image file"),
-              link: Yup.string().required(),
+              name: Yup.string(),
+              image: Yup.mixed(),
+              link: Yup.string(),
             })}
           >
             {({ handleSubmit, errors, touched }) => (
@@ -259,7 +261,7 @@ const ProductManagement = () => {
                     </FormLabel>
                     <Field as={Input} id="id" name="id" />
                   </FormControl>
-                  <FormControl>
+                  <FormControl isInvalid={touched.name && errors.name}>
                     <FormLabel fontWeight="600" fontSize="lg" htmlFor="name">
                       İsim
                     </FormLabel>
@@ -271,7 +273,7 @@ const ProductManagement = () => {
                     </FormLabel>
                     <Field as={Input} id="image" name="image" type="file" />
                   </FormControl>
-                  <FormControl>
+                  <FormControl isInvalid={touched.link && errors.link}>
                     <FormLabel fontWeight="600" fontSize="lg" htmlFor="link">
                       Link
                     </FormLabel>
@@ -334,6 +336,7 @@ const ProductManagement = () => {
                 <Tr>
                   <Th>ID</Th>
                   <Th>İsim</Th>
+                  <Th>Görsel</Th>
                   <Th>Link</Th>
                 </Tr>
               </Thead>
@@ -342,6 +345,7 @@ const ProductManagement = () => {
                   <Tr key={index}>
                     <Td>{product.ID}</Td>
                     <Td>{product.NAME}</Td>
+                    <Td>{product.IMAGE}</Td>
                     <Td>{product.LINK}</Td>
                   </Tr>
                 ))}

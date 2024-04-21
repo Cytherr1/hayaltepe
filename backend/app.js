@@ -13,6 +13,7 @@ const multer = require("multer");
 const adminAuthRoutes = require("./routes/admin/auth_routes");
 const adminProdRoutes = require("./routes/admin/product_routes");
 const adminUserRoutes = require("./routes/admin/user_routes");
+const adminImageRoutes = require("./routes/admin/image_routes");
 
 // 2. General routes
 const generalAuthRoutes = require("./routes/general/auth_routes");
@@ -41,23 +42,11 @@ app.use(
   })
 );
 
-// Multer middleware
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, "public", "images"));
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  },
-});
-
-// Multer middleware. Must be handled for features.
-const upload = multer({ storage: storage });
-
 // Mount routes
 app.use("/admin/auth", adminAuthRoutes);
 app.use("/admin/product", adminProdRoutes);
 app.use("/admin/user", adminUserRoutes);
+app.use("/admin/image", adminImageRoutes);
 
 app.use("/general/auth", generalAuthRoutes);
 app.use("/general/product", generalProdRoutes);
