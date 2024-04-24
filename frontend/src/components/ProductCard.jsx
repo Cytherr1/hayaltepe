@@ -24,10 +24,11 @@ const ProductCard = (props) => {
 			bgColor="b.500" 
 			borderColor='black' 
 			boxShadow="2xl"
+			borderRadius="2xl"
 			p="0.5em"
 		>
 			<CardBody>
-				<Image src={props.image} alt='product image' borderRadius='lg' boxSize='250'/>
+				<Image src={props.image} alt='product image' borderRadius='2xl' boxSize='250'/>
 			</CardBody>
 			<Heading size='md' maxW="250px">{props.name}</Heading>
 			<CardFooter>

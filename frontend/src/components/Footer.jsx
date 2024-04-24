@@ -20,7 +20,7 @@ const Footer = (props) => {
         width="100%"
         align="center"
         justify="center"
-        bg="#A9B388"
+        bg="g.500"
         p="1em"
         flexWrap="wrap"
       >

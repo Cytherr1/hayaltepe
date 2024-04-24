@@ -6,7 +6,8 @@ import {
   Text, 
   VStack,
   Heading,
-  Spacer
+  Spacer,
+  Divider
 } from '@chakra-ui/react'
 import {
   PhoneIcon,
@@ -45,22 +46,24 @@ const Contact = () => {
           justify="center"
           gap="1.5em" 
           p="1.5em"
-          h={isMobile ? "xs" : "xl"}
+          h={isMobile ? 400 : 475}
           borderWidth="2px"
           borderRadius={isMobile ? "lg" : "0px 10px 10px 0px"}
-          bg="g.400"
+          bg="g.500"
           boxShadow="lg"
           w={isMobile ? "md" : "xs"}
         >
           <Spacer/>
-          <Spacer/>
           <Heading size="lg"><FormattedMessage id='contus'/></Heading>
           <Heading size="md"><FormattedMessage id='cinfo'/></Heading>
+          <Spacer/>
+          <Divider borderColor="dg.500"/>
           <Spacer/>
           <Text fontWeight="600"><InfoIcon mr={2}/> Yeşilüzümlü mah. Fethiye/Muğla</Text>
           <Text fontWeight="600"><EmailIcon mr={2}/> info@hayaltepe.com</Text>
           <Text fontWeight="600"><PhoneIcon mr={1}/> +90 541 487 59 78</Text>
           <Spacer/>
+          <Divider borderColor="dg.500"/>
           <Spacer/>
         </VStack>
       </Box>

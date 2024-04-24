@@ -38,13 +38,13 @@ const Navbar = (props) => {
       <Flex 
         alignItems='center' 
         p="1.5em"
-        bg="#5F6F52"
+        bg="dg.500"
         maxH="100px"
         gap={3}
         >
         <Spacer/>
         <Center
-          bg="#A9B388"
+          bg="g.500"
           borderRadius="0px 0px 5px 5px"
           boxShadow="md"
           minW="150px"
