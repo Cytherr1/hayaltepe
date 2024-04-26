@@ -106,9 +106,9 @@ const ContactForm = () => {
                                 name="policy"
                             >
                                 <Flex align="center" gap={1}>
-                                {lan === "TR" && <Link to="/privacy"><Text><FormattedMessage id="kvkk"/></Text></Link>}
+                                {lan === "TR" && <Link to="/corporate/privacy"><Text><FormattedMessage id="kvkk"/></Text></Link>}
                                 <Text><FormattedMessage id="read"/></Text>
-                                {lan === "EN" && <Link to="/privacy"><Text><FormattedMessage id="kvkk"/></Text></Link>}
+                                {lan === "EN" && <Link to="/corporate/privacy"><Text><FormattedMessage id="kvkk"/></Text></Link>}
                                 </Flex>
                             </Field>
                             <FormErrorMessage>{errors.policy}</FormErrorMessage>
