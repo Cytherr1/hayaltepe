@@ -1,12 +1,14 @@
 import React from 'react'
-import { Flex } from '@chakra-ui/react'
+import { VStack } from '@chakra-ui/react'
 import BrandSection from '../components/BrandSection'
+import Hero from '../components/Hero'
 
 const Home = () => {
   return (
-    <Flex>
+    <VStack gap="none">
+      <Hero/>
       <BrandSection/>
-    </Flex>
+    </VStack>
   )
 }
 

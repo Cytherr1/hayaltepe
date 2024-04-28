@@ -1,17 +1,10 @@
 import React from 'react'
 import {
 	useMediaQuery,
-	Flex, 
-	Box, 
-	Text, 
+	Flex,
 	HStack,
 	Heading,
 	Divider,
-	Spacer,
-	Button,
-	Image,
-	Link,
-	VStack
 } from '@chakra-ui/react'
 import { FormattedMessage } from 'react-intl'
 import BrandCard from './BrandCard'
