@@ -6,7 +6,7 @@ const getAllProduct = async (req, res) => {
   try {
     connection = await getConnection();
 
-    const query = "SELECT ID, NAME, IMAGE FROM PRODUCT";
+    const query = "SELECT ID, NAME, IMAGE, LINK FROM PRODUCT";
 
     connection.query(query, (error, results) => {
       if (error) {
@@ -31,8 +31,8 @@ const addProduct = async (req, res) => {
     connection = await getConnection();
     
     const { name, link } = req.body;
-    const image = req.file;
-    const imagePath = image.path;
+    const image = req.file.filename;
+    console.log(image);
     const addQuery = "INSERT INTO PRODUCT (NAME, IMAGE, LINK) VALUES (?,?,?)";
     const logQuery =
       "INSERT INTO LOG (LOG_USER, LOG_TIMESTAMP, LOG_DESCR) VALUES (?, ?, ?)";

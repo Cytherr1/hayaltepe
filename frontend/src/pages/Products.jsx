@@ -88,7 +88,7 @@ const Products = () => {
           return(
             <ProductCard
               key={product.ID}
-              image={product.IMAGE}
+              image={"http://localhost:3000/images/" + product.IMAGE}
               name={product.NAME}
               url={product.LINK}
             />

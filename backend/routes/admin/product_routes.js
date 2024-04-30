@@ -4,7 +4,7 @@ const productRoutes = require("../../controllers/admin_controllers/product_contr
 const upload = require("../../middlewares/multerMiddleware")
 
 router.get("/getAllProduct", productRoutes.getAllProduct);
-router.post("/add", upload.single("file"), productRoutes.addProduct);
+router.post("/add", upload.single("image"), productRoutes.addProduct);
 router.post("/delete", productRoutes.removeProduct);
 router.post("/update", productRoutes.updateProduct);
 
