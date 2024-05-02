@@ -29,7 +29,7 @@ const addProduct = async (req, res) => {
 
   try {
     connection = await getConnection();
-    
+
     const { name, link } = req.body;
     const image = req.file.filename;
     console.log(image);
@@ -80,66 +80,64 @@ const addProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
   let connection;
-  let query;
 
   try {
     connection = await getConnection();
 
-    const { id, name, image, link } = req.body;
-    query = "UPDATE PRODUCT SET";
+    const { name, link, id } = req.body;
+    const image = req.file.filename;
 
+    let updateQuery = "UPDATE PRODUCT SET";
     const updateValues = [];
-    if (name) {
-      query += " NAME = ?,";
+
+    if (name !== undefined) {
+      updateQuery += " NAME = ?,";
       updateValues.push(name);
     }
 
-    if (image) {
-      query += " IMAGE = ?,";
+    if (image !== undefined) {
+      updateQuery += " IMAGE = ?,";
       updateValues.push(image);
     }
 
-    if (link) {
-      query += " LINK = ?,";
+    if (link !== undefined) {
+      updateQuery += " LINK = ?,";
       updateValues.push(link);
     }
 
-    query = query.slice(0, -1);
-
-    query += " WHERE ID = ?";
+    updateQuery = updateQuery.slice(0, -1) + " WHERE ID = ?";
+    updateValues.push(id);
 
     const logQuery =
       "INSERT INTO LOG (LOG_USER, LOG_TIMESTAMP, LOG_DESCR) VALUES (?, ?, ?)";
 
     await connection.beginTransaction();
 
-    connection.query(
-      query,
-      [...updateValues, id],
-      async (error, updateResult) => {
-        if (error) {
-          await connection.rollback();
-          res.status(500).json({ error: error.message });
-          return;
-        }
-
-        connection.query(
-          logQuery,
-          ["log_user", new Date(), "Product updated successfully"],
-          async (error, logResult) => {
-            if (error) {
-              await connection.rollback();
-              res.status(500).json({ error: error.message });
-              return;
-            }
-            await connection.commit();
-            res
-              .status(200)
-              .json({ success: true, message: "Product updated successfully" });
-          }
-        );
+    connection.query(updateQuery, updateValues, async (error, updateResult) => {
+      if (error) {
+        await connection.rollback();
+        res.status(500).json({ error: error.message });
+        return;
       }
-    );
+
+      connection.query(
+        logQuery,
+        ["log_user", new Date(), "Product updated successfully"],
+        async (error, logResult) => {
+          if (error) {
+            await connection.rollback();
+            res.status(500).json({ error: error.message });
+            return;
+          }
+
+          await connection.commit();
+        }
+      );
+    });
+
+    res
+      .status(200)
+      .json({ success: true, message: "User updated successfully" });
   } catch (error) {
     if (connection) {
       await connection.rollback();

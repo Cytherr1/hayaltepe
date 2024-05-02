@@ -20,7 +20,6 @@ import * as Yup from "yup";
 import axios from "axios";
 
 const ProductManagement = () => {
-
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -48,7 +47,6 @@ const ProductManagement = () => {
 
       if (responseData.success) {
         setProducts(responseData.products);
-        console.log(responseData.products);
       } else {
         alert(responseData.errors);
       }
@@ -59,14 +57,12 @@ const ProductManagement = () => {
   };
 
   const addProduct = async (formData) => {
-    console.log(formData);
     try {
-      await axios.post('http://localhost:3000/admin/product/add', formData, {
+      await axios.post("http://localhost:3000/admin/product/add", formData, {
         headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+          "Content-Type": "multipart/form-data",
+        },
       });
-
     } catch (error) {
       console.error("Error:", error);
       alert("An error has occured.");
@@ -75,30 +71,11 @@ const ProductManagement = () => {
 
   const updateProduct = async (formData) => {
     try {
-      const response = await fetch(
-        "http://localhost:3000/admin/product/update",
-        {
-          method: "POST",
-          headers: {
-            Accept: "application/form-data",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      const responseData = await response.json();
-
-      if (responseData.success) {
-        localStorage.setItem("auth-token", responseData.token);
-        window.location.replace("/");
-      } else {
-        alert(responseData.errors);
-      }
+      await axios.post("http://localhost:3000/admin/product/update", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
     } catch (error) {
       console.error("Error:", error);
       alert("An error has occured.");
@@ -126,8 +103,6 @@ const ProductManagement = () => {
       const responseData = await response.json();
 
       if (responseData.success) {
-        localStorage.setItem("auth-token", responseData.token);
-        window.location.replace("/");
       } else {
         alert(responseData.errors);
       }
@@ -156,7 +131,6 @@ const ProductManagement = () => {
               link: "",
             }}
             onSubmit={(values, { resetForm }) => {
-              console.log(values);
               addProduct(values);
               resetForm();
             }}
@@ -179,7 +153,13 @@ const ProductManagement = () => {
                     <FormLabel fontWeight="600" fontSize="lg" htmlFor="image">
                       Görsel
                     </FormLabel>
-                    <Input id="image" type="file" onChange={e => setFieldValue("image", e.target.files[0])}/>
+                    <Input
+                      id="image"
+                      type="file"
+                      onChange={(e) =>
+                        setFieldValue("image", e.target.files[0])
+                      }
+                    />
                   </FormControl>
                   <FormControl isInvalid={touched.link && errors.link}>
                     <FormLabel fontWeight="600" fontSize="lg" htmlFor="link">
@@ -208,7 +188,7 @@ const ProductManagement = () => {
             initialValues={{
               id: "",
               name: "",
-              image: "",
+              image: null,
               link: "",
             }}
             onSubmit={(values, { resetForm }) => {
@@ -222,7 +202,7 @@ const ProductManagement = () => {
               link: Yup.string(),
             })}
           >
-            {({ handleSubmit, errors, touched }) => (
+            {({ handleSubmit, errors, touched, setFieldValue }) => (
               <form onSubmit={handleSubmit}>
                 <VStack gap="1em">
                   <FormControl isInvalid={touched.id && errors.id}>
@@ -241,7 +221,13 @@ const ProductManagement = () => {
                     <FormLabel fontWeight="600" fontSize="lg" htmlFor="image">
                       Görsel
                     </FormLabel>
-                    <Field as={Input} id="image" name="image" type="file" />
+                    <Input
+                      id="image"
+                      type="file"
+                      onChange={(e) =>
+                        setFieldValue("image", e.target.files[0])
+                      }
+                    />
                   </FormControl>
                   <FormControl isInvalid={touched.link && errors.link}>
                     <FormLabel fontWeight="600" fontSize="lg" htmlFor="link">
