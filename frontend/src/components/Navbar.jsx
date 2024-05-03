@@ -44,7 +44,7 @@ const Navbar = (props) => {
         >
         <Spacer/>
         <Center
-          bg="g.500"
+          bgGradient="linear(to-b, y.500, g.500)"
           borderRadius="0px 0px 5px 5px"
           boxShadow="md"
           minW="150px"
