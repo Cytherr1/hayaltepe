@@ -26,6 +26,7 @@ const Contact = () => {
     <Flex
       align="center"
       justify="center"
+      h="87vh"
       p="3.5em"
       gap="1em"
       bg="y.500"

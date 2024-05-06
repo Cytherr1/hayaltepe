@@ -103,12 +103,6 @@ const NavbarMobile = (props) => {
                     <AccordionPanel>
                       <Text as={Link} onClick={onClose} _hover={{color: "#A9B388"}} fontWeight="semibold" transition="0.3s" to="/corporate/privacy"><FormattedMessage id='privacy'/></Text>
                     </AccordionPanel>
-                    <AccordionPanel>
-                      <Text as={Link} onClick={onClose} _hover={{color: "#A9B388"}} fontWeight="semibold" transition="0.3s" to="/corporate/contract"><FormattedMessage id='dsc'/></Text>
-                    </AccordionPanel>
-                    <AccordionPanel>
-                      <Text as={Link} onClick={onClose} _hover={{color: "#A9B388"}} fontWeight="semibold" transition="0.3s" to="/corporate/refund"><FormattedMessage id='refund'/></Text>
-                    </AccordionPanel>
                   </AccordionItem>
                 </ListItem>
                 <ListItem onClick={onClose} _hover={{color: "#A9B388"}} fontWeight="semibold" transition="0.3s" as={Link} to="/contact"><FormattedMessage id='contact'/></ListItem>

@@ -23,12 +23,6 @@ const Corporate = (props) => {
     if (location.pathname === '/corporate/privacy') {
       props.tabSetter(1)
     }
-    else if (location.pathname === '/corporate/contract') {
-      props.tabSetter(2)
-    }
-    else if (location.pathname === '/corporate/refund') {
-      props.tabSetter(3)
-    }
     else {
       props.tabSetter(0)
     }
@@ -63,8 +57,6 @@ const Corporate = (props) => {
           <TabList gap="1em" p="none" alignItems="center">
             <Tab as={Link} to="/corporate/about" onClick={() => props.tabSetter(0)}><FormattedMessage id='about'/></Tab>
             <Tab as={Link} to="/corporate/privacy" onClick={() => props.tabSetter(1)}><FormattedMessage id='privacy'/></Tab>
-            <Tab as={Link} to="/corporate/contract" onClick={() => props.tabSetter(2)}><FormattedMessage id='dsc'/></Tab>
-            <Tab as={Link} to="/corporate/refund" onClick={() => props.tabSetter(3)}><FormattedMessage id='refund'/></Tab>
           </TabList>}
 
           <TabPanels>
@@ -75,14 +67,6 @@ const Corporate = (props) => {
             <TabPanel p="2em">
               <Heading size="xl"><FormattedMessage id='privacy'/></Heading>
               <Text fontSize="md">two!</Text>
-            </TabPanel>
-            <TabPanel p="2em">
-              <Heading size="xl"><FormattedMessage id='dsc'/></Heading>
-              <Text fontSize="md">three!</Text>
-            </TabPanel>
-            <TabPanel p="2em">
-              <Heading size="xl"><FormattedMessage id='refund'/></Heading>
-              <Text fontSize="md">three!</Text>
             </TabPanel>
           </TabPanels>
         </Tabs>

@@ -4,9 +4,10 @@ import {
   Spinner,
   Text,
   Icon,
-  VStack
+  VStack,
+  Heading
 } from '@chakra-ui/react'
-import { WarningTwoIcon } from '@chakra-ui/icons'
+import { WarningTwoIcon, MoonIcon} from '@chakra-ui/icons'
 import ProductCard from '../components/ProductCard'
 import { FormattedMessage } from 'react-intl';
 
@@ -71,6 +72,13 @@ const Products = () => {
         wrap="wrap"
         gap="2em"
       >
+        { products.length === 0 && 
+          <VStack gap={5}>
+            <Icon as={MoonIcon} boxSize={10} color="dg.500"/>
+            <Heading size="lg" color="dg.500" textAlign="center"><FormattedMessage id='noproducth'/></Heading>
+            <Text><FormattedMessage id='noproduct'/></Text>
+          </VStack>
+        }
         { isLoading && <Spinner
           thickness='4px'
           speed='0.65s'

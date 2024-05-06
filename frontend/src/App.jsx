@@ -42,8 +42,6 @@ function App() {
             <Route path='/corporate' element={<Corporate index={index} tabSetter={setIndex}/>}>
               <Route path='about' element={<Corporate index={index} tabSetter={setIndex}/>}/>
               <Route path='privacy' element={<Corporate index={index} tabSetter={setIndex}/>}/>
-              <Route path='contract' element={<Corporate index={index} tabSetter={setIndex}/>}/>
-              <Route path='refund' element={<Corporate index={index} tabSetter={setIndex}/>}/>
             </Route>
           </Routes>
           {isMobile ? <FooterMobile tabSetter={setIndex}/> :<Footer tabSetter={setIndex}/>}

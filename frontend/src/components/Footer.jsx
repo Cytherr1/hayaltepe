@@ -42,8 +42,6 @@ const Footer = (props) => {
           <UnorderedList style={{display: "flex", flexDirection: "column", alignItems: "flex-start", margin: "0"}} spacing="0.5em">
             <ListItem  _hover={{color: "#5F6F52"}} transition="0.3s" as={Link} to="/corporate/about" onClick={() => props.tabSetter(0)}><FormattedMessage id='about'/></ListItem>
             <ListItem  _hover={{color: "#5F6F52"}} transition="0.3s" as={Link} to="/corporate/privacy" onClick={() => props.tabSetter(1)}><FormattedMessage id='privacy'/></ListItem>
-            <ListItem  _hover={{color: "#5F6F52"}} transition="0.3s" as={Link} to="/corporate/contract" onClick={() => props.tabSetter(2)}><FormattedMessage id='dsc'/></ListItem>
-            <ListItem  _hover={{color: "#5F6F52"}} transition="0.3s" as={Link} to="/corporate/refund" onClick={() => props.tabSetter(3)}><FormattedMessage id='refund'/></ListItem>
           </UnorderedList>
         </VStack>
         <Spacer/>

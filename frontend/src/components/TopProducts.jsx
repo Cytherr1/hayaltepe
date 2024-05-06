@@ -60,6 +60,7 @@ const TopProducts = () => {
 	};
 
 	return (
+		products.length > 0 &&
 		<Flex
 			w="100%"
 			h="65vh"
