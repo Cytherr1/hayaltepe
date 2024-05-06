@@ -9,8 +9,6 @@
     "qmenu": "Hızlı Menü",
     "corpo": "Kurumsal",
     "privacy": "Gizlilik Sözleşmesi",
-    "dsc": "Mesafeli Satış Sözleşmesi",
-    "refund": "İptal ve İade Koşulları",
     "cinfo": "İletişim Bilgileri",
     "reserved": "Tüm hakları saklıdır.",
     "name": "İsim",
@@ -51,5 +49,7 @@
     "salta": "Tekne ve yatlarınızın bakımı, onarımı ve teknik değişiklikleri.",
     "brands": "Markalarımız",
     "noproduct": "Şu anda herhangi bir ürün mevcut değil.",
-    "noproducth": "Burası Hayaltepe kadar sakin gözüküyor"
+    "noproducth": "Burası Hayaltepe kadar sakin gözüküyor",
+    "topproducth": "Hayaltepe'den sizlere",
+    "topproduct": "Ürünlerimize göz atın."
 }

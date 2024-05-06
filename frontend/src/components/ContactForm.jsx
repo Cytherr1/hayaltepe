@@ -104,6 +104,7 @@ const ContactForm = () => {
                                 as={Checkbox}
                                 id="policy"
                                 name="policy"
+                                colorScheme="dg"
                             >
                                 <Flex align="center" gap={1}>
                                 {lan === "TR" && <Link to="/corporate/privacy"><Text><FormattedMessage id="kvkk"/></Text></Link>}

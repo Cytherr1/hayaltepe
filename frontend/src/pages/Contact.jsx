@@ -17,6 +17,7 @@ import {
 import ContactForm from '../components/ContactForm'
 import Map from '../components/Map'
 import { FormattedMessage } from 'react-intl'
+import BrandSection from '../components/BrandSection'
 
 const Contact = () => {
 
@@ -26,12 +27,14 @@ const Contact = () => {
     <Flex
       align="center"
       justify="center"
-      h="87vh"
+      minH="87vh"
+      flexDirection="column"
       p="3.5em"
-      gap="1em"
+      gap="3em"
       bg="y.500"
       w="100%"
     >
+      <Heading size="xl"><FormattedMessage id='contus'/></Heading>
       <Box
         display="flex"
         flexDirection={isMobile ? "column" : 'row'}
@@ -55,8 +58,7 @@ const Contact = () => {
           w={isMobile ? "md" : "xs"}
         >
           <Spacer/>
-          <Heading size="lg"><FormattedMessage id='contus'/></Heading>
-          <Heading size="md"><FormattedMessage id='cinfo'/></Heading>
+          <Heading size="lg"><FormattedMessage id='cinfo'/></Heading>
           <Spacer/>
           <Divider borderColor="dg.500"/>
           <Spacer/>
@@ -68,6 +70,7 @@ const Contact = () => {
           <Spacer/>
         </VStack>
       </Box>
+      <BrandSection/>
     </Flex>
   )
 }

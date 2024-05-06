@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import {
 	useMediaQuery,
+	Text,
 	Spinner,
 	Flex,
 	VStack,
 	HStack,
-	Spacer,
 	Heading,
 	IconButton,
 } from '@chakra-ui/react'
@@ -20,6 +20,7 @@ const TopProducts = () => {
 	const [products, setProducts] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [isError, setError] = useState(false);
+	const [isMobile] = useMediaQuery("(max-width: 768px)")
 
 	useEffect(() => {
     fetchProducts();
@@ -63,14 +64,15 @@ const TopProducts = () => {
 		products.length > 0 &&
 		<Flex
 			w="100%"
-			h="65vh"
+			minH="65vh"
 			bgColor="y.500"
 			alignItems="center"
 			justifyContent="center"
+			p="3em"
+			gap={isMobile ? "50px" : "100px"}
+			wrap="wrap"
 		>
-			<HStack w="100%" alignItems="center" justifyContent="center" gap={7}>
-				<Spacer/>
-				<Spacer/>
+			<HStack gap="5em" wrap="wrap" alignItems="center" justifyContent="center">
 				{ isLoading && <Spinner
 						thickness='4px'
 						speed='0.65s'
@@ -95,14 +97,12 @@ const TopProducts = () => {
 						);
 					}
 				)}
-				<Spacer/>
-				<VStack gap={7}>
-					<Heading>Ürünlerimize göz atın</Heading>
-					<IconButton as={Link} boxSize={50} fontSize="75px" bg="none" borderRadius="50%" _hover={{bg: "none"}} icon={<ChevronRightIcon color="dg.500"/>} to='/products'/>
-				</VStack>
-				<Spacer/>
-				<Spacer/>
 			</HStack>
+			<VStack gap={7} alignItems={isMobile ? "center" : "flex-start"}>
+				<Heading color="dg.500"><FormattedMessage id='topproducth'/></Heading>
+				<Text ><FormattedMessage id='topproduct'/></Text>
+				<IconButton as={Link} boxSize={50} fontSize="75px" bg="none" borderRadius="50%" _hover={{bg: "none"}} icon={<ChevronRightIcon color="dg.500"/>} to='/products'/>
+			</VStack>
 		</Flex>
 	)
 }

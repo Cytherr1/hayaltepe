@@ -21,6 +21,7 @@ const ProductCard = (props) => {
 			borderRadius="2xl"
 			p={2}
 			gap={3}
+			minW="-moz-fit-content"
 		>
 			<CardBody p={2}>
 				<Image src={props.image} alt='product image' borderRadius='2xl' boxSize='250'/>

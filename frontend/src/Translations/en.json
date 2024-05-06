@@ -9,8 +9,6 @@
     "qmenu": "Quick Menu",
     "corpo": "Corporate",
     "privacy": "Privacy Policy",
-    "dsc": "Distance Selling Contract",
-    "refund": "Cancellation and Refunding",
     "cinfo": "Contact Info",
     "reserved": "All rights reserved.",
     "name": "Name",
@@ -51,5 +49,7 @@
     "salta": "Boat and Yacht maintenance, repair and modification.",
     "brands": "Our Brands",
     "noproduct": "There are no products available at the moment.",
-    "noproducth": "It's as calm as Hayaltepe here"
+    "noproducth": "It's as calm as Hayaltepe here",
+    "topproducth": "From Hayaltepe to you",
+    "topproduct": "Take a look at our products."
 }

@@ -10,9 +10,11 @@ import {
   Text,
   Heading,
   Center,
+  Divider,
 } from '@chakra-ui/react'
 import { FormattedMessage } from 'react-intl'
 import { Link, useLocation } from 'react-router-dom'
+import Policy from '../components/Policy'
 
 const Corporate = (props) => {
 
@@ -31,8 +33,8 @@ const Corporate = (props) => {
   return (
     <Center
       w="100%"
-      h="85vh"
-      p="1em"
+      minH="85vh"
+      p="5em"
       bg="y.500"
     >
       <Box
@@ -54,19 +56,21 @@ const Corporate = (props) => {
           p="1em"
           >
           {!isMobile &&
-          <TabList gap="1em" p="none" alignItems="center">
-            <Tab as={Link} to="/corporate/about" onClick={() => props.tabSetter(0)}><FormattedMessage id='about'/></Tab>
-            <Tab as={Link} to="/corporate/privacy" onClick={() => props.tabSetter(1)}><FormattedMessage id='privacy'/></Tab>
+          <TabList gap="1em" p="none" alignItems="center" w={150}>
+            <Tab w={150} as={Link} to="/corporate/about" onClick={() => props.tabSetter(0)}><FormattedMessage id='about'/></Tab>
+            <Tab w={150} as={Link} to="/corporate/privacy" onClick={() => props.tabSetter(1)}><FormattedMessage id='privacy'/></Tab>
           </TabList>}
 
           <TabPanels>
-            <TabPanel p="2em">
+            <TabPanel p="3em">
               <Heading size="xl"><FormattedMessage id='about'/></Heading>
-              <Text fontSize="md">one!</Text>
+              <br/>
+              <Text fontSize="md">Hayaltepe çokiyi</Text>
             </TabPanel>
-            <TabPanel p="2em">
+            <TabPanel p="3em">
               <Heading size="xl"><FormattedMessage id='privacy'/></Heading>
-              <Text fontSize="md">two!</Text>
+              <br/>
+              <Text fontSize="md"><Policy/></Text>
             </TabPanel>
           </TabPanels>
         </Tabs>
