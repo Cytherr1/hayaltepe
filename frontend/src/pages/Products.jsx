@@ -72,7 +72,7 @@ const Products = () => {
         wrap="wrap"
         gap="2em"
       >
-        { products.length === 0 && !isLoading &&
+        { products.length === 0 && !isLoading && !isError &&
           <VStack gap={5}>
             <Icon as={MoonIcon} boxSize={10} color="dg.500"/>
             <Heading size="lg" color="dg.500" textAlign="center"><FormattedMessage id='noproducth'/></Heading>
