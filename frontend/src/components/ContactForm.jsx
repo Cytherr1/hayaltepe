@@ -59,7 +59,6 @@ const ContactForm = () => {
                     policy: false
                 }}
                 onSubmit={(values, {resetForm}) => {
-                    console.log(values)
                     sendForm(values);
                     resetForm();
                 }}
