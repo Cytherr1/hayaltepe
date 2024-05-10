@@ -14,10 +14,6 @@ const sendMail = async (req, res) => {
 			text: req.body.message
 		}
 
-		console.log(req.body.name);
-		console.log(req.body.email);
-		console.log(formData.from);
-
 		mg.messages.create(process.env.MAILGUN_DOMAIN, formData)
 	} catch (error) {
     res.status(500).json({ error: error.message });
