@@ -17,12 +17,27 @@ import {
 } from "@chakra-ui/react"
 import { Link } from 'react-router-dom'
 import { Language } from '../App'
+import axios from 'axios'
 
 const ContactForm = () => {
 
     const [charCount, setCharCount] = useState(0);
     const lan = useContext(Language);
     const [load, setLoad] = useState(false);
+
+    const sendForm = async (formData) => {
+        try {
+            await axios.post("http://localhost:3000/general/mail/sendform", formData, {
+                headers: {
+                    Accept: "application/form-data",
+                    "Content-Type": "application/json",
+                  },
+            });
+        } catch (error) {
+            console.error("Error:", error);
+            alert("An error has occured.");
+        }
+      };
   
     return (
         <Box
@@ -44,7 +59,9 @@ const ContactForm = () => {
                     policy: false
                 }}
                 onSubmit={(values, {resetForm}) => {
-                    resetForm()
+                    console.log(values)
+                    sendForm(values);
+                    resetForm();
                 }}
                 validationSchema={Yup.object({
                     name: Yup.string().required(<FormattedMessage id='required'/>),

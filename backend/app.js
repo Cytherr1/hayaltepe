@@ -17,6 +17,7 @@ const adminImageRoutes = require("./routes/admin/image_routes");
 // 2. General routes
 const generalAuthRoutes = require("./routes/general/auth_routes");
 const generalProdRoutes = require("./routes/general/product_routes");
+const generalMailRoutes = require("./routes/general/mail_routes")
 
 // 3. Log routes
 const logRoutes = require("./routes/log/log_routes");
@@ -49,6 +50,7 @@ app.use("/admin/image", adminImageRoutes);
 
 app.use("/general/auth", generalAuthRoutes);
 app.use("/general/product", generalProdRoutes);
+app.use("/general/mail", generalMailRoutes);
 
 app.use("/log", logRoutes);
 
