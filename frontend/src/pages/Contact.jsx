@@ -51,8 +51,9 @@ const Contact = () => {
           gap="1.5em" 
           p="1.5em"
           h={isMobile ? 400 : 475}
-          borderWidth="2px"
+          borderWidth={isMobile ? "2px" : "2px 2px 2px 0px"}
           borderRadius={isMobile ? "lg" : "0px 10px 10px 0px"}
+          borderColor="dg.500"
           bg="g.500"
           boxShadow="lg"
           w={isMobile ? "md" : "xs"}

@@ -48,8 +48,9 @@ const RegisterForm = () => {
   return (
     <Box
       minW="sm"
+      border="2px solid"
+      borderColor="dg.500"
       borderRadius="lg"
-      borderWidth="2px"
       bgColor="g.500"
       p="1em"
       maxW="lg"
@@ -147,9 +148,9 @@ const RegisterForm = () => {
                     colorScheme="dg"
                   >
                     <Flex align="center" gap={1} justifyContent="center">
-                      {lan === "TR" && <Link to="/corporate/privacy"><Text><FormattedMessage id="kvkk"/></Text></Link>}
+                      {lan === "TR" && <Link to="/corporate/privacy"><Text color="dg.500"><FormattedMessage id="kvkk"/></Text></Link>}
                       <Text><FormattedMessage id="read"/></Text>
-                      {lan === "EN" && <Link to="corporate/privacy"><Text><FormattedMessage id="kvkk"/></Text></Link>}
+                      {lan === "EN" && <Link to="corporate/privacy"><Text color="dg.500"><FormattedMessage id="kvkk"/></Text></Link>}
                     </Flex>
                   </Field>
                   <FormErrorMessage>{errors.policy}</FormErrorMessage>

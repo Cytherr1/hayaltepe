@@ -76,7 +76,7 @@ const Navbar = (props) => {
           <Button variant="nav" as={Link} to="/register"><FormattedMessage id='register'/></Button>
           </>
           :
-          <Button onClick={() => {localStorage.removeItem("auth-token"); window.location.replace("/")}}><FormattedMessage id='logout'/></Button>
+          <Button variant="nav" onClick={() => {localStorage.removeItem("auth-token"); window.location.replace("/")}}><FormattedMessage id='logout'/></Button>
           }
         </Flex>
         <Spacer/>

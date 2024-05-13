@@ -38,7 +38,8 @@ const LoginForm = () => {
     <Box 
       minW="sm"
       maxW="md"
-      borderWidth="2px" 
+      border="2px solid"
+      borderColor="dg.500"
       borderRadius="lg" 
       overflow="hidden"
       bgColor="g.500"

@@ -12,8 +12,9 @@ const Map = () => {
 		<AspectRatio 
 			minW={isMobile ? "md" : "2xl"}
 			h={475} 
-			borderWidth="2px" 
-			borderRadius={isMobile ? "lg" : "10px 0px 0px 10px"} 
+			borderWidth={isMobile ? "2px" : "2px 0px 2px 2px"}
+			borderRadius={isMobile ? "lg" : "10px 0px 0px 10px"}
+			borderColor="dg.500"
 			overflow="hidden"
 			boxShadow="lg"
 		>

@@ -117,7 +117,7 @@ const NavbarMobile = (props) => {
                 <Button variant="form" as={Link} to="/register" onClick={onClose}><FormattedMessage id='register'/></Button>
                 </>
                 :
-                <Button onClick={() => {localStorage.removeItem("auth-token"); window.location.replace("/"); onClose}}><FormattedMessage id='logout'/></Button>
+                <Button variant="form" onClick={() => {localStorage.removeItem("auth-token"); window.location.replace("/"); onClose}}><FormattedMessage id='logout'/></Button>
                 }
               </Flex>
             </DrawerFooter>

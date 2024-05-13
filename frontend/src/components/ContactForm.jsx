@@ -44,7 +44,9 @@ const ContactForm = () => {
             minW="md"
             maxW="lg"
             overflow="hidden"
-            border="form"
+            border="2px solid"
+            borderColor="dg.500"
+            borderRadius="lg"
             bg="g.500"
             boxShadow="lg"
             p="1em"
@@ -123,9 +125,9 @@ const ContactForm = () => {
                                 borderColor="dg.500"
                             >
                                 <Flex align="center" gap={1}>
-                                {lan === "TR" && <Link to="/corporate/privacy"><Text><FormattedMessage id="kvkk"/></Text></Link>}
+                                {lan === "TR" && <Link to="/corporate/privacy"><Text color="dg.500"><FormattedMessage id="kvkk"/></Text></Link>}
                                 <Text><FormattedMessage id="read"/></Text>
-                                {lan === "EN" && <Link to="/corporate/privacy"><Text><FormattedMessage id="kvkk"/></Text></Link>}
+                                {lan === "EN" && <Link to="/corporate/privacy"><Text color="dg.500"><FormattedMessage id="kvkk"/></Text></Link>}
                                 </Flex>
                             </Field>
                             <FormErrorMessage>{errors.policy}</FormErrorMessage>
