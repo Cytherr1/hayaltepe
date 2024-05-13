@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Box, VStack, Text, Heading} from "@chakra-ui/react"
+import { VStack, Text, Heading, UnorderedList, ListItem} from "@chakra-ui/react"
 import { Language } from '../App'
 
 const Policy = () => {
@@ -26,16 +26,16 @@ const Policy = () => {
 			<Heading size="md">4. Veri Sahiplerinin Hakları ve Bu Hakların Kullanılması</Heading>
 			<br />
 			<Text>6698 Sayılı Kanun kapsamında kişisel verilerinize ilişkin haklarınızı kimliğinizi tevsik edici belgeler ve talebinizi içeren dilekçeniz ile bizzat elden veya noter kanalıyla, veya info@tisse.net e-posta adresimize mail atmak suretiyle iletmeniz durumunda TİSSE talebin niteliğine göre talebi en kısa sürede ve en geç otuz gün içinde sonuçlandıracaktır. Taleplere ilişkin olarak herhangi bir ücret talep edilmemesi esas olmakla birlikte, Şirket’in Kişisel Verileri Koruma Kurulu tarafından belirlenen ücret tarifesi üzerinden ücret talep etme hakkı saklıdır. Bu kapsamda Kanun’un 11. maddesi uyarınca kişisel veri sahipleri;</Text>
-			<Box> 
-				<Text>Kişisel verilerin işlenip işlenmediğini öğrenme,</Text>
-				<Text>Kişisel verileri işlenmişse buna ilişkin bilgi talep etme,</Text>
-				<Text>Kişisel verilerin işlenme amacını ve bunların amacına uygun kullanılıp kullanılmadığını öğrenme,</Text>
-				<Text>Yurt içinde veya yurt dışında kişisel verilerin aktarıldığı üçüncü kişileri bilme,</Text>
-				<Text>Kişisel verilerin eksik veya yanlış işlenmiş olması hâlinde bunların düzeltilmesini isteme ve bu kapsamda yapılan işlemin kişisel verilerin aktarıldığı üçüncü kişilere bildirilmesini isteme,</Text>
-				<Text>Kanun ve ilgili diğer kanun hükümlerine uygun olarak işlenmiş olmasına rağmen, işlenmesini gerektiren sebeplerin ortadan kalkması hâlinde kişisel verilerin silinmesini veya yok edilmesini isteme ve bu kapsamda yapılan işlemin kişisel verilerin aktarıldığı üçüncü kişilere bildirilmesini isteme,</Text>
-				<Text>İşlenen verilerin münhasıran otomatik sistemler vasıtasıyla analiz edilmesi suretiyle kişinin kendisi aleyhine bir sonucun ortaya çıkmasına itiraz etme,</Text>
-				<Text>Kişisel verilerin kanuna aykırı olarak işlenmesi sebebiyle zarara uğraması hâlinde zararın giderilmesini talep etme haklarına sahiptir.</Text>
-			</Box>  
+			<UnorderedList> 
+				<ListItem>Kişisel verilerin işlenip işlenmediğini öğrenme,</ListItem>
+				<ListItem>Kişisel verileri işlenmişse buna ilişkin bilgi talep etme,</ListItem>
+				<ListItem>Kişisel verilerin işlenme amacını ve bunların amacına uygun kullanılıp kullanılmadığını öğrenme,</ListItem>
+				<ListItem>Yurt içinde veya yurt dışında kişisel verilerin aktarıldığı üçüncü kişileri bilme,</ListItem>
+				<ListItem>Kişisel verilerin eksik veya yanlış işlenmiş olması hâlinde bunların düzeltilmesini isteme ve bu kapsamda yapılan işlemin kişisel verilerin aktarıldığı üçüncü kişilere bildirilmesini isteme,</ListItem>
+				<ListItem>Kanun ve ilgili diğer kanun hükümlerine uygun olarak işlenmiş olmasına rağmen, işlenmesini gerektiren sebeplerin ortadan kalkması hâlinde kişisel verilerin silinmesini veya yok edilmesini isteme ve bu kapsamda yapılan işlemin kişisel verilerin aktarıldığı üçüncü kişilere bildirilmesini isteme,</ListItem>
+				<ListItem>İşlenen verilerin münhasıran otomatik sistemler vasıtasıyla analiz edilmesi suretiyle kişinin kendisi aleyhine bir sonucun ortaya çıkmasına itiraz etme,</ListItem>
+				<ListItem>Kişisel verilerin kanuna aykırı olarak işlenmesi sebebiyle zarara uğraması hâlinde zararın giderilmesini talep etme haklarına sahiptir.</ListItem>
+			</UnorderedList>  
 		</VStack> :
 		<VStack alignItems="left">
 			<Text>This Information Text has been prepared by TISSE ("Company") in order to inform data subjects about the principles and procedures regarding the processing of personal data of customers in accordance with the Law on the Protection of Personal Data numbered 6698 ("Law").</Text>
@@ -55,16 +55,16 @@ const Policy = () => {
 			<Heading size="md">4. Rights of Data Subjects and Exercise of These Rights</Heading>
 			<br />
 			<Text>If you wish to exercise these rights regarding your personal data under Law No. 6698, you can submit your request in person or through a notary with documents verifying your identity and containing your request, or by sending an email to info@tisse.net. TISSE will process your request promptly and no later than thirty days, depending on the nature of the request. Although there is no fee for requests, TISSE reserves the right to charge a fee based on the fee schedule determined by the Personal Data Protection Board. According to Article 11 of Law No. 6698, data subjects have the following rights:</Text>
-			<Box> 
-				<Text>Learn whether personal data is processed,</Text>
-				<Text>Request information if personal data has been processed,</Text>
-				<Text>Learn the purpose of processing personal data and whether they are used appropriately for their purpose,</Text>
-				<Text>Know the third parties to whom personal data is transferred, whether domestically or abroad,</Text>
-				<Text>Request correction of personal data in case of incomplete or incorrect processing and request notification of the transaction made within this scope to third parties to whom personal data has been transferred,</Text>
-				<Text>Request the deletion or destruction of personal data in case the reasons requiring its processing disappear, despite being processed in accordance with the law and request notification of the transaction made within this scope to third parties to whom personal data has been transferred,</Text>
-				<Text>Object to the occurrence of a result against the person by analyzing the processed data exclusively through automated systems,</Text>
-				<Text>In case of suffering damage due to the processing of personal data unlawfully, request the compensation of the damage.</Text>
-			</Box>  
+			<UnorderedList>
+				<ListItem>Learn whether personal data is processed,</ListItem>
+				<ListItem>Request information if personal data has been processed,</ListItem>
+				<ListItem>Learn the purpose of processing personal data and whether they are used appropriately for their purpose,</ListItem>
+				<ListItem>Know the third parties to whom personal data is transferred, whether domestically or abroad,</ListItem>
+				<ListItem>Request correction of personal data in case of incomplete or incorrect processing and request notification of the transaction made within this scope to third parties to whom personal data has been transferred,</ListItem>
+				<ListItem>Request the deletion or destruction of personal data in case the reasons requiring its processing disappear, despite being processed in accordance with the law and request notification of the transaction made within this scope to third parties to whom personal data has been transferred,</ListItem>
+				<ListItem>Object to the occurrence of a result against the person by analyzing the processed data exclusively through automated systems,</ListItem>
+				<ListItem>In case of suffering damage due to the processing of personal data unlawfully, request the compensation of the damage.</ListItem>
+			</UnorderedList>
 		</VStack>
   );
 }

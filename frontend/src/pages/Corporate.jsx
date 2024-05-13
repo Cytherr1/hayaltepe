@@ -15,6 +15,7 @@ import {
 import { FormattedMessage } from 'react-intl'
 import { Link, useLocation } from 'react-router-dom'
 import Policy from '../components/Policy'
+import About from '../components/About'
 
 const Corporate = (props) => {
 
@@ -65,7 +66,7 @@ const Corporate = (props) => {
             <TabPanel p="3em">
               <Heading size="xl"><FormattedMessage id='about'/></Heading>
               <br/>
-              <Text fontSize="md">Hayaltepe çokiyi</Text>
+              <Text fontSize="md"><About/></Text>
             </TabPanel>
             <TabPanel p="3em">
               <Heading size="xl"><FormattedMessage id='privacy'/></Heading>
