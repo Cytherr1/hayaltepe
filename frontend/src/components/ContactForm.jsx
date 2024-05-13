@@ -43,9 +43,8 @@ const ContactForm = () => {
         <Box
             minW="md"
             maxW="lg"
-            borderWidth="2px" 
-            borderRadius="lg" 
             overflow="hidden"
+            border="form"
             bg="g.500"
             boxShadow="lg"
             p="1em"
@@ -121,6 +120,7 @@ const ContactForm = () => {
                                 id="policy"
                                 name="policy"
                                 colorScheme="dg"
+                                borderColor="dg.500"
                             >
                                 <Flex align="center" gap={1}>
                                 {lan === "TR" && <Link to="/corporate/privacy"><Text><FormattedMessage id="kvkk"/></Text></Link>}
@@ -130,7 +130,7 @@ const ContactForm = () => {
                             </Field>
                             <FormErrorMessage>{errors.policy}</FormErrorMessage>
                             </FormControl>
-                            <Button w="100%" isLoading={load} type='submit'><FormattedMessage id='submit'/></Button>
+                            <Button variant="form" w="100%" isLoading={load} type='submit'><FormattedMessage id='submit'/></Button>
                         </VStack>
                     </form>
                 )}

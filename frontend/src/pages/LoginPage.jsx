@@ -13,8 +13,9 @@ const LoginPage = () => {
       justifyContent="center"
       alignItems="center"
       flexDirection="column"
-      h="85vh"
+      minH="85vh"
       gap="2em"
+      p="2em"
     >
 			<Heading size="lg"><FormattedMessage id='loginp'/></Heading>
 			<LoginForm/>

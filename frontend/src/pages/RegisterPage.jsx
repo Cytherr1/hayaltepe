@@ -13,8 +13,9 @@ const RegisterPage = () => {
       justifyContent="center"
       alignItems="center"
       flexDirection="column"
-      h="90vh"
+      minH="90vh"
       gap="2em"
+      p="3em"
     >
 			<Heading size="lg"><FormattedMessage id='registerp'/></Heading>
 			<RegisterForm/>

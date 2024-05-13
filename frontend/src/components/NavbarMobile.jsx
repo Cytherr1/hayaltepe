@@ -41,7 +41,7 @@ const NavbarMobile = (props) => {
     <>
       <Flex
         bg="black"
-        maxH="25px"
+        maxH="20px"
         align="center"
         justify="flex-end"
       >
@@ -54,26 +54,26 @@ const NavbarMobile = (props) => {
         alignItems='center' 
         p="1.5em"
         bg="#5F6F52"
-        maxH="100px"
+        maxH="80px"
         gap={3}
         >
         <Spacer/>
         <Center
-          bg="#A9B388"
+          bgGradient="linear(to-b, y.500, g.500)"
           borderRadius="0px 0px 5px 5px"
           boxShadow="md"
-          minW="150px"
+          minW="120px"
           zIndex={10}
         >
           <Image
-            boxSize="150px"
+            boxSize="120px"
             src={logo}
             alt='Hayaltepe Logo'
           />
         </Center>
         <Spacer/>
         <Spacer/>
-        <Button ref={btnRef} onClick={onOpen}><HamburgerIcon/></Button>
+        <Button variant="nav" w="42px" ref={btnRef} onClick={onOpen}><HamburgerIcon/></Button>
         <Drawer
           isOpen={isOpen}
           placement='right'
@@ -81,7 +81,7 @@ const NavbarMobile = (props) => {
           finalFocusRef={btnRef}
         >
           <DrawerOverlay/>
-          <DrawerContent>
+          <DrawerContent bgColor="g.500">
             <DrawerCloseButton/>
             <DrawerHeader></DrawerHeader>
 
@@ -90,22 +90,22 @@ const NavbarMobile = (props) => {
                 style={{display: "flex", flexDirection:"column", gap: "3em"}}
                 styleType="none"
               >
-                <ListItem onClick={onClose} _hover={{color: "#A9B388"}} fontWeight="semibold" transition="0.3s" as={Link} to="/"><FormattedMessage id='home'/></ListItem>
-                <ListItem onClick={onClose} _hover={{color: "#A9B388"}} fontWeight="semibold" transition="0.3s" as={Link} to="/products"><FormattedMessage id='products'/></ListItem>
+                <ListItem onClick={onClose} _hover={{color: "dg.500"}} fontWeight="semibold" transition="0.3s" as={Link} to="/"><FormattedMessage id='home'/></ListItem>
+                <ListItem onClick={onClose} _hover={{color: "dg.500"}} fontWeight="semibold" transition="0.3s" as={Link} to="/products"><FormattedMessage id='products'/></ListItem>
                 <ListItem fontWeight="semibold" transition="0.3s" as={Accordion} allowMultiple>
-                  <AccordionItem>
-                    <AccordionButton _hover={{color: "#A9B388"}} fontWeight="semibold">
-                      <FormattedMessage id='corpo'/>
+                  <AccordionItem border="none">
+                    <AccordionButton pl="0" _hover={{color: "dg.500"}} fontWeight="semibold">
+                      <FormattedMessage style={{padding: "none"}} id='corpo'/>
                     </AccordionButton>
                     <AccordionPanel>
-                      <Text as={Link} onClick={onClose} _hover={{color: "#A9B388"}} fontWeight="semibold" transition="0.3s" to="/corporate/about"><FormattedMessage id='about'/></Text>
+                      <Text as={Link} onClick={onClose} _hover={{color: "dg.500"}} fontWeight="semibold" transition="0.3s" to="/corporate/about"><FormattedMessage id='about'/></Text>
                     </AccordionPanel>
                     <AccordionPanel>
-                      <Text as={Link} onClick={onClose} _hover={{color: "#A9B388"}} fontWeight="semibold" transition="0.3s" to="/corporate/privacy"><FormattedMessage id='privacy'/></Text>
+                      <Text as={Link} onClick={onClose} _hover={{color: "dg.500"}} fontWeight="semibold" transition="0.3s" to="/corporate/privacy"><FormattedMessage id='privacy'/></Text>
                     </AccordionPanel>
                   </AccordionItem>
                 </ListItem>
-                <ListItem onClick={onClose} _hover={{color: "#A9B388"}} fontWeight="semibold" transition="0.3s" as={Link} to="/contact"><FormattedMessage id='contact'/></ListItem>
+                <ListItem onClick={onClose} _hover={{color: "dg.500"}} fontWeight="semibold" transition="0.3s" as={Link} to="/contact"><FormattedMessage id='contact'/></ListItem>
               </UnorderedList>
             </DrawerBody>
 
@@ -113,8 +113,8 @@ const NavbarMobile = (props) => {
               <Flex gap="1em">
                 {!localStorage.getItem("auth-token") ?
                 <>
-                <Button as={Link} to="/login" onClick={onClose}><FormattedMessage id='login'/></Button>
-                <Button as={Link} to="/register" onClick={onClose}><FormattedMessage id='register'/></Button>
+                <Button variant="form" as={Link} to="/login" onClick={onClose}><FormattedMessage id='login'/></Button>
+                <Button variant="form" as={Link} to="/register" onClick={onClose}><FormattedMessage id='register'/></Button>
                 </>
                 :
                 <Button onClick={() => {localStorage.removeItem("auth-token"); window.location.replace("/"); onClose}}><FormattedMessage id='logout'/></Button>

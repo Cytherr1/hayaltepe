@@ -80,7 +80,7 @@ const LoginForm = () => {
                 />
                 <FormErrorMessage>{errors.password}</FormErrorMessage>
               </FormControl>
-              <Button w="100%" type='submit'><FormattedMessage id='login'/></Button>
+              <Button variant="form" w="100%" type='submit'><FormattedMessage id='login'/></Button>
             </VStack>
           </form>
         )}

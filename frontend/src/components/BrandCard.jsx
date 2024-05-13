@@ -41,7 +41,7 @@ const BrandCard = (props) => {
 				</VStack>
 			</CardBody>
 			<CardFooter alignItems="center" justifyContent="center">
-				<Button as={Link} href={props.url} _hover={{textDecoration: "none"}} w="xs" borderRadius="2xl"><FormattedMessage id='visit'/></Button>
+				<Button variant="card" as={Link} href={props.url} _hover={{textDecoration: "none"}} w="xs" borderRadius="2xl"><FormattedMessage id='visit'/></Button>
 			</CardFooter>
 		</Card>
 	)

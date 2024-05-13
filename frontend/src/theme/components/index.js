@@ -1,5 +1,11 @@
+import { Textarea } from "./textarea";
 import { Button } from "./button";
+import { Input } from "./input";
 
-export const components = {
+const components = {
     Button: Button,
+    Input: Input,
+    Textarea: Textarea,
 }
+
+export default components;

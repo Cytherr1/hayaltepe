@@ -143,6 +143,8 @@ const RegisterForm = () => {
                     as={Checkbox}
                     id="policy"
                     name="policy"
+                    borderColor="dg.500"
+                    colorScheme="dg"
                   >
                     <Flex align="center" gap={1} justifyContent="center">
                       {lan === "TR" && <Link to="/corporate/privacy"><Text><FormattedMessage id="kvkk"/></Text></Link>}
@@ -152,7 +154,7 @@ const RegisterForm = () => {
                   </Field>
                   <FormErrorMessage>{errors.policy}</FormErrorMessage>
                 </FormControl>
-                <Button w="100%" type='submit'><FormattedMessage id='register'/></Button>
+                <Button variant="form" w="100%" type='submit'><FormattedMessage id='register'/></Button>
               </VStack>
             </form>
           )}

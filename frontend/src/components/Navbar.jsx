@@ -72,8 +72,8 @@ const Navbar = (props) => {
         <Flex gap="1em">
           {!localStorage.getItem("auth-token") ?
           <>
-          <Button as={Link} to="/login"><FormattedMessage id='login'/></Button>
-          <Button as={Link} to="/register"><FormattedMessage id='register'/></Button>
+          <Button variant="nav" as={Link} to="/login"><FormattedMessage id='login'/></Button>
+          <Button variant="nav" as={Link} to="/register"><FormattedMessage id='register'/></Button>
           </>
           :
           <Button onClick={() => {localStorage.removeItem("auth-token"); window.location.replace("/")}}><FormattedMessage id='logout'/></Button>
