@@ -50,7 +50,7 @@ const addUser = async (req, res) => {
 
         connection.query(
           logQuery,
-          ["log_user", new Date(), "User added successfully"],
+          ["Admin", new Date(), "User added successfully"],
           async (error, logResult) => {
             if (error) {
               await connection.rollback();
@@ -130,7 +130,7 @@ const updateUser = async (req, res) => {
 
       connection.query(
         logQuery,
-        ["log_user", new Date(), "User updated successfully"],
+        ["Admin", new Date(), "User updated successfully"],
         async (error, logResult) => {
           if (error) {
             await connection.rollback();
@@ -180,7 +180,7 @@ const deleteUser = async (req, res) => {
 
       connection.query(
         logQuery,
-        ["log_user", new Date(), "User removed successfully"],
+        ["Admin", new Date(), "User removed successfully"],
         async (error, logResult) => {
           if (error) {
             await connection.rollback();

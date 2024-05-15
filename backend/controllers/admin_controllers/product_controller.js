@@ -52,7 +52,7 @@ const addProduct = async (req, res) => {
 
         connection.query(
           logQuery,
-          ["log_user", new Date(), "Product added successfully"],
+          ["Admin", new Date(), "Product added successfully"],
           async (error, logResult) => {
             if (error) {
               await connection.rollback();
@@ -123,7 +123,7 @@ const updateProduct = async (req, res) => {
 
       connection.query(
         logQuery,
-        ["log_user", new Date(), "Product updated successfully"],
+        ["Admin", new Date(), "Product updated successfully"],
         async (error, logResult) => {
           if (error) {
             await connection.rollback();
@@ -175,7 +175,7 @@ const removeProduct = async (req, res) => {
 
       connection.query(
         logQuery,
-        ["log_user", new Date(), "Product removed successfully"],
+        ["Admin", new Date(), "Product removed successfully"],
         async (error, logResult) => {
           if (error) {
             await connection.rollback();
