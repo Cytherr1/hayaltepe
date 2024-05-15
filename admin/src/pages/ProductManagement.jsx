@@ -63,6 +63,9 @@ const ProductManagement = () => {
           "Content-Type": "multipart/form-data",
         },
       });
+
+      window.location.reload();
+
     } catch (error) {
       console.error("Error:", error);
       alert("An error has occured.");
@@ -76,6 +79,9 @@ const ProductManagement = () => {
           "Content-Type": "multipart/form-data",
         },
       });
+
+      window.location.reload();
+
     } catch (error) {
       console.error("Error:", error);
       alert("An error has occured.");
@@ -103,6 +109,7 @@ const ProductManagement = () => {
       const responseData = await response.json();
 
       if (responseData.success) {
+        window.location.reload();
       } else {
         alert(responseData.errors);
       }

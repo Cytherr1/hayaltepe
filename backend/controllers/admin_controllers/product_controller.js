@@ -1,4 +1,5 @@
 const { getConnection, releaseConnection } = require("../../config/db_config");
+const fs = require("fs");
 
 const getAllProduct = async (req, res) => {
   let connection;
@@ -152,16 +153,18 @@ const updateProduct = async (req, res) => {
 
 const removeProduct = async (req, res) => {
   let connection;
-
   try {
     connection = await getConnection();
 
     const { id } = req.body;
+
     const deleteQuery = "DELETE FROM PRODUCT WHERE ID = ?";
     const logQuery =
       "INSERT INTO LOG (LOG_USER, LOG_TIMESTAMP, LOG_DESCR) VALUES (?, ?, ?)";
 
     await connection.beginTransaction();
+
+    deleteImage(connection, id);
 
     connection.query(deleteQuery, [id], async (error, deleteResult) => {
       if (error) {
@@ -195,6 +198,41 @@ const removeProduct = async (req, res) => {
     if (connection) {
       releaseConnection(connection);
     }
+  }
+};
+
+const deleteImage = async (passedConnection, passedID) => {
+  let connection;
+  let query;
+
+  try {
+    connection = passedConnection;
+
+    const id = passedID;
+
+    query = "SELECT IMAGE FROM PRODUCT WHERE ID = ?";
+
+    connection.query(query, [id], (error, results) => {
+      if (error) {
+        res.status(500).json({ error: error.message });
+        return;
+      }
+
+      if (results.length === 0) {
+        res.status(404).json({ error: "Image not found" });
+        return;
+      }
+
+      fs.unlink("public/images/" + results[0].IMAGE, (unlinkError) => {
+        if (unlinkError) {
+          console.log("Unlink Error:" + unlinkError.message);
+          res.status(500).json({ error: unlinkError.message });
+          return;
+        }
+      });
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };
 
