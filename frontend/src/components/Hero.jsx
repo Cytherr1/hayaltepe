@@ -25,10 +25,10 @@ const Hero = () => {
 			alignItems="center"
 			justifyContent="center"
 			flexDirection="column"
-			gap="3.5em"
+			gap="4em"
 		>
 			<Image boxSize={isMobile ? 150 : 350} src={logo} bgGradient="linear(to-b, y.500, g.500)" borderRadius="50%"/>
-			<Heading w={isMobile ? "50%" : "100%"} textAlign="center" color="y.500" size={isMobile ? "md" : "xl"}>BİR HAYAL KURDUK, ADINI HAYALTEPE KOYDUK</Heading>
+			<Heading w={isMobile ? "50%" : "100%"} textAlign="center" color="y.500" fontWeight={200} size={isMobile ? "lg" : "2xl"}>Bir Hayal Kurduk, Adını HAYALTEPE Koyduk</Heading>
 		</Flex>
 	)
 }
