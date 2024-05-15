@@ -30,9 +30,9 @@ const addUser = async (req, res) => {
   try {
     connection = await getConnection();
 
-    const { name, surname, mail, password, tel } = req.body;
+    const { name, surname, mail, password, tel, rolefilter } = req.body;
     const addQuery =
-      "INSERT INTO USER (NAME, SURNAME, MAIL, PASSWORD, TELEPHONE_NUMBER) VALUES (?, ?, ?, ?, ?)";
+      "INSERT INTO USER (NAME, SURNAME, MAIL, PASSWORD, TELEPHONE_NUMBER, ROLE_FILTER) VALUES (?, ?, ?, ?, ?, ?)";
     const logQuery =
       "INSERT INTO LOG (LOG_USER, LOG_TIMESTAMP, LOG_DESCR) VALUES (?, ?, ?)";
 
@@ -40,7 +40,7 @@ const addUser = async (req, res) => {
 
     connection.query(
       addQuery,
-      [name, surname, mail, password, tel],
+      [name, surname, mail, password, tel, rolefilter],
       async (error, addResult) => {
         if (error) {
           await connection.rollback();

@@ -22,6 +22,7 @@ import {
   ModalBody,
   ModalCloseButton,
   useDisclosure,
+  Select,
 } from "@chakra-ui/react";
 import { Field, Formik } from "formik";
 import * as Yup from "yup";
@@ -180,7 +181,7 @@ const UserManagement = () => {
                     mail: "",
                     password: "",
                     tel: "",
-                    rolefilter: "",
+                    rolefilter: "U",
                   }}
                   onSubmit={(values, { resetForm }) => {
                     addUser(values);
@@ -241,7 +242,10 @@ const UserManagement = () => {
                           <FormLabel fontWeight="600" fontSize="lg" htmlFor="rolefilter">
                             Rol Filtresi
                           </FormLabel>
-                          <Field as={Input} id="tel" name="rolefilter" />
+                          <Field as={Select} id="tel" name="rolefilter">
+                            <option value="AU">Admin Kullanıcı (AU)</option>
+                            <option value="U">Normal Kullanıcı (U)</option>
+                          </Field>
                           <FormErrorMessage>{errors.tel}</FormErrorMessage>
                         </FormControl>
                         <Button w="100%" type="submit">
