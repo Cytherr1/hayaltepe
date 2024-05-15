@@ -14,6 +14,13 @@ import {
   FormLabel,
   Button,
   VStack,
+  Modal,
+  ModalHeader,
+  ModalOverlay,
+  ModalContent,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { Field, Formik } from "formik";
 import * as Yup from "yup";
@@ -21,6 +28,9 @@ import axios from "axios";
 
 const ProductManagement = () => {
   const [products, setProducts] = useState([]);
+  const { isOpen: isAddOpen, onOpen: onAddOpen, onClose: onAddClose } = useDisclosure();
+  const { isOpen: isAdjOpen, onOpen: onAdjOpen, onClose: onAdjClose } = useDisclosure();
+  const { isOpen: isDelOpen, onOpen: onDelOpen, onClose: onDelClose } = useDisclosure();
 
   useEffect(() => {
     fetchProducts();
@@ -121,173 +131,206 @@ const ProductManagement = () => {
 
   return (
     <Box>
-      <Box display="flex">
-        <Box
-          minW="sm"
-          maxW="md"
-          borderWidth="2px"
-          borderRadius="lg"
-          overflow="hidden"
-          bgColor="white"
-          p="1em"
-        >
-          <Formik
-            initialValues={{
-              name: "",
-              image: null,
-              link: "",
-            }}
-            onSubmit={(values, { resetForm }) => {
-              addProduct(values);
-              resetForm();
-            }}
-            validationSchema={Yup.object({
-              name: Yup.string().required(),
-              image: Yup.mixed().required(),
-              link: Yup.string().required(),
-            })}
-          >
-            {({ handleSubmit, errors, touched, setFieldValue }) => (
-              <form onSubmit={handleSubmit}>
-                <VStack gap="1em">
-                  <FormControl isInvalid={touched.name && errors.name}>
-                    <FormLabel fontWeight="600" fontSize="lg" htmlFor="name">
-                      İsim
-                    </FormLabel>
-                    <Field as={Input} id="name" name="name" />
-                  </FormControl>
-                  <FormControl>
-                    <FormLabel fontWeight="600" fontSize="lg" htmlFor="image">
-                      Görsel
-                    </FormLabel>
-                    <Input
-                      id="image"
-                      type="file"
-                      onChange={(e) =>
-                        setFieldValue("image", e.target.files[0])
-                      }
-                    />
-                  </FormControl>
-                  <FormControl isInvalid={touched.link && errors.link}>
-                    <FormLabel fontWeight="600" fontSize="lg" htmlFor="link">
-                      Link
-                    </FormLabel>
-                    <Field as={Input} id="link" name="link" />
-                  </FormControl>
-                  <Button w="100%" type="submit">
-                    Ürün Ekle
-                  </Button>
-                </VStack>
-              </form>
-            )}
-          </Formik>
-        </Box>
-        <Box
-          minW="sm"
-          maxW="md"
-          borderWidth="2px"
-          borderRadius="lg"
-          overflow="hidden"
-          bgColor="white"
-          p="1em"
-        >
-          <Formik
-            initialValues={{
-              id: "",
-              name: "",
-              image: null,
-              link: "",
-            }}
-            onSubmit={(values, { resetForm }) => {
-              updateProduct(values);
-              resetForm();
-            }}
-            validationSchema={Yup.object({
-              id: Yup.number().required(),
-              name: Yup.string(),
-              image: Yup.mixed(),
-              link: Yup.string(),
-            })}
-          >
-            {({ handleSubmit, errors, touched, setFieldValue }) => (
-              <form onSubmit={handleSubmit}>
-                <VStack gap="1em">
-                  <FormControl isInvalid={touched.id && errors.id}>
-                    <FormLabel fontWeight="600" fontSize="lg" htmlFor="id">
-                      ID
-                    </FormLabel>
-                    <Field as={Input} id="id" name="id" />
-                  </FormControl>
-                  <FormControl isInvalid={touched.name && errors.name}>
-                    <FormLabel fontWeight="600" fontSize="lg" htmlFor="name">
-                      İsim
-                    </FormLabel>
-                    <Field as={Input} id="name" name="name" />
-                  </FormControl>
-                  <FormControl>
-                    <FormLabel fontWeight="600" fontSize="lg" htmlFor="image">
-                      Görsel
-                    </FormLabel>
-                    <Input
-                      id="image"
-                      type="file"
-                      onChange={(e) =>
-                        setFieldValue("image", e.target.files[0])
-                      }
-                    />
-                  </FormControl>
-                  <FormControl isInvalid={touched.link && errors.link}>
-                    <FormLabel fontWeight="600" fontSize="lg" htmlFor="link">
-                      Link
-                    </FormLabel>
-                    <Field as={Input} id="link" name="link" />
-                  </FormControl>
-                  <Button w="100%" type="submit">
-                    Ürünü Güncelle
-                  </Button>
-                </VStack>
-              </form>
-            )}
-          </Formik>
-        </Box>
-        <Box
-          minW="sm"
-          maxW="md"
-          borderWidth="2px"
-          borderRadius="lg"
-          overflow="hidden"
-          bgColor="white"
-          p="1em"
-        >
-          <Formik
-            initialValues={{
-              id: "",
-            }}
-            onSubmit={(values, { resetForm }) => {
-              deleteProduct(values);
-              resetForm();
-            }}
-            validationSchema={Yup.object({
-              id: Yup.number().required(),
-            })}
-          >
-            {({ handleSubmit, errors, touched }) => (
-              <form onSubmit={handleSubmit}>
-                <VStack gap="1em">
-                  <FormControl isInvalid={touched.id && errors.id}>
-                    <FormLabel fontWeight="600" fontSize="lg" htmlFor="id">
-                      ID
-                    </FormLabel>
-                    <Field as={Input} id="id" name="id" />
-                  </FormControl>
-                  <Button w="100%" type="submit">
-                    Ürünü Sil
-                  </Button>
-                </VStack>
-              </form>
-            )}
-          </Formik>
-        </Box>
+      <Box display="flex" alignItems="center" justifyContent="center" gap="3.5em" w="100%" h="10vh" flexWrap="wrap">
+
+      <Button onClick={onAddOpen}>Ürün Ekle</Button>
+        <Modal isOpen={isAddOpen} onClose={onAddClose}>
+          <ModalOverlay/>
+          <ModalContent>
+            <ModalHeader>Ürün Ekle</ModalHeader>
+            <ModalCloseButton/>
+            <ModalBody p="1em">
+              <Box
+                minW="sm"
+                maxW="md"
+                borderWidth="2px"
+                borderRadius="lg"
+                overflow="hidden"
+                bgColor="white"
+                p="1em"
+              >
+                <Formik
+                  initialValues={{
+                    name: "",
+                    image: null,
+                    link: "",
+                  }}
+                  onSubmit={(values, { resetForm }) => {
+                    addProduct(values);
+                    resetForm();
+                  }}
+                  validationSchema={Yup.object({
+                    name: Yup.string().required(),
+                    image: Yup.mixed().required(),
+                    link: Yup.string().required(),
+                  })}
+                >
+                  {({ handleSubmit, errors, touched, setFieldValue }) => (
+                    <form onSubmit={handleSubmit}>
+                      <VStack gap="1em">
+                        <FormControl isInvalid={touched.name && errors.name}>
+                          <FormLabel fontWeight="600" fontSize="lg" htmlFor="name">
+                            İsim
+                          </FormLabel>
+                          <Field as={Input} id="name" name="name" />
+                        </FormControl>
+                        <FormControl>
+                          <FormLabel fontWeight="600" fontSize="lg" htmlFor="image">
+                            Görsel
+                          </FormLabel>
+                          <Input
+                            id="image"
+                            type="file"
+                            onChange={(e) =>
+                              setFieldValue("image", e.target.files[0])
+                            }
+                          />
+                        </FormControl>
+                        <FormControl isInvalid={touched.link && errors.link}>
+                          <FormLabel fontWeight="600" fontSize="lg" htmlFor="link">
+                            Link
+                          </FormLabel>
+                          <Field as={Input} id="link" name="link" />
+                        </FormControl>
+                        <Button w="100%" type="submit">
+                          Ürün Ekle
+                        </Button>
+                      </VStack>
+                    </form>
+                  )}
+                </Formik>
+              </Box>
+            </ModalBody>
+          </ModalContent>
+        </Modal>
+
+        <Button onClick={onAdjOpen}>Ürün Ekle</Button>
+        <Modal isOpen={isAdjOpen} onClose={onAdjClose}>
+          <ModalOverlay/>
+          <ModalContent>
+            <ModalHeader>Ürün Ekle</ModalHeader>
+            <ModalCloseButton/>
+            <ModalBody p="1em">
+              <Box
+                minW="sm"
+                maxW="md"
+                borderWidth="2px"
+                borderRadius="lg"
+                overflow="hidden"
+                bgColor="white"
+                p="1em"
+              >
+                <Formik
+                  initialValues={{
+                    id: "",
+                    name: "",
+                    image: null,
+                    link: "",
+                  }}
+                  onSubmit={(values, { resetForm }) => {
+                    updateProduct(values);
+                    resetForm();
+                  }}
+                  validationSchema={Yup.object({
+                    id: Yup.number().required(),
+                    name: Yup.string(),
+                    image: Yup.mixed(),
+                    link: Yup.string(),
+                  })}
+                >
+                  {({ handleSubmit, errors, touched, setFieldValue }) => (
+                    <form onSubmit={handleSubmit}>
+                      <VStack gap="1em">
+                        <FormControl isInvalid={touched.id && errors.id}>
+                          <FormLabel fontWeight="600" fontSize="lg" htmlFor="id">
+                            ID
+                          </FormLabel>
+                          <Field as={Input} id="id" name="id" />
+                        </FormControl>
+                        <FormControl isInvalid={touched.name && errors.name}>
+                          <FormLabel fontWeight="600" fontSize="lg" htmlFor="name">
+                            İsim
+                          </FormLabel>
+                          <Field as={Input} id="name" name="name" />
+                        </FormControl>
+                        <FormControl>
+                          <FormLabel fontWeight="600" fontSize="lg" htmlFor="image">
+                            Görsel
+                          </FormLabel>
+                          <Input
+                            id="image"
+                            type="file"
+                            onChange={(e) =>
+                              setFieldValue("image", e.target.files[0])
+                            }
+                          />
+                        </FormControl>
+                        <FormControl isInvalid={touched.link && errors.link}>
+                          <FormLabel fontWeight="600" fontSize="lg" htmlFor="link">
+                            Link
+                          </FormLabel>
+                          <Field as={Input} id="link" name="link" />
+                        </FormControl>
+                        <Button w="100%" type="submit">
+                          Ürünü Güncelle
+                        </Button>
+                      </VStack>
+                    </form>
+                  )}
+                </Formik>
+              </Box>
+            </ModalBody>
+          </ModalContent>
+        </Modal>
+
+        <Button onClick={onDelOpen}>Ürün Ekle</Button>
+        <Modal isOpen={isDelOpen} onClose={onDelClose}>
+          <ModalOverlay/>
+          <ModalContent>
+            <ModalHeader>Ürün Ekle</ModalHeader>
+            <ModalCloseButton/>
+            <ModalBody p="1em">
+              <Box
+                minW="sm"
+                maxW="md"
+                borderWidth="2px"
+                borderRadius="lg"
+                overflow="hidden"
+                bgColor="white"
+                p="1em"
+              >
+                <Formik
+                  initialValues={{
+                    id: "",
+                  }}
+                  onSubmit={(values, { resetForm }) => {
+                    deleteProduct(values);
+                    resetForm();
+                  }}
+                  validationSchema={Yup.object({
+                    id: Yup.number().required(),
+                  })}
+                >
+                  {({ handleSubmit, errors, touched }) => (
+                    <form onSubmit={handleSubmit}>
+                      <VStack gap="1em">
+                        <FormControl isInvalid={touched.id && errors.id}>
+                          <FormLabel fontWeight="600" fontSize="lg" htmlFor="id">
+                            ID
+                          </FormLabel>
+                          <Field as={Input} id="id" name="id" />
+                        </FormControl>
+                        <Button w="100%" type="submit">
+                          Ürünü Sil
+                        </Button>
+                      </VStack>
+                    </form>
+                  )}
+                </Formik>
+              </Box>
+            </ModalBody>
+          </ModalContent>
+        </Modal>
       </Box>
 
       <Box>
