@@ -51,5 +51,9 @@
     "noproduct": "Şu anda herhangi bir ürün mevcut değil.",
     "noproducth": "Burası Hayaltepe kadar sakin gözüküyor",
     "topproducth": "Hayaltepe'den sizlere",
-    "topproduct": "Ürünlerimize göz atın."
+    "topproduct": "Ürünlerimize göz atın.",
+    "toasterrorh": "Hop!",
+    "toasterror": "Bir şeyler ters gitti.",
+    "toastsuccessh": "Başarılı!",
+    "toastsuccess": "Mesajınız bize ulaştı, teşekkürler."
 }

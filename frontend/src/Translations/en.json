@@ -51,5 +51,9 @@
     "noproduct": "There are no products available at the moment.",
     "noproducth": "It's as calm as Hayaltepe here",
     "topproducth": "From Hayaltepe to you",
-    "topproduct": "Take a look at our products."
+    "topproduct": "Take a look at our products.",
+    "toasterrorh": "Oops!",
+    "toasterror": "Something went wrong.",
+    "toastsuccessh": "Success!",
+    "toastsuccess": "We got your message, thanks."
 }
