@@ -9,7 +9,7 @@ const Policy = () => {
   return(
 		lan === "TR" ?
 		<VStack alignItems="left">
-			<Text>İşbu Aydınlatma Metni, 6698 sayılı Kişisel Verilerin Korunması Kanunu (“Kanun”) uyarınca, TİSSE (“Şirket”) tarafından müşterilerine ait kişisel verilerin işlenmesine ilişkin usul ve esaslara ilişkin olarak veri sahiplerinin aydınlatılması amacı ile kaleme alınmıştır.</Text>
+			<Text>İşbu Aydınlatma Metni, 6698 sayılı Kişisel Verilerin Korunması Kanunu (“Kanun”) uyarınca, Hayaltepe (“Şirket”) tarafından müşterilerine ait kişisel verilerin işlenmesine ilişkin usul ve esaslara ilişkin olarak veri sahiplerinin aydınlatılması amacı ile kaleme alınmıştır.</Text>
 			<br />
 			<Heading size="md">1. Kişisel Verilerin İşlenme Amacı</Heading>
 			<br />
@@ -17,7 +17,7 @@ const Policy = () => {
 			<br />
 			<Heading size="md">2. Kişisel Verilerin Aktarılabileceği Taraflar ve Aktarım Amacı</Heading>
 			<br />
-			<Text>Müşterilere ilişkin kişisel veriler, Kanun’un 8. ve 9. maddelerinde belirtilen kişisel veri işleme şartları ve amaçları çerçevesinde, Şirket tarafından sunulan ürün ve hizmetlerin ilgili kişilerin beğeni, kullanım alışkanlıkları ve ihtiyaçlarına göre özelleştirilerek ilgili kişilere önerilmesi ve tanıtılması için gerekli olan aktivitelerin planlanması ve icrası, Şirket tarafından sunulan ürün ve hizmetlerden ilgili kişileri faydalandırmak için gerekli çalışmaların iş birimleri tarafından yapılması ve ilgili iş süreçlerinin yürütülmesi, Şirket tarafından yürütülen ticari faaliyetlerin gerçekleştirilmesi için ilgili iş birimleri tarafından gerekli çalışmaların yapılması ve buna bağlı iş süreçlerinin yürütülmesi, Şirket'in ticari ve/veya iş stratejilerinin planlanması ve icrası ve Şirket'in ve Şirket'le iş ilişkisi içerisinde olan ilgili kişilerin hukuki, teknik ve ticari-iş güvenliğinin temini amaçları dahilinde TİSSE MAKİNA KALIP TASARIM SAN. TİC. LTD. ŞİRKETİ ve Grup Şirketleri, TİSSE’nin iş ortakları ve tedarikçileri ile hukuken yetkili kurum ve kuruluşlar ile hukuken yetkili özel hukuk tüzel kişileriyle paylaşılabilecektir.</Text>
+			<Text>Müşterilere ilişkin kişisel veriler, Kanun’un 8. ve 9. maddelerinde belirtilen kişisel veri işleme şartları ve amaçları çerçevesinde, Şirket tarafından sunulan ürün ve hizmetlerin ilgili kişilerin beğeni, kullanım alışkanlıkları ve ihtiyaçlarına göre özelleştirilerek ilgili kişilere önerilmesi ve tanıtılması için gerekli olan aktivitelerin planlanması ve icrası, Şirket tarafından sunulan ürün ve hizmetlerden ilgili kişileri faydalandırmak için gerekli çalışmaların iş birimleri tarafından yapılması ve ilgili iş süreçlerinin yürütülmesi, Şirket tarafından yürütülen ticari faaliyetlerin gerçekleştirilmesi için ilgili iş birimleri tarafından gerekli çalışmaların yapılması ve buna bağlı iş süreçlerinin yürütülmesi, Şirket'in ticari ve/veya iş stratejilerinin planlanması ve icrası ve Şirket'in ve Şirket'le iş ilişkisi içerisinde olan ilgili kişilerin hukuki, teknik ve ticari-iş güvenliğinin temini amaçları dahilinde Hayaltepe MAKİNA KALIP TASARIM SAN. TİC. LTD. ŞİRKETİ ve Grup Şirketleri, Hayaltepe’nin iş ortakları ve tedarikçileri ile hukuken yetkili kurum ve kuruluşlar ile hukuken yetkili özel hukuk tüzel kişileriyle paylaşılabilecektir.</Text>
 			<br />
 			<Heading size="md">3. Kişisel Veri Toplamanın Yöntemi ve Hukuki Sebebi</Heading>
 			<br />
@@ -25,7 +25,7 @@ const Policy = () => {
 			<br />
 			<Heading size="md">4. Veri Sahiplerinin Hakları ve Bu Hakların Kullanılması</Heading>
 			<br />
-			<Text>6698 Sayılı Kanun kapsamında kişisel verilerinize ilişkin haklarınızı kimliğinizi tevsik edici belgeler ve talebinizi içeren dilekçeniz ile bizzat elden veya noter kanalıyla, veya info@tisse.net e-posta adresimize mail atmak suretiyle iletmeniz durumunda TİSSE talebin niteliğine göre talebi en kısa sürede ve en geç otuz gün içinde sonuçlandıracaktır. Taleplere ilişkin olarak herhangi bir ücret talep edilmemesi esas olmakla birlikte, Şirket’in Kişisel Verileri Koruma Kurulu tarafından belirlenen ücret tarifesi üzerinden ücret talep etme hakkı saklıdır. Bu kapsamda Kanun’un 11. maddesi uyarınca kişisel veri sahipleri;</Text>
+			<Text>6698 Sayılı Kanun kapsamında kişisel verilerinize ilişkin haklarınızı kimliğinizi tevsik edici belgeler ve talebinizi içeren dilekçeniz ile bizzat elden veya noter kanalıyla, veya info@hayaltepe.net e-posta adresimize mail atmak suretiyle iletmeniz durumunda Hayaltepe talebin niteliğine göre talebi en kısa sürede ve en geç otuz gün içinde sonuçlandıracaktır. Taleplere ilişkin olarak herhangi bir ücret talep edilmemesi esas olmakla birlikte, Şirket’in Kişisel Verileri Koruma Kurulu tarafından belirlenen ücret tarifesi üzerinden ücret talep etme hakkı saklıdır. Bu kapsamda Kanun’un 11. maddesi uyarınca kişisel veri sahipleri;</Text>
 			<UnorderedList> 
 				<ListItem>Kişisel verilerin işlenip işlenmediğini öğrenme,</ListItem>
 				<ListItem>Kişisel verileri işlenmişse buna ilişkin bilgi talep etme,</ListItem>
@@ -38,7 +38,7 @@ const Policy = () => {
 			</UnorderedList>  
 		</VStack> :
 		<VStack alignItems="left">
-			<Text>This Information Text has been prepared by TISSE ("Company") in order to inform data subjects about the principles and procedures regarding the processing of personal data of customers in accordance with the Law on the Protection of Personal Data numbered 6698 ("Law").</Text>
+			<Text>This Information Text has been prepared by hayaltepe ("Company") in order to inform data subjects about the principles and procedures regarding the processing of personal data of customers in accordance with the Law on the Protection of Personal Data numbered 6698 ("Law").</Text>
 			<br />
 			<Heading size="md">1. Purpose of Processing Personal Data</Heading>
 			<br />
@@ -46,7 +46,7 @@ const Policy = () => {
 			<br />
 			<Heading size="md">2. Parties to Which Personal Data May be Transferred and Purpose of Transfer</Heading>
 			<br />
-			<Text>Personal data regarding customers may be shared with TISSE MAKİNA KALIP TASARIM SAN. TİC. LTD. ŞTİ and Group Companies, business partners and suppliers of TISSE, legally authorized institutions and organizations, and legally authorized private legal entities within the framework of the personal data processing conditions and purposes specified in Articles 8 and 9 of the Law for the customization of products and services offered by the Company according to the preferences, usage habits, and needs of related persons, and for their promotion and introduction; conducting necessary studies by our business units to benefit related persons from the products and services offered by the Company and for the execution of related business processes; planning and execution of commercial and/or business strategies of the Company, and for the provision of legal, technical, and commercial-business security of the Company and related persons in business relations with the Company.</Text>
+			<Text>Personal data regarding customers may be shared with hayaltepe MAKİNA KALIP TASARIM SAN. TİC. LTD. ŞTİ and Group Companies, business partners and suppliers of hayaltepe, legally authorized institutions and organizations, and legally authorized private legal entities within the framework of the personal data processing conditions and purposes specified in Articles 8 and 9 of the Law for the customization of products and services offered by the Company according to the preferences, usage habits, and needs of related persons, and for their promotion and introduction; conducting necessary studies by our business units to benefit related persons from the products and services offered by the Company and for the execution of related business processes; planning and execution of commercial and/or business strategies of the Company, and for the provision of legal, technical, and commercial-business security of the Company and related persons in business relations with the Company.</Text>
 			<br />
 			<Heading size="md">3. Method of Collection and Legal Basis for Personal Data Collection</Heading>
 			<br />
@@ -54,7 +54,7 @@ const Policy = () => {
 			<br />
 			<Heading size="md">4. Rights of Data Subjects and Exercise of These Rights</Heading>
 			<br />
-			<Text>If you wish to exercise these rights regarding your personal data under Law No. 6698, you can submit your request in person or through a notary with documents verifying your identity and containing your request, or by sending an email to info@tisse.net. TISSE will process your request promptly and no later than thirty days, depending on the nature of the request. Although there is no fee for requests, TISSE reserves the right to charge a fee based on the fee schedule determined by the Personal Data Protection Board. According to Article 11 of Law No. 6698, data subjects have the following rights:</Text>
+			<Text>If you wish to exercise these rights regarding your personal data under Law No. 6698, you can submit your request in person or through a notary with documents verifying your identity and containing your request, or by sending an email to info@hayaltepe.net. hayaltepe will process your request promptly and no later than thirty days, depending on the nature of the request. Although there is no fee for requests, hayaltepe reserves the right to charge a fee based on the fee schedule determined by the Personal Data Protection Board. According to Article 11 of Law No. 6698, data subjects have the following rights:</Text>
 			<UnorderedList>
 				<ListItem>Learn whether personal data is processed,</ListItem>
 				<ListItem>Request information if personal data has been processed,</ListItem>
