@@ -11,26 +11,27 @@ import {
   Box,
   VStack
 } from "@chakra-ui/react"
+import axios from 'axios'
 
 const LoginForm = () => {
 
+  const axiosInstance = axios.create({
+    baseURL: process.env.VITE_APP_API_URL,
+  });
+
     const login = async (formData) => {
-      let responseData;
-      await fetch("http://localhost:3000/general/auth/login", {
-        method: "POST",
-        headers: {
-          Accept: "application/form-data",
-          'content-type': "application/json",
-        },
-        body: JSON.stringify(formData),
-      }).then((response) => response.json()).then((data) => responseData = data)
-  
-      if (responseData.success) {
+      try {
+        console.log(import.meta.env.VITE_APP_API_URL);
+        await axiosInstance.post("/general/auth/login", formData, {
+          headers: {
+            Accept: "application/form-data",
+            'content-type': "application/json",
+          },
+        })
         localStorage.setItem("auth-token", responseData.token);
         window.location.replace("/");
-      }
-      else {
-        alert(responseData.errors)
+      } catch (error){
+        alert(error)
       }
     }
 

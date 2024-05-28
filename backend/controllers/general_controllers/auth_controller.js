@@ -12,12 +12,12 @@ const login = async (req, res) => {
 
     connection.query(query, [email], (error, results) => {
       if (error) {
-        res.status(500).send(error.message);
+        res.status(500).json({ error: error.message });
         return;
       }
 
       if (results.length === 0) {
-        res.status(404).send("User not found");
+        res.status(500).json({ error: error.message });
         return;
       }
 
@@ -26,15 +26,15 @@ const login = async (req, res) => {
       const isMatch = bcrypt.compare(password, user.PASSWORD);
 
       if (!isMatch) {
-        res.status(401).send("Invalid credentials");
+        res.status(500).json({ error: error.message });
         return;
       }
 
-      res.status(200).send("User logged in");
+      res.status(200).json({ success: true });
 
     });
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500).json({ error: error.message });
   } finally {
     if (connection) {
       releaseConnection(connection);
@@ -49,20 +49,20 @@ const register = async (req, res) => {
     connection = await getConnection();
 
     const { name, surname, tel, email, password } = req.body;
-
+    const role = "U"
     const query =
-      "INSERT INTO USER (NAME, SURNAME, TELEPHONE_NUMBER, MAIL, PASSWORD) VALUES (?, ?, ?, ?, ?)";
+      "INSERT INTO USER (NAME, SURNAME, TELEPHONE_NUMBER, MAIL, PASSWORD, ROLE_FILTER) VALUES (?, ?, ?, ?, ?, ?)";
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
     connection.query(
       query,
-      [name, surname, tel, email, hashedPassword],
+      [name, surname, tel, email, hashedPassword, role],
       (error, results) => {
         if (error) {
-          res.status(500).send(error.message);
+          res.status(500).json({ error: error.message });
         } else {
-          res.status(201).send("User registered");
+          res.status(200).json({ success: true });
         }
       }
     );
