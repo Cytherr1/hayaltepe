@@ -69,7 +69,7 @@ const Navbar = () => {
           </ListItem>
         </UnorderedList>
         <Spacer />
-        <Button onClick={logout}>Çıkış yap</Button>
+        <Button variant="nav" onClick={logout}>Çıkış yap</Button>
       </Flex>
     </>
   );

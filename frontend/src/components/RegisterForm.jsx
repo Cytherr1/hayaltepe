@@ -16,29 +16,29 @@ import * as Yup from "yup"
 import { Field, Formik } from 'formik'
 import { Link } from "react-router-dom"
 import { Language } from '../App'
+import axios from 'axios'
 
 import 'yup-phone-lite'
 import 'libphonenumber-js'
 
 const RegisterForm = () => {
+  const axiosInstance = axios.create({
+    baseURL: import.meta.env.VITE_APP_API_URL,
+  });
 
   const register = async (formData) => {
-    let responseData;
-    await fetch("http://localhost:3000/general/auth/register", {
-      method: "POST",
-      headers: {
-        Accept: "application/form-data",
-        'content-type': "application/json",
-      },
-      body: JSON.stringify(formData),
-    }).then((response) => response.json()).then((data) => responseData = data)
+    try {
+      const response = await axiosInstance.post("general/auth/register", formData, {
+        headers: {
+          Accept: "application/form-data",
+          'content-type': "application/json",
+        },
+      });
 
-    if (responseData.success) {
-      localStorage.setItem("auth-token", responseData.token);
+      localStorage.setItem("auth-token", response.data.accessToken);
       window.location.replace("/");
-    }
-    else {
-      alert(responseData.errors)
+    } catch (error) {
+      alert(error)
     }
 }
 

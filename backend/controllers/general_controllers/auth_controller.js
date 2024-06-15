@@ -1,5 +1,7 @@
 const { getConnection, releaseConnection } = require("../../config/db_config");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const secret = process.env.SECRET_KEY;
 
 const login = async (req, res) => {
   let connection;
@@ -30,7 +32,9 @@ const login = async (req, res) => {
         return;
       }
 
-      res.status(200).json({ success: true });
+      const token = jwt.sign(req.body, secret, {expiresIn: '4h'})
+
+      res.status(200).json({ success: true, accessToken: token});
 
     });
   } catch (error) {

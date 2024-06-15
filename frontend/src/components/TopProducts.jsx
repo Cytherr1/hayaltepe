@@ -13,7 +13,7 @@ import { WarningTwoIcon, ChevronRightIcon } from '@chakra-ui/icons'
 import ProductCard from '../components/ProductCard'
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom'
-
+import axios from 'axios';
 
 const TopProducts = () => {
 
@@ -21,6 +21,9 @@ const TopProducts = () => {
   const [isLoading, setLoading] = useState(true);
   const [isError, setError] = useState(false);
 	const [isMobile] = useMediaQuery("(max-width: 768px)")
+	const axiosInstance = axios.create({
+    baseURL: import.meta.env.VITE_APP_API_URL,
+  });
 
 	useEffect(() => {
     fetchProducts();
@@ -29,26 +32,15 @@ const TopProducts = () => {
 	const fetchProducts = async () => {
 		try {
 			setLoading(true);
-			const response = await fetch(
-				"http://localhost:3000/general/product/getAllProduct",
-				{
-					method: "GET",
+			const response = await axiosInstance.get("general/product/getAllProduct", {
 					headers: {
 						Accept: "application/json",
 						"Content-Type": "application/json",
 					},
-				}
-			);
+				});
 
-			if (!response.ok) {
-				throw new Error("Network response was not ok");
-			}
-
-			const responseData = await response.json();
-
-			if (responseData.success) {
-				setProducts(responseData.products.slice(0, 3));
-				console.log(products);
+			if (response.data.success) {
+				setProducts(response.data.products.slice(0, 3));
 				setLoading(false);
 			} else {
 				setError(true);

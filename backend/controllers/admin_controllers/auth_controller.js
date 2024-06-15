@@ -1,4 +1,6 @@
 const { getConnection, releaseConnection } = require("../../config/db_config");
+const jwt = require("jsonwebtoken");
+const secret = process.env.SECRET_KEY;
 
 const login = async (req, res) => {
   let connection;
@@ -27,8 +29,9 @@ const login = async (req, res) => {
         res.status(401).json({ error: "Invalid credentials" });
         return;
       }
+      const token = jwt.sign(req.body, secret, {expiresIn: '4h'})
 
-      res.status(200).json({ success: true, message: "User logged in" });
+      res.status(200).json({ success: true, message: "User logged in", accessToken: token});
     });
   } catch (error) {
     res.status(500).json({ error: error.message });

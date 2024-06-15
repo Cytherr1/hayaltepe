@@ -31,6 +31,9 @@ const ProductManagement = () => {
   const { isOpen: isAddOpen, onOpen: onAddOpen, onClose: onAddClose } = useDisclosure();
   const { isOpen: isAdjOpen, onOpen: onAdjOpen, onClose: onAdjClose } = useDisclosure();
   const { isOpen: isDelOpen, onOpen: onDelOpen, onClose: onDelClose } = useDisclosure();
+  const axiosInstance = axios.create({
+    baseURL: import.meta.env.VITE_APP_API_URL,
+  });
 
   useEffect(() => {
     fetchProducts();
@@ -38,27 +41,17 @@ const ProductManagement = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch(
-        "http://localhost:3000/admin/product/getAllProduct",
-        {
-          method: "GET",
+      const response = await axiosInstance.get("admin/product/getAllProduct", {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
           },
-        }
-      );
+        });
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      const responseData = await response.json();
-
-      if (responseData.success) {
-        setProducts(responseData.products);
+      if (response.data.success) {
+        setProducts(response.data.products);
       } else {
-        alert(responseData.errors);
+        alert(response.data.errors);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -68,7 +61,7 @@ const ProductManagement = () => {
 
   const addProduct = async (formData) => {
     try {
-      await axios.post("http://localhost:3000/admin/product/add", formData, {
+      await axiosInstance.post("admin/product/add", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -84,7 +77,7 @@ const ProductManagement = () => {
 
   const updateProduct = async (formData) => {
     try {
-      await axios.post("http://localhost:3000/admin/product/update", formData, {
+      await axiosInstance.post("admin/product/update", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -100,28 +93,17 @@ const ProductManagement = () => {
 
   const deleteProduct = async (formData) => {
     try {
-      const response = await fetch(
-        "http://localhost:3000/admin/product/delete",
-        {
-          method: "POST",
+      const response = await axiosInstance.post("admin/product/delete", formData, {
           headers: {
             Accept: "application/form-data",
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(formData),
-        }
-      );
+        });
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      const responseData = await response.json();
-
-      if (responseData.success) {
+      if (response.data.success) {
         window.location.reload();
       } else {
-        alert(responseData.errors);
+        alert(response.data.errors);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -133,20 +115,21 @@ const ProductManagement = () => {
     <Box>
       <Box display="flex" alignItems="center" justifyContent="center" gap="3.5em" w="100%" h="10vh" flexWrap="wrap">
 
-      <Button onClick={onAddOpen}>Ürün Ekle</Button>
+      <Button variant="nav" onClick={onAddOpen}>Ürün Ekle</Button>
         <Modal isOpen={isAddOpen} onClose={onAddClose}>
           <ModalOverlay/>
-          <ModalContent>
+          <ModalContent bgColor="y.500">
             <ModalHeader>Ürün Ekle</ModalHeader>
             <ModalCloseButton/>
             <ModalBody p="1em">
               <Box
                 minW="sm"
                 maxW="md"
-                borderWidth="2px"
+                borderWidth="1px"
                 borderRadius="lg"
+                borderColor="dg.500"
                 overflow="hidden"
-                bgColor="white"
+                bgColor="g.500"
                 p="1em"
               >
                 <Formik
@@ -192,7 +175,7 @@ const ProductManagement = () => {
                           </FormLabel>
                           <Field as={Input} id="link" name="link" />
                         </FormControl>
-                        <Button w="100%" type="submit">
+                        <Button variant="form" w="100%" type="submit">
                           Ürün Ekle
                         </Button>
                       </VStack>
@@ -204,20 +187,21 @@ const ProductManagement = () => {
           </ModalContent>
         </Modal>
 
-        <Button onClick={onAdjOpen}>Ürün Ekle</Button>
+        <Button variant="nav" onClick={onAdjOpen}>Ürün Ekle</Button>
         <Modal isOpen={isAdjOpen} onClose={onAdjClose}>
           <ModalOverlay/>
-          <ModalContent>
+          <ModalContent bgColor="y.500">
             <ModalHeader>Ürün Ekle</ModalHeader>
             <ModalCloseButton/>
             <ModalBody p="1em">
               <Box
                 minW="sm"
                 maxW="md"
-                borderWidth="2px"
+                borderWidth="1px"
                 borderRadius="lg"
+                borderColor="dg.500"
                 overflow="hidden"
-                bgColor="white"
+                bgColor="g.500"
                 p="1em"
               >
                 <Formik
@@ -271,7 +255,7 @@ const ProductManagement = () => {
                           </FormLabel>
                           <Field as={Input} id="link" name="link" />
                         </FormControl>
-                        <Button w="100%" type="submit">
+                        <Button variant="form" w="100%" type="submit">
                           Ürünü Güncelle
                         </Button>
                       </VStack>
@@ -283,20 +267,21 @@ const ProductManagement = () => {
           </ModalContent>
         </Modal>
 
-        <Button onClick={onDelOpen}>Ürün Ekle</Button>
+        <Button variant="nav" onClick={onDelOpen}>Ürün Ekle</Button>
         <Modal isOpen={isDelOpen} onClose={onDelClose}>
           <ModalOverlay/>
-          <ModalContent>
+          <ModalContent bgColor="y.500">
             <ModalHeader>Ürün Ekle</ModalHeader>
             <ModalCloseButton/>
             <ModalBody p="1em">
               <Box
                 minW="sm"
                 maxW="md"
-                borderWidth="2px"
+                borderWidth="1px"
+                borderColor="dg.500"
                 borderRadius="lg"
                 overflow="hidden"
-                bgColor="white"
+                bgColor="g.500"
                 p="1em"
               >
                 <Formik
@@ -320,7 +305,7 @@ const ProductManagement = () => {
                           </FormLabel>
                           <Field as={Input} id="id" name="id" />
                         </FormControl>
-                        <Button w="100%" type="submit">
+                        <Button variant="form" w="100%" type="submit">
                           Ürünü Sil
                         </Button>
                       </VStack>

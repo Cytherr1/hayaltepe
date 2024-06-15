@@ -16,24 +16,23 @@ import axios from 'axios'
 const LoginForm = () => {
 
   const axiosInstance = axios.create({
-    baseURL: process.env.VITE_APP_API_URL,
+    baseURL: import.meta.env.VITE_APP_API_URL,
   });
 
-    const login = async (formData) => {
-      try {
-        console.log(import.meta.env.VITE_APP_API_URL);
-        await axiosInstance.post("/general/auth/login", formData, {
-          headers: {
-            Accept: "application/form-data",
-            'content-type': "application/json",
-          },
-        })
-        localStorage.setItem("auth-token", responseData.token);
-        window.location.replace("/");
-      } catch (error){
-        alert(error)
-      }
+  const login = async (formData) => {
+    try {
+      const response = await axiosInstance.post("general/auth/login", formData, {
+        headers: {
+          Accept: "application/form-data",
+          'content-type': "application/json",
+        },
+      })
+      localStorage.setItem("auth-token", response.data.accessToken);
+      window.location.replace("/");
+    } catch (error){
+      alert(error)
     }
+  }
 
   return (
     <Box 

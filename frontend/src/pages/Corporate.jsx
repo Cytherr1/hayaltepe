@@ -66,12 +66,12 @@ const Corporate = (props) => {
             <TabPanel p="3em">
               <Heading size="xl"><FormattedMessage id='about'/></Heading>
               <br/>
-              <Text fontSize="md"><About/></Text>
+              <About/>
             </TabPanel>
             <TabPanel p="3em">
               <Heading size="xl"><FormattedMessage id='privacy'/></Heading>
               <br/>
-              <Text fontSize="md"><Policy/></Text>
+              <Policy/>
             </TabPanel>
           </TabPanels>
         </Tabs>

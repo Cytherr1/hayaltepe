@@ -12,32 +12,25 @@ import {
   Heading,
   Flex
 } from "@chakra-ui/react"
+import axios from "axios";
 
 const LoginForm = () => {
 
+  const axiosInstance = axios.create({
+    baseURL: import.meta.env.VITE_APP_API_URL,
+  });
+
   const login = async (formData) => {
+
     try {
-        const response = await fetch("http://localhost:3000/admin/auth/login", {
-            method: "POST",
-            headers: {
-                Accept: "application/form-data",
-                'Content-Type': "application/json",
-            },
-            body: JSON.stringify(formData),
-        });
-        
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-
-        const responseData = await response.json();
-
-        if (responseData.success) {
-            localStorage.setItem("auth-token", responseData.token);
-            window.location.replace("/");
-        } else {
-            alert(responseData.errors);
-        }
+      const response = await axiosInstance.post("admin/auth/login", formData, {
+        headers: {
+          Accept: "application/form-data",
+          'content-type': "application/json",
+        },
+      })
+      localStorage.setItem("auth-token", response.data.accessToken);
+      window.location.replace("/");
     } catch (error) {
         console.error("Error:", error);
         alert("An error has occured.");
@@ -60,10 +53,11 @@ const LoginForm = () => {
         <Box 
           minW="sm"
           maxW="md"
-          borderWidth="2px" 
+          borderWidth="1px" 
           borderRadius="lg" 
+          borderColor="dg.500"
           overflow="hidden" 
-          bgColor="white"
+          bgColor="g.500"
           p="1em"
           >
           <Formik
@@ -102,7 +96,7 @@ const LoginForm = () => {
                     />
                     <FormErrorMessage>{errors.password}</FormErrorMessage>
                   </FormControl>
-                  <Button w="100%" type='submit'>Giriş</Button>
+                  <Button variant="form" w="100%" type='submit'>Giriş</Button>
                 </VStack>
               </form>
             )}

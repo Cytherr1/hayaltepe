@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Box, VStack, Text, Heading} from "@chakra-ui/react"
+import { VStack, Text, Heading} from "@chakra-ui/react"
 import { Language } from '../App'
 
 const About = () => {

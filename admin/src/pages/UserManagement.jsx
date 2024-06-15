@@ -26,12 +26,16 @@ import {
 } from "@chakra-ui/react";
 import { Field, Formik } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
 
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
   const { isOpen: isAddOpen, onOpen: onAddOpen, onClose: onAddClose } = useDisclosure();
   const { isOpen: isAdjOpen, onOpen: onAdjOpen, onClose: onAdjClose } = useDisclosure();
   const { isOpen: isDelOpen, onOpen: onDelOpen, onClose: onDelClose } = useDisclosure();
+  const axiosInstance = axios.create({
+    baseURL: import.meta.env.VITE_APP_API_URL,
+  });
 
   useEffect(() => {
     fetchUsers();
@@ -39,27 +43,17 @@ const UserManagement = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch(
-        "http://localhost:3000/admin/user/getAllUser",
-        {
-          method: "GET",
+      const response = await axiosInstance.get("admin/user/getAllUser", {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
           },
-        }
-      );
+        });
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      const responseData = await response.json();
-
-      if (responseData.success) {
-        setUsers(responseData.products);
+      if (response.data.success) {
+        setUsers(response.data.products);
       } else {
-        alert(responseData.errors);
+        alert(response.data.errors);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -69,26 +63,17 @@ const UserManagement = () => {
 
   const addUser = async (formData) => {
     try {
-      const response = await fetch("http://localhost:3000/admin/user/add", {
-        method: "POST",
+      const response = await axiosInstance.post("admin/user/add", formData, {
         headers: {
           Accept: "application/form-data",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
       });
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      const responseData = await response.json();
-
-      if (responseData.success) {
-        localStorage.setItem("auth-token", responseData.token);
+      if (response.data.success) {
         window.location.replace("/");
       } else {
-        alert(responseData.errors);
+        alert(response.data.errors);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -98,26 +83,17 @@ const UserManagement = () => {
 
   const updateUser = async (formData) => {
     try {
-      const response = await fetch("http://localhost:3000/admin/user/update", {
-        method: "POST",
+      const response = await axiosInstance.post("admin/user/update", formData, {
         headers: {
           Accept: "application/form-data",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
       });
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      const responseData = await response.json();
-
-      if (responseData.success) {
-        localStorage.setItem("auth-token", responseData.token);
+      if (response.data.success) {
         window.location.replace("/");
       } else {
-        alert(responseData.errors);
+        alert(response.data.errors);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -127,26 +103,17 @@ const UserManagement = () => {
 
   const deleteUser = async (formData) => {
     try {
-      const response = await fetch("http://localhost:3000/admin/user/delete", {
-        method: "POST",
+      const response = await axiosInstance.post("admin/user/delete", formData, {
         headers: {
           Accept: "application/form-data",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
       });
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      const responseData = await response.json();
-
-      if (responseData.success) {
-        localStorage.setItem("auth-token", responseData.token);
+      if (response.data.success) {
         window.location.replace("/");
       } else {
-        alert(responseData.errors);
+        alert(response.data.errors);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -158,20 +125,21 @@ const UserManagement = () => {
     <Box>
       <Box display="flex" alignItems="center" justifyContent="center" gap="3.5em" w="100%" h="10vh" flexWrap="wrap">
 
-      <Button onClick={onAddOpen}>Kullanıcı Ekle</Button>
+      <Button variant="nav" w="200" onClick={onAddOpen}>Kullanıcı Ekle</Button>
         <Modal isOpen={isAddOpen} onClose={onAddClose}>
           <ModalOverlay/>
-          <ModalContent>
+          <ModalContent bgColor="y.500">
             <ModalHeader>Kullanıcı Ekle</ModalHeader>
             <ModalCloseButton/>
             <ModalBody p="1em">
               <Box
                 minW="sm"
                 maxW="md"
-                borderWidth="2px"
+                borderWidth="1px"
+                borderColor="dg.500"
                 borderRadius="lg"
                 overflow="hidden"
-                bgColor="white"
+                bgColor="g.500"
                 p="1em"
               >
                 <Formik
@@ -248,7 +216,7 @@ const UserManagement = () => {
                           </Field>
                           <FormErrorMessage>{errors.tel}</FormErrorMessage>
                         </FormControl>
-                        <Button w="100%" type="submit">
+                        <Button variant="form" w="100%" type="submit">
                           Kullanıcı Ekle
                         </Button>
                       </VStack>
@@ -260,24 +228,31 @@ const UserManagement = () => {
           </ModalContent>
         </Modal>
 
-        <Button onClick={onAdjOpen}>Kullanıcı Güncelle</Button>
+        <Button variant="nav" w="200" onClick={onAdjOpen}>Kullanıcı Güncelle</Button>
         <Modal isOpen={isAdjOpen} onClose={onAdjClose}>
           <ModalOverlay/>
-          <ModalContent>
+          <ModalContent bgColor="y.500">
             <ModalHeader>Kullanıcı Güncelle</ModalHeader>
             <ModalCloseButton/>
             <ModalBody p="1em">
               <Box
                 minW="sm"
                 maxW="md"
-                borderWidth="2px"
+                borderWidth="1px"
                 borderRadius="lg"
+                borderColor="dg.500"
                 overflow="hidden"
-                bgColor="white"
+                bgColor="g.500"
                 p="1em"
               >
                 <Formik
                   initialValues={{
+                    id: "",
+                    name: "",
+                    surname: "",
+                    mail: "",
+                    password: "",
+                    tel: "", 
                   }}
                   onSubmit={(values, { resetForm }) => {
                     updateUser(values);
@@ -336,7 +311,7 @@ const UserManagement = () => {
                           </FormLabel>
                           <Field as={Input} id="tel" name="tel" />
                         </FormControl>
-                        <Button w="100%" type="submit">
+                        <Button variant="form" w="100%" type="submit">
                           Kullanıcıyı Güncelle
                         </Button>
                       </VStack>
@@ -348,20 +323,21 @@ const UserManagement = () => {
           </ModalContent>
         </Modal>
 
-        <Button onClick={onDelOpen}>Kullanıcı sil</Button>
+        <Button variant="nav" w="200" onClick={onDelOpen}>Kullanıcı sil</Button>
         <Modal isOpen={isDelOpen} onClose={onDelClose}>
           <ModalOverlay/>
-          <ModalContent>
+          <ModalContent bgColor="y.500">
             <ModalHeader>Kullanıcı Sil</ModalHeader>
             <ModalCloseButton/>
             <ModalBody p="1em">
               <Box
                 minW="sm"
                 maxW="md"
-                borderWidth="2px"
+                borderWidth="1px"
                 borderRadius="lg"
+                borderColor="dg.500"
                 overflow="hidden"
-                bgColor="white"
+                bgColor="g.500"
                 p="1em"
               >
                 <Formik
@@ -386,7 +362,7 @@ const UserManagement = () => {
                           <Field as={Input} id="id" name="id" />
                           <FormErrorMessage>{errors.id}</FormErrorMessage>
                         </FormControl>
-                        <Button w="100%" type="submit">
+                        <Button variant="form" w="100%" type="submit">
                           Onayla
                         </Button>
                       </VStack>

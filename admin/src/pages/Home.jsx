@@ -10,31 +10,28 @@ import {
   TableContainer,
   Box
 } from "@chakra-ui/react";
+import axios from "axios"
 
 const Home = () => {
   const [logs, setLogs] = useState([]);
+  const axiosInstance = axios.create({
+    baseURL: import.meta.env.VITE_APP_API_URL,
+  });
 
   useEffect(() => {
     const fetchLogs = async () => {
       try {
-        const response = await fetch("http://localhost:3000/log/getAllLogs", {
-          method: "GET",
+        const response = await axiosInstance.get("log/getAllLogs", {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
           },
         });
 
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const responseData = await response.json();
-
-        if (responseData.success) {
-          setLogs(responseData.logs);
+        if (response.data.success) {
+          setLogs(response.data.logs);
         } else {
-          alert(responseData.errors);
+          alert(response.data.errors);
         }
       } catch (error) {
         console.error("Error:", error);
@@ -56,17 +53,15 @@ const Home = () => {
             <Th>Açıklama</Th>
           </Tr>
         </Thead>
-        <Box w="100%" h="70vh">
-          <Tbody display="table" w="100%">
-            {logs.map((log, index) => (
-              <Tr display="table" w="100%" key={index} style={{tableLayout: "fixed"}}>
-                <Td>{log.LOG_USER}</Td>
-                <Td>{log.LOG_TIMESTAMP}</Td>
-                <Td>{log.LOG_DESCR}</Td>
-              </Tr>
-            ))}
-          </Tbody>
-        </Box>
+        <Tbody display="table" w="100%" h="70vh">
+          {logs.map((log, index) => (
+            <Tr display="table" w="100%" key={index} style={{tableLayout: "fixed"}}>
+              <Td>{log.LOG_USER}</Td>
+              <Td>{log.LOG_TIMESTAMP}</Td>
+              <Td>{log.LOG_DESCR}</Td>
+            </Tr>
+          ))}
+        </Tbody>
       </Table>
     </TableContainer>
   );

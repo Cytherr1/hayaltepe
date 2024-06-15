@@ -26,13 +26,13 @@ const ContactForm = () => {
   const [load, setLoad] = useState(false);
   const toast = useToast();
   const intl = useIntl();
+  const axiosInstance = axios.create({
+    baseURL: import.meta.env.VITE_APP_API_URL,
+  });
 
   const sendForm = async (formData) => {
     try {
-      await axios.post(
-        "http://localhost:3000/general/mail/sendform",
-        formData,
-        {
+      await axiosInstance.post("general/mail/sendform", formData, {
           headers: {
             Accept: "application/form-data",
             "Content-Type": "application/json",
