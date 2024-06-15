@@ -23,6 +23,7 @@ import {
   ModalCloseButton,
   useDisclosure,
   Select,
+  useToast,
 } from "@chakra-ui/react";
 import { Field, Formik } from "formik";
 import * as Yup from "yup";
@@ -30,6 +31,7 @@ import axios from "axios";
 
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
+  const toast = useToast();
   const { isOpen: isAddOpen, onOpen: onAddOpen, onClose: onAddClose } = useDisclosure();
   const { isOpen: isAdjOpen, onOpen: onAdjOpen, onClose: onAdjClose } = useDisclosure();
   const { isOpen: isDelOpen, onOpen: onDelOpen, onClose: onDelClose } = useDisclosure();
@@ -52,12 +54,15 @@ const UserManagement = () => {
 
       if (response.data.success) {
         setUsers(response.data.products);
-      } else {
-        alert(response.data.errors);
       }
     } catch (error) {
-      console.error("Error:", error);
-      alert("An error has occurred.");
+      toast({
+        title: "Hata!",
+        description: "Kullanıcılar yüklenemedi, tekrar deneyiniz.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
     }
   };
 
@@ -71,13 +76,25 @@ const UserManagement = () => {
       });
 
       if (response.data.success) {
-        window.location.replace("/");
-      } else {
-        alert(response.data.errors);
+        toast({
+          title: "Başarılı!",
+          description: "Kullanıcı başarıyla eklendi.",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
       }
     } catch (error) {
-      console.error("Error:", error);
-      alert("An error has occured.");
+      toast({
+        title: "Hata!",
+        description: "Kullanıcı eklenemedi.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
     }
   };
 
@@ -91,13 +108,25 @@ const UserManagement = () => {
       });
 
       if (response.data.success) {
-        window.location.replace("/");
-      } else {
-        alert(response.data.errors);
+        toast({
+          title: "Başarılı!",
+          description: "Kullanıcı başarıyla değiştirildi.",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
       }
     } catch (error) {
-      console.error("Error:", error);
-      alert("An error has occured.");
+      toast({
+        title: "Hata!",
+        description: "Kullanıcı değişiklikleri kaydedilemedi.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
     }
   };
 
@@ -111,13 +140,25 @@ const UserManagement = () => {
       });
 
       if (response.data.success) {
-        window.location.replace("/");
-      } else {
-        alert(response.data.errors);
+        toast({
+          title: "Başarılı!",
+          description: "Kullanıcı başarıyla silindi.",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
       }
     } catch (error) {
-      console.error("Error:", error);
-      alert("An error has occured.");
+      toast({
+        title: "Hata!",
+        description: "Kullanıcı silinemedi.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
     }
   };
 

@@ -10,12 +10,14 @@ import {
   Box,
   VStack,
   Heading,
-  Flex
+  Flex,
+  useToast
 } from "@chakra-ui/react"
 import axios from "axios";
 
 const LoginForm = () => {
 
+  const toast = useToast();
   const axiosInstance = axios.create({
     baseURL: import.meta.env.VITE_APP_API_URL,
   });
@@ -32,8 +34,23 @@ const LoginForm = () => {
       localStorage.setItem("auth-token", response.data.accessToken);
       window.location.replace("/");
     } catch (error) {
-        console.error("Error:", error);
-        alert("An error has occured.");
+      if (error.response.status == 404) {
+        toast({
+          title: "Hata!",
+          description: "Giriş bilgileri doğru değil, lütfen tekrar deneyiniz.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      } else {
+        toast({
+          title: "Hata!",
+          description: "Bir sorun meydana geldi, lütfen tekrar deneyiniz.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
     }
 }
 

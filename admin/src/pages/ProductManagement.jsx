@@ -21,6 +21,7 @@ import {
   ModalBody,
   ModalCloseButton,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { Field, Formik } from "formik";
 import * as Yup from "yup";
@@ -28,6 +29,7 @@ import axios from "axios";
 
 const ProductManagement = () => {
   const [products, setProducts] = useState([]);
+  const toast = useToast();
   const { isOpen: isAddOpen, onOpen: onAddOpen, onClose: onAddClose } = useDisclosure();
   const { isOpen: isAdjOpen, onOpen: onAdjOpen, onClose: onAdjClose } = useDisclosure();
   const { isOpen: isDelOpen, onOpen: onDelOpen, onClose: onDelClose } = useDisclosure();
@@ -50,12 +52,15 @@ const ProductManagement = () => {
 
       if (response.data.success) {
         setProducts(response.data.products);
-      } else {
-        alert(response.data.errors);
       }
     } catch (error) {
-      console.error("Error:", error);
-      alert("An error has occurred.");
+      toast({
+        title: "Hata!",
+        description: "Ürünlere ulaşılamıyor lütfen tekrar deneyiniz.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
     }
   };
 
@@ -67,11 +72,26 @@ const ProductManagement = () => {
         },
       });
 
-      window.location.reload();
-
+      if(response.data.success) {
+        toast({
+          title: "Başarılı!",
+          description: "Ürün eklendi.",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
+      }
     } catch (error) {
-      console.error("Error:", error);
-      alert("An error has occured.");
+      toast({
+        title: "Hata!",
+        description: "Ürün eklenemedi.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
     }
   };
 
@@ -83,11 +103,27 @@ const ProductManagement = () => {
         },
       });
 
-      window.location.reload();
+      if(response.data.success) {
+        toast({
+          title: "Başarılı!",
+          description: "Ürün başarıyla güncellendi.",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
+      }
 
     } catch (error) {
-      console.error("Error:", error);
-      alert("An error has occured.");
+      toast({
+          title: "Hata!",
+          description: "Ürün güncellenemedi.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+      });
     }
   };
 
@@ -100,14 +136,26 @@ const ProductManagement = () => {
           },
         });
 
-      if (response.data.success) {
-        window.location.reload();
-      } else {
-        alert(response.data.errors);
-      }
+        if(response.data.success) {
+          toast({
+            title: "Başarılı!",
+            description: "Ürün başarıyla silindi.",
+            status: "success",
+            duration: 5000,
+            isClosable: true,
+          });
+          setTimeout(() => {
+            window.location.reload();
+          }, 1500);
+        }
     } catch (error) {
-      console.error("Error:", error);
-      alert("An error has occured.");
+      toast({
+        title: "Hata!",
+        description: "Ürün silinemedi.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
     }
   };
 

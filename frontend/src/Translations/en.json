@@ -55,5 +55,11 @@
     "toasterrorh": "Oops!",
     "toasterror": "Something went wrong.",
     "toastsuccessh": "Success!",
-    "toastsuccess": "We got your message, thanks."
+    "toastemailsuccess": "We got your message, thanks.",
+    "toastloginsuccess": "Welcome to Hayaltepe.",
+    "toastloginerror": "Wrong email or password, please try again.",
+    "toastregistersuccess": "You've registered successfully.",
+    "toastlogoutsuccess": "Logged out.",
+    "notfound": "Page Not Found",
+    "notfounddesc": "This page has no longer exists or it has never been."
 }

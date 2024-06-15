@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect} from 'react'
+import { createContext, useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { IntlProvider } from 'react-intl'
 import { useMediaQuery } from '@chakra-ui/react';
@@ -13,6 +13,7 @@ import Contact from './pages/Contact';
 import Corporate from './pages/Corporate';
 import NavbarMobile from './components/NavbarMobile';
 import FooterMobile from './components/FooterMobile';
+import NotFound from './pages/NotFound';
 
 export const Language = createContext();
 
@@ -43,6 +44,7 @@ function App() {
               <Route path='about' element={<Corporate index={index} tabSetter={setIndex}/>}/>
               <Route path='privacy' element={<Corporate index={index} tabSetter={setIndex}/>}/>
             </Route>
+            <Route path="*" element={<NotFound/>}/>
           </Routes>
           {isMobile ? <FooterMobile tabSetter={setIndex}/> :<Footer tabSetter={setIndex}/>}
         </BrowserRouter>

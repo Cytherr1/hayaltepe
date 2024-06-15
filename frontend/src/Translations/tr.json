@@ -55,5 +55,11 @@
     "toasterrorh": "Hop!",
     "toasterror": "Bir şeyler ters gitti.",
     "toastsuccessh": "Başarılı!",
-    "toastsuccess": "Mesajınız bize ulaştı, teşekkürler."
+    "toastemailsuccess": "Mesajınız bize ulaştı, teşekkürler.",
+    "toastloginsuccess": "Hayaltepeye hoş geldiniz.",
+    "toastloginerror": "Email adresi veya şifre hatalı, lütfen tekrar deneyiniz.",
+    "toastregistersuccess": "Başarılı bir şekilde kayıt oldunuz.",
+    "toastlogoutsuccess": "Çıkış yapıldı.",
+    "notfound": "Sayfa bulunamadı.",
+    "notfounddesc": "Bu sayfa artık mevcut değil veya hiç var olmadı."
 }

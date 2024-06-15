@@ -24,13 +24,16 @@ import {
   AccordionPanel,
   AccordionIcon,
   useDisclosure,
+  useToast,
 } from '@chakra-ui/react'
 import { HamburgerIcon } from '@chakra-ui/icons'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, useIntl} from 'react-intl'
 import { Link } from 'react-router-dom'
 
 const NavbarMobile = (props) => {
 
+  const toast = useToast();
+  const intl = useIntl();
   const { isOpen, onOpen, onClose } = useDisclosure()
   const btnRef = useRef()
   const langChangeHandler = (lan) => {
@@ -117,7 +120,20 @@ const NavbarMobile = (props) => {
                 <Button variant="form" as={Link} to="/register" onClick={onClose}><FormattedMessage id='register'/></Button>
                 </>
                 :
-                <Button variant="form" onClick={() => {localStorage.removeItem("auth-token"); window.location.replace("/"); onClose}}><FormattedMessage id='logout'/></Button>
+                <Button variant="form" onClick={() => {
+                  onClose();
+                  localStorage.removeItem("auth-token"); 
+                  toast({
+                    description: intl.formatMessage({ id: "toastlogoutsuccess" }),
+                    duration: 5000,
+                    isClosable: true,
+                  });
+                  setTimeout(() => {
+                    window.location.replace("/");
+                  }, 1500);
+                }}>
+                  <FormattedMessage id='logout'/>
+                </Button>
                 }
               </Flex>
             </DrawerFooter>

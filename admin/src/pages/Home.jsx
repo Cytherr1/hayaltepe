@@ -8,11 +8,14 @@ import {
   Td,
   TableCaption,
   TableContainer,
-  Box
+  Box,
+  useToast,
 } from "@chakra-ui/react";
 import axios from "axios"
 
 const Home = () => {
+
+  const toast = useToast();
   const [logs, setLogs] = useState([]);
   const axiosInstance = axios.create({
     baseURL: import.meta.env.VITE_APP_API_URL,
@@ -30,12 +33,15 @@ const Home = () => {
 
         if (response.data.success) {
           setLogs(response.data.logs);
-        } else {
-          alert(response.data.errors);
         }
       } catch (error) {
-        console.error("Error:", error);
-        alert("An error has occurred.");
+        toast({
+          title: "Hata!",
+          description: "Bir sorun meydana geldi, lütfen Sayfayı yenileyiniz.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
       }
     };
 

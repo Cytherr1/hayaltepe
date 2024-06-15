@@ -10,6 +10,7 @@ import {
   Text,
   Box,
   VStack,
+  useToast,
 } from "@chakra-ui/react"
 import { FormattedMessage, useIntl } from 'react-intl'
 import * as Yup from "yup"
@@ -22,6 +23,8 @@ import 'yup-phone-lite'
 import 'libphonenumber-js'
 
 const RegisterForm = () => {
+
+  const toast = useToast();
   const axiosInstance = axios.create({
     baseURL: import.meta.env.VITE_APP_API_URL,
   });
@@ -35,10 +38,27 @@ const RegisterForm = () => {
         },
       });
 
-      localStorage.setItem("auth-token", response.data.accessToken);
-      window.location.replace("/");
+      if(response.data.success) {
+        toast({
+        title: intl.formatMessage({ id: "toastsuccessh" }),
+        description: intl.formatMessage({ id: "toastregistersuccess" }),
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        });
+        localStorage.setItem("auth-token", response.data.accessToken);
+        setTimeout(() => {
+          window.location.replace("/");
+        }, 1500);
+      }
     } catch (error) {
-      alert(error)
+      toast({
+        title: intl.formatMessage({ id: "toasterrorh" }),
+        description: intl.formatMessage({ id: "toasterror" }),
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
     }
 }
 

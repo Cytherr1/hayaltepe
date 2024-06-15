@@ -1,5 +1,5 @@
 import React from 'react'
-import {FormattedMessage} from "react-intl"
+import { FormattedMessage, useIntl } from "react-intl"
 import { Field, Formik } from 'formik'
 import * as Yup from "yup"
 import {
@@ -8,13 +8,16 @@ import {
   FormLabel,
   FormErrorMessage,
   Input,
-  Box,
-  VStack
+  VStack,
+  useToast,
+  Box
 } from "@chakra-ui/react"
 import axios from 'axios'
 
 const LoginForm = () => {
 
+  const toast = useToast();
+  const intl = useIntl();
   const axiosInstance = axios.create({
     baseURL: import.meta.env.VITE_APP_API_URL,
   });
@@ -22,15 +25,44 @@ const LoginForm = () => {
   const login = async (formData) => {
     try {
       const response = await axiosInstance.post("general/auth/login", formData, {
-        headers: {
-          Accept: "application/form-data",
-          'content-type': "application/json",
-        },
-      })
-      localStorage.setItem("auth-token", response.data.accessToken);
-      window.location.replace("/");
+          headers: {
+            Accept: "application/form-data",
+            'content-type': "application/json",
+          },
+        }
+      );
+  
+      if(response.data.success) {
+        toast({
+          title: intl.formatMessage({ id: "toastsuccessh" }),
+          description: intl.formatMessage({ id: "toastloginsuccess" }),
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+        localStorage.setItem("auth-token", response.data.accessToken);
+        setTimeout(() => {
+          window.location.replace("/");
+        }, 1500);
+      }
     } catch (error){
-      alert(error)
+      if (error.response.status == 404) {
+        toast({
+          title: intl.formatMessage({ id: "toasterrorh"}),
+          description: intl.formatMessage({ id: "toastloginerror"}),
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      } else {
+        toast({
+          title: intl.formatMessage({ id: "toasterrorh"}),
+          description: intl.formatMessage({ id: "toasterror"}),
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
     }
   }
 

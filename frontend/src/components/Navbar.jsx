@@ -12,12 +12,15 @@ import {
   UnorderedList,
   ListItem,
   Heading,
+  useToast,
 } from '@chakra-ui/react'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl'
 import { Link } from 'react-router-dom'
 
 const Navbar = (props) => {
 
+  const toast = useToast();
+  const intl = useIntl();
   const langChangeHandler = (lan) => {
     props.langSelector(lan);
   }
@@ -76,7 +79,19 @@ const Navbar = (props) => {
           <Button variant="nav" as={Link} to="/register"><FormattedMessage id='register'/></Button>
           </>
           :
-          <Button variant="nav" onClick={() => {localStorage.removeItem("auth-token"); window.location.replace("/")}}><FormattedMessage id='logout'/></Button>
+          <Button variant="nav" onClick={() => {
+            localStorage.removeItem("auth-token");
+            toast({
+              description: intl.formatMessage({ id: "toastlogoutsuccess" }),
+              duration: 5000,
+              isClosable: true,
+            });
+            setTimeout(() => {
+              window.location.replace("/");
+            }, 1500);
+          }}>
+            <FormattedMessage id='logout'/>
+          </Button>
           }
         </Flex>
         <Spacer/>

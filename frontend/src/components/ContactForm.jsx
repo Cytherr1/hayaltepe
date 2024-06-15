@@ -40,7 +40,7 @@ const ContactForm = () => {
         },
         toast({
           title: intl.formatMessage({ id: "toastsuccessh" }),
-          description: intl.formatMessage({ id: "toastsuccess" }),
+          description: intl.formatMessage({ id: "toastemailsuccess" }),
           status: "success",
           duration: 5000,
           isClosable: true,
