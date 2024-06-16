@@ -239,7 +239,7 @@ const ProductManagement = () => {
         <Modal isOpen={isAdjOpen} onClose={onAdjClose}>
           <ModalOverlay/>
           <ModalContent bgColor="y.500">
-            <ModalHeader>Ürün Ekle</ModalHeader>
+            <ModalHeader>Ürün Güncelle</ModalHeader>
             <ModalCloseButton/>
             <ModalBody p="1em">
               <Box
@@ -319,7 +319,7 @@ const ProductManagement = () => {
         <Modal isOpen={isDelOpen} onClose={onDelClose}>
           <ModalOverlay/>
           <ModalContent bgColor="y.500">
-            <ModalHeader>Ürün Ekle</ModalHeader>
+            <ModalHeader>Ürün Sil</ModalHeader>
             <ModalCloseButton/>
             <ModalBody p="1em">
               <Box
