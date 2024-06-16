@@ -36,7 +36,7 @@ app.use(express.static(path.join(__dirname, "public"))); // Serve static files
 app.use(bodyParser.json());
 app.use(
   cors({
-    origin: ["https://www.hayaltepe.com.tr", "https://admin.hayaltepe.com.tr", "https://api.hayaltepe.com.tr", "https://hayaltepe.com.tr"],
+    origin: "*",
     methods: ["GET", "POST"],
     credentials: true,
   })
